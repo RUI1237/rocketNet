@@ -1,31 +1,43 @@
-// --- 变量定义 (与登录页完全统一) ---
+// --- 变量和动画定义 ---
 $color-primary: #00ddff;
 $color-bg-dark: #0d0221;
-$color-bg-panel: #1d103f;
+$border-color: rgba($color-primary, 0.3);
 $text-primary: #e0e0e0;
 $text-secondary: #8b8a95;
-$border-color: rgba($color-primary, 0.2);
 $font-tech: "Orbitron", sans-serif;
 
-// --- 动画定义 ---
 @keyframes background-pulse {
   0% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0.6;
+    opacity: 0.4;
   }
   50% {
     transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0.8;
+    opacity: 0.6;
   }
   100% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0.6;
+    opacity: 0.4;
   }
 }
 
-// --- 主布局 ---
+@keyframes panel-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+// --- 主布局容器 ---
 .mainLayout {
   height: 100vh;
+  width: 100vw;
   background-color: $color-bg-dark !important;
   position: relative;
   overflow: hidden;
@@ -41,56 +53,116 @@ $font-tech: "Orbitron", sans-serif;
     z-index: 0;
     background-image: radial-gradient(
       circle at center,
-      rgba($color-primary, 0.15) 0%,
-      transparent 60%
+      rgba($color-primary, 0.1) 0%,
+      transparent 50%
     );
-    background-repeat: no-repeat;
-    background-position: center;
     animation: background-pulse 15s infinite ease-in-out;
   }
+
+  // “追光”效果
+  &::after {
+    content: "";
+    position: absolute;
+    top: var(--mouse-y);
+    left: var(--mouse-x);
+    width: 0;
+    height: 0;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 300px 120px rgba($color-primary, 0.08);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    opacity: 0.5s ease;
+  }
+  &:hover::after {
+    opacity: 1;
+  }
 }
 
-// --- 侧边栏 Sider ---
-.sider {
-  background: $color-bg-panel !important;
-  border-right: 1px solid $border-color;
-  position: relative;
-  z-index: 1;
+// --- 左上角：浮动导航模块 ---
+.mainNav {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3rem;
 
   .logo {
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: $font-tech;
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #fff;
-    letter-spacing: 2px;
-    text-shadow: 0 0 10px rgba($color-primary, 0.7);
+    text-shadow: 0 0 15px rgba($color-primary, 0.8);
+  }
+
+  .navButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; // 增加按钮间距
   }
 }
 
-// --- 顶部 Header ---
-.header {
+.navButton {
+  background: transparent;
+  border: 1px solid transparent;
+  color: $text-secondary;
+  cursor: pointer;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: transparent !important;
-  padding: 0 24px !important;
-  border-bottom: 1px solid $border-color;
-  height: 65px;
-  position: relative;
-  z-index: 1;
 
-  .headerTitle {
-    font-family: $font-tech;
-    font-size: 1.2rem;
-    color: $text-secondary;
-    letter-spacing: 1px;
+  // 尺寸放大
+  gap: 1.25rem;
+  padding: 1rem 2rem;
+
+  transition: all 0.3s ease-out;
+  position: relative;
+
+  .icon {
+    font-size: 1.75rem;
+  }
+  .label {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  // 动态下划线
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: $color-primary;
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    color: #fff;
+    &::after {
+      width: 100%;
+    }
+  }
+
+  &.active {
+    color: $color-primary;
+    text-shadow: 0 0 8px rgba($color-primary, 0.7);
+    &::after {
+      width: 100%;
+    }
   }
 }
 
-// --- 用户信息区域 ---
+// --- 右上角：用户信息模块 ---
+.header {
+  position: absolute;
+  top: 25px;
+  right: 70px;
+  z-index: 10;
+}
+
 .userProfile {
   cursor: pointer;
   .avatar {
@@ -103,60 +175,44 @@ $font-tech: "Orbitron", sans-serif;
   }
 }
 
-// --- 主内容区 Content ---
-.content {
-  padding: 24px;
-  margin: 0;
-  overflow-y: auto;
-  position: relative;
-  z-index: 1;
-
-  // “追光”效果伪元素
-  &::before {
-    content: "";
-    position: absolute;
-    top: var(--mouse-y);
-    left: var(--mouse-x);
-    width: 0;
-    height: 0;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 400px 150px rgba($color-primary, 0.1);
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  &:hover::before {
-    opacity: 1;
-  }
+// --- 中央内容区域 ---
+.contentArea {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // 减少 padding, 扩大内容区
+  padding: 80px 50px 50px 300px;
 }
 
-// --- “扫描线”菜单悬停效果 (使用 :global 穿透 antd 的 class) ---
-:global(.ant-menu-dark.ant-menu-inline) {
-  .ant-menu-item {
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s ease;
+// --- 内容浮动面板 ---
+.contentPanel {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  background: rgba(13, 2, 33, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: panel-enter 0.6s ease-out forwards;
 
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba($color-primary, 0.3), transparent);
-      transition: left 0.4s ease-out;
+  // 内部滚动条美化
+  > div {
+    flex-grow: 1;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 6px;
     }
-
-    &:hover::before,
-    &.ant-menu-item-selected::before {
-      left: 100%;
+    &::-webkit-scrollbar-track {
+      background: transparent;
     }
-
-    &.ant-menu-item-selected {
-      background: rgba($color-primary, 0.2) !important;
+    &::-webkit-scrollbar-thumb {
+      background: $color-primary;
+      border-radius: 3px;
     }
   }
 }

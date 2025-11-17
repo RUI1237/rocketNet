@@ -97,7 +97,10 @@ const AlarmLogModule: React.FC = () => {
   ];
 
   return (
-    <div className={styles.moduleContainer}>
+    <div
+      className={styles.moduleContainer}
+      style={{ height: "100%", display: "flex", flexDirection: "column" }}
+    >
       <h2>报警日志模块</h2>
       <Table columns={columns} dataSource={logs} />
       <Modal

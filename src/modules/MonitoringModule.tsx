@@ -32,7 +32,10 @@ const MonitoringModule: React.FC = () => {
   };
 
   return (
-    <div className={styles.moduleContainer}>
+    <div
+      className={styles.moduleContainer}
+      style={{ height: "100%", display: "flex", flexDirection: "column" }}
+    >
       <h2>画面监控模块</h2>
       <div className={styles.uploadSection}>
         <div>

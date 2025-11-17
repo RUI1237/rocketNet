@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react"; // useRef 保持不变
-import { Layout, Menu, Dropdown, Avatar, Space } from "antd";
+import React, { useState, useRef } from "react";
+import { Dropdown, Avatar, Space } from "antd";
 import type { MenuProps } from "antd";
+// 1. 引入新的图标
 import {
   PieChartOutlined,
   VideoCameraOutlined,
@@ -8,13 +9,23 @@ import {
   LogoutOutlined,
   UserOutlined,
   SettingOutlined,
+  ThunderboltOutlined, // 新增图标
 } from "@ant-design/icons";
 import styles from "./MainLayout.module.scss";
 import MonitoringModule from "@/modules/MonitoringModule";
 import AlarmLogModule from "@/modules/AlarmLogModule";
+// 2. 引入新的模块组件
+import PredictionLogModule from "@/modules/PredictionLogModule";
+import DataAnalysisModule from "@/modules/DataAnalysisModule";
 import { useMousePosition } from "@/hooks/useMousePosition";
 
-const { Header, Content, Sider } = Layout;
+// 3. 更新导航项数组
+const navItems = [
+  { key: "1", icon: <VideoCameraOutlined />, label: "画面监控" },
+  { key: "2", icon: <WarningOutlined />, label: "报警日志" },
+  { key: "3", icon: <ThunderboltOutlined />, label: "预测日志" }, // 新增
+  { key: "4", icon: <PieChartOutlined />, label: "数据分析" }, // 调整 key
+];
 
 interface MainLayoutProps {
   onLogout: () => void;
@@ -22,31 +33,8 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ onLogout }) => {
   const [selectedKey, setSelectedKey] = useState("1");
-  const [currentModuleTitle, setCurrentModuleTitle] = useState("画面监控");
-
-  // --- 核心修改在这里 ---
-  // 将 useRef 的泛型从 <HTMLDivElement | null> 改为 <HTMLDivElement>
-  const contentRef = useRef<HTMLDivElement>(null!);
-  // --- 修改结束 ---
-
-  const mousePosition = useMousePosition(contentRef); // 现在这里的类型将完美匹配
-
-  const onSelectMenu = ({ key }: { key: string }) => {
-    setSelectedKey(key);
-    switch (key) {
-      case "1":
-        setCurrentModuleTitle("画面监控");
-        break;
-      case "2":
-        setCurrentModuleTitle("报警日志");
-        break;
-      case "3":
-        setCurrentModuleTitle("数据分析");
-        break;
-      default:
-        setCurrentModuleTitle("仪表盘");
-    }
-  };
+  const layoutRef = useRef<HTMLDivElement>(null!);
+  const mousePosition = useMousePosition(layoutRef);
 
   const dropdownItems: MenuProps["items"] = [
     { key: "1", label: "个人中心", icon: <UserOutlined /> },
@@ -56,59 +44,69 @@ const MainLayout: React.FC<MainLayoutProps> = ({ onLogout }) => {
   ];
 
   const renderContent = () => {
-    switch (selectedKey) {
-      case "1":
-        return <MonitoringModule />;
-      case "2":
-        return <AlarmLogModule />;
-      default:
-        return <div style={{ color: "white" }}>欢迎使用系统</div>;
-    }
+    const module = (() => {
+      // 4. 更新 switch 语句以渲染新模块
+      switch (selectedKey) {
+        case "1":
+          return <MonitoringModule />;
+        case "2":
+          return <AlarmLogModule />;
+        case "3":
+          return <PredictionLogModule />; // 新增
+        case "4":
+          return <DataAnalysisModule />; // 新增
+        default:
+          return <div style={{ padding: "2rem", color: "#94a3b8" }}>请选择一个模块</div>;
+      }
+    })();
+
+    return selectedKey ? (
+      <div className={styles.contentPanel} key={selectedKey}>
+        {module}
+      </div>
+    ) : null;
   };
 
   return (
-    <Layout className={styles.mainLayout}>
-      <Sider breakpoint="lg" collapsedWidth="0" className={styles.sider}>
+    <main
+      ref={layoutRef}
+      className={styles.mainLayout}
+      style={
+        {
+          "--mouse-x": `${mousePosition.x}px`,
+          "--mouse-y": `${mousePosition.y}px`,
+        } as React.CSSProperties
+      }
+    >
+      <nav className={styles.mainNav}>
         <div className={styles.logo}>GEMINI</div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          onSelect={onSelectMenu}
-          style={{ background: "transparent", borderRight: 0 }}
-          items={[
-            { key: "1", icon: <VideoCameraOutlined />, label: "画面监控" },
-            { key: "2", icon: <WarningOutlined />, label: "报警日志" },
-            { key: "3", icon: <PieChartOutlined />, label: "数据分析" },
-          ]}
-        />
-      </Sider>
-      <Layout>
-        <Header className={styles.header}>
-          <div className={styles.headerTitle}>{currentModuleTitle}</div>
-          <Dropdown menu={{ items: dropdownItems }} trigger={["click"]}>
-            <a onClick={(e) => e.preventDefault()} className={styles.userProfile}>
-              <Space>
-                <Avatar className={styles.avatar} icon={<UserOutlined />} />
-                <span>Admin</span>
-              </Space>
-            </a>
-          </Dropdown>
-        </Header>
-        <Content
-          ref={contentRef}
-          className={styles.content}
-          style={
-            {
-              "--mouse-x": `${mousePosition.x}px`,
-              "--mouse-y": `${mousePosition.y}px`,
-            } as React.CSSProperties
-          }
-        >
-          {renderContent()}
-        </Content>
-      </Layout>
-    </Layout>
+        <div className={styles.navButtonsContainer}>
+          {navItems.map((item) => (
+            <button
+              key={item.key}
+              className={`${styles.navButton} ${selectedKey === item.key ? styles.active : ""}`}
+              onClick={() => setSelectedKey(item.key)}
+            >
+              <span className={styles.icon}>{item.icon}</span>
+              <span className={styles.label}>{item.label}</span>
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      <header className={styles.header}>
+        <Dropdown menu={{ items: dropdownItems }} trigger={["click"]}>
+          <a onClick={(e) => e.preventDefault()} className={styles.userProfile}>
+            <Space>
+              <Avatar className={styles.avatar} icon={<UserOutlined />} />
+              <span>Admin</span>
+            </Space>
+          </a>
+        </Dropdown>
+      </header>
+
+      <section className={styles.contentArea}>{renderContent()}</section>
+    </main>
   );
 };
 
