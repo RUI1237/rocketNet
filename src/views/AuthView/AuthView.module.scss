@@ -1,0 +1,120 @@
+// --- 变量定义 ---
+$color-primary: #00ddff;
+$color-secondary: #ff00c1;
+$color-bg-dark: #0d0221;
+$color-bg-panel: #1d103f;
+$font-main: "Roboto", "Helvetica Neue", sans-serif;
+$font-tech: "Orbitron", sans-serif;
+
+// --- 动画定义 ---
+@keyframes grid-pan {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    text-shadow: 0 0 5px $color-primary;
+    opacity: 0.8;
+  }
+  50% {
+    text-shadow: 0 0 20px $color-primary;
+    opacity: 1;
+  }
+}
+
+// --- 页面主布局 ---
+.authPage {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  height: 100vh;
+  width: 100vw;
+  background-color: $color-bg-dark;
+  font-family: $font-main;
+  overflow: hidden;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// --- 左侧表单面板 ---
+.formPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: darken($color-bg-panel, 5%);
+}
+
+// --- 右侧视觉展示面板 ---
+.showcasePanel {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  background-color: $color-bg-panel;
+  background-image:
+    linear-gradient(rgba($color-primary, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba($color-primary, 0.15) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: grid-pan 60s linear infinite;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 30%, $color-bg-panel 80%);
+  }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
+.showcaseContent {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+}
+
+.logo {
+  font-family: $font-tech;
+  margin-bottom: 4rem;
+  h1 {
+    font-size: 5rem;
+    letter-spacing: 10px;
+    margin: 0;
+    color: #fff;
+    animation: pulse 4s infinite ease-in-out;
+  }
+  p {
+    font-size: 1rem;
+    letter-spacing: 5px;
+    color: $color-primary;
+    margin-top: -10px;
+  }
+}
+
+.techQuote {
+  font-size: 1.1rem;
+  max-width: 400px;
+  p {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+  span {
+    font-style: italic;
+    color: #8b8a95;
+  }
+}

@@ -1,0 +1,162 @@
+// --- 变量定义 (与登录页完全统一) ---
+$color-primary: #00ddff;
+$color-bg-dark: #0d0221;
+$color-bg-panel: #1d103f;
+$text-primary: #e0e0e0;
+$text-secondary: #8b8a95;
+$border-color: rgba($color-primary, 0.2);
+$font-tech: "Orbitron", sans-serif;
+
+// --- 动画定义 ---
+@keyframes background-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+}
+
+// --- 主布局 ---
+.mainLayout {
+  height: 100vh;
+  background-color: $color-bg-dark !important;
+  position: relative;
+  overflow: hidden;
+
+  // 动态背景层
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-image: radial-gradient(
+      circle at center,
+      rgba($color-primary, 0.15) 0%,
+      transparent 60%
+    );
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: background-pulse 15s infinite ease-in-out;
+  }
+}
+
+// --- 侧边栏 Sider ---
+.sider {
+  background: $color-bg-panel !important;
+  border-right: 1px solid $border-color;
+  position: relative;
+  z-index: 1;
+
+  .logo {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-tech;
+    font-size: 1.5rem;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba($color-primary, 0.7);
+  }
+}
+
+// --- 顶部 Header ---
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent !important;
+  padding: 0 24px !important;
+  border-bottom: 1px solid $border-color;
+  height: 65px;
+  position: relative;
+  z-index: 1;
+
+  .headerTitle {
+    font-family: $font-tech;
+    font-size: 1.2rem;
+    color: $text-secondary;
+    letter-spacing: 1px;
+  }
+}
+
+// --- 用户信息区域 ---
+.userProfile {
+  cursor: pointer;
+  .avatar {
+    background-color: $color-primary;
+    box-shadow: 0 0 10px rgba($color-primary, 0.5);
+  }
+  span {
+    color: $text-primary;
+    font-weight: 500;
+  }
+}
+
+// --- 主内容区 Content ---
+.content {
+  padding: 24px;
+  margin: 0;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
+
+  // “追光”效果伪元素
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--mouse-y);
+    left: var(--mouse-x);
+    width: 0;
+    height: 0;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 400px 150px rgba($color-primary, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+// --- “扫描线”菜单悬停效果 (使用 :global 穿透 antd 的 class) ---
+:global(.ant-menu-dark.ant-menu-inline) {
+  .ant-menu-item {
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba($color-primary, 0.3), transparent);
+      transition: left 0.4s ease-out;
+    }
+
+    &:hover::before,
+    &.ant-menu-item-selected::before {
+      left: 100%;
+    }
+
+    &.ant-menu-item-selected {
+      background: rgba($color-primary, 0.2) !important;
+    }
+  }
+}

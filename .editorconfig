@@ -1,0 +1,26 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+# 所有的文件都默认使用 LF 换行符
+end_of_line = lf
+
+# 所有的文件都在末尾保留一个空行
+insert_final_newline = true
+
+# 移除行尾多余的空格
+trim_trailing_whitespace = true
+
+# 设置编码为 utf-8
+charset = utf-8
+
+# 设置缩进风格为空格，大小为2
+indent_style = space
+indent_size = 2
+
+[*.md]
+# 对 Markdown 文件单独设置
+insert_final_newline = false
+trim_trailing_whitespace = false
