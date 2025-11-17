@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React from "react"; // 不再需要 useState
 import { Dropdown, Avatar, Space } from "antd";
 import type { MenuProps } from "antd";
-// 1. 引入新的图标
+// 1. 引入 Outlet 和 NavLink
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {
   PieChartOutlined,
   VideoCameraOutlined,
@@ -9,63 +10,47 @@ import {
   LogoutOutlined,
   UserOutlined,
   SettingOutlined,
-  ThunderboltOutlined, // 新增图标
+  ThunderboltOutlined,
 } from "@ant-design/icons";
 import styles from "./MainLayout.module.scss";
-import MonitoringModule from "@/modules/MonitoringModule";
-import AlarmLogModule from "@/modules/AlarmLogModule";
-// 2. 引入新的模块组件
-import PredictionLogModule from "@/modules/PredictionLogModule";
-import DataAnalysisModule from "@/modules/DataAnalysisModule";
+// 不再需要直接引入模块组件
 import { useMousePosition } from "@/hooks/useMousePosition";
+import { useAuthStore } from "@/stores";
 
-// 3. 更新导航项数组
+// 2. 更新导航项，加入 to 属性用于导航
 const navItems = [
-  { key: "1", icon: <VideoCameraOutlined />, label: "画面监控" },
-  { key: "2", icon: <WarningOutlined />, label: "报警日志" },
-  { key: "3", icon: <ThunderboltOutlined />, label: "预测日志" }, // 新增
-  { key: "4", icon: <PieChartOutlined />, label: "数据分析" }, // 调整 key
+  { key: "1", to: "/", icon: <VideoCameraOutlined />, label: "画面监控" },
+  { key: "2", to: "/alarm", icon: <WarningOutlined />, label: "报警日志" },
+  { key: "3", to: "/prediction", icon: <ThunderboltOutlined />, label: "预测日志" },
+  { key: "4", to: "/analysis", icon: <PieChartOutlined />, label: "数据分析" },
 ];
 
 interface MainLayoutProps {
-  onLogout: () => void;
+  // onLogout?: () => void;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ onLogout }) => {
-  const [selectedKey, setSelectedKey] = useState("1");
-  const layoutRef = useRef<HTMLDivElement>(null!);
+const MainLayout: React.FC<MainLayoutProps> = () => {
+  const layoutRef = React.useRef<HTMLDivElement>(null!); // useRef 保持
   const mousePosition = useMousePosition(layoutRef);
+  const navigate = useNavigate();
 
   const dropdownItems: MenuProps["items"] = [
-    { key: "1", label: "个人中心", icon: <UserOutlined /> },
-    { key: "2", label: "系统设置", icon: <SettingOutlined /> },
+    {
+      key: "profile",
+      label: "个人中心",
+      icon: <UserOutlined />,
+      onClick: () => navigate("/profile"),
+    },
+    { key: "settings", label: "系统设置", icon: <SettingOutlined /> },
     { type: "divider" },
-    { key: "3", label: "退出登录", icon: <LogoutOutlined />, danger: true, onClick: onLogout },
+    {
+      key: "logout",
+      label: "退出登录",
+      icon: <LogoutOutlined />,
+      danger: true,
+      onClick: useAuthStore((state) => state.logout),
+    },
   ];
-
-  const renderContent = () => {
-    const module = (() => {
-      // 4. 更新 switch 语句以渲染新模块
-      switch (selectedKey) {
-        case "1":
-          return <MonitoringModule />;
-        case "2":
-          return <AlarmLogModule />;
-        case "3":
-          return <PredictionLogModule />; // 新增
-        case "4":
-          return <DataAnalysisModule />; // 新增
-        default:
-          return <div style={{ padding: "2rem", color: "#94a3b8" }}>请选择一个模块</div>;
-      }
-    })();
-
-    return selectedKey ? (
-      <div className={styles.contentPanel} key={selectedKey}>
-        {module}
-      </div>
-    ) : null;
-  };
 
   return (
     <main
@@ -82,14 +67,18 @@ const MainLayout: React.FC<MainLayoutProps> = ({ onLogout }) => {
         <div className={styles.logo}>GEMINI</div>
         <div className={styles.navButtonsContainer}>
           {navItems.map((item) => (
-            <button
+            // 4. 使用 NavLink 组件替代 button
+            <NavLink
               key={item.key}
-              className={`${styles.navButton} ${selectedKey === item.key ? styles.active : ""}`}
-              onClick={() => setSelectedKey(item.key)}
+              to={item.to}
+              // NavLink 会自动在匹配当前 URL 时添加 'active' class
+              // end={true} 确保 '/' 只在精确匹配时才激活
+              end={item.to === "/"}
+              className={({ isActive }) => `${styles.navButton} ${isActive ? styles.active : ""}`}
             >
               <span className={styles.icon}>{item.icon}</span>
               <span className={styles.label}>{item.label}</span>
-            </button>
+            </NavLink>
           ))}
         </div>
       </nav>
@@ -105,7 +94,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ onLogout }) => {
         </Dropdown>
       </header>
 
-      <section className={styles.contentArea}>{renderContent()}</section>
+      <section className={styles.contentArea}>
+        {/* 5. 核心：在这里放置 Outlet，路由匹配的子组件将在这里渲染 */}
+        <Outlet />
+      </section>
     </main>
   );
 };

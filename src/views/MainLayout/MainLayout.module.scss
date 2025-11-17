@@ -199,20 +199,33 @@ $font-tech: "Orbitron", sans-serif;
   display: flex;
   flex-direction: column;
   animation: panel-enter 0.6s ease-out forwards;
+}
 
-  // 内部滚动条美化
-  > div {
-    flex-grow: 1;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: $color-primary;
-      border-radius: 3px;
-    }
+// 为 <a> 标签移除下划线
+
+.navButton {
+  background: transparent;
+  border: 1px solid transparent;
+  color: $text-secondary;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+
+// 内部滚动条美化
+> div {
+  flex-grow: 1;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    border-radius: 3px;
   }
 }

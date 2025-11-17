@@ -31,7 +31,7 @@ $font-tech: "Orbitron", sans-serif;
 // --- 页面主布局 ---
 .authPage {
   display: grid;
-  grid-template-columns: 2fr 3fr;
+  grid-template-columns: 1000fr 618fr;
   height: 100vh;
   width: 100vw;
   background-color: $color-bg-dark;
@@ -43,16 +43,16 @@ $font-tech: "Orbitron", sans-serif;
   }
 }
 
-// --- 左侧表单面板 ---
+// --- 右侧表单面板 ---
 .formPanel {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 15rem;
   background-color: darken($color-bg-panel, 5%);
 }
 
-// --- 右侧视觉展示面板 ---
+// --- 左侧视觉展示面板 ---
 .showcasePanel {
   position: relative;
   display: flex;

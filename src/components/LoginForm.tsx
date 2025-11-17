@@ -2,24 +2,27 @@ import React from "react";
 import { Form, Input, Button } from "antd";
 import { ApiOutlined, MailOutlined, LockOutlined, UserAddOutlined } from "@ant-design/icons";
 import styles from "@/styles/AuthForms/AuthForms.module.scss";
+import { useAuthStore } from "@/stores";
 
 // 1. 更新 props 接口，增加 onLoginSuccess
 interface LoginFormProps {
   onSwitchToRegister: () => void;
-  onLoginSuccess: () => void;
+  // onLoginSuccess: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister, onLoginSuccess }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
   // 2. 在 onFinish 函数中处理登录逻辑
+  const onLoginSuccess = useAuthStore((state) => state.login);
   const onFinish = (values: any) => {
-    console.log("Login Submitted:", values);
-
     // 在这里，您通常会调用 API 与后端进行验证
     // 我们在这里模拟一个成功的登录
 
     // 3. 调用从父组件传来的 onLoginSuccess 函数
     // 这个调用会通知 App.tsx 更新 isLoggedIn 状态，从而触发路由跳转
-    onLoginSuccess();
+    const user = { username: "sdsd", email: "hdgshgd" };
+    onLoginSuccess(user);
+    // useAuthStore((state) => state.login)(user);
+    // console.log(useAuthStore((state) => state.isLoggedIn));
   };
 
   return (
@@ -30,7 +33,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister, onLoginSucces
         <p>请输入您的凭证以继续</p>
       </div>
 
-      <Form name="login" onFinish={onFinish} autoComplete="off">
+      <Form name="login" autoComplete="off">
         <Form.Item
           name="email"
           rules={[
@@ -50,7 +53,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister, onLoginSucces
             type="primary"
             htmlType="submit"
             className={styles.submitButton}
-            onClick={onLoginSuccess}
+            onClick={onFinish}
           >
             授 权 访 问
           </Button>
