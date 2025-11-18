@@ -1,6 +1,6 @@
 import React from "react";
 import { BarChartOutlined } from "@ant-design/icons";
-import styles from "./Modules.module.scss";
+import styles from "@/styles/Modules.module.scss";
 
 const DataAnalysisModule: React.FC = () => {
   return (

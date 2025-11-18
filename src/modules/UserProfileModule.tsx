@@ -10,24 +10,29 @@ import {
   KeyOutlined,
   CameraOutlined,
 } from "@ant-design/icons";
-import commonStyles from "./Modules.module.scss"; // 通用模块样式
-import profileStyles from "./UserProfile.module.scss"; // 新的、独立的样式
+import commonStyles from "@/styles/Modules.module.scss";
 
-// 模拟当前登录的用户数据
-const currentUser = {
-  username: "Admin",
-  email: "admin@gemini-systems.io",
-  phone: "138-0013-8000",
-  // 假设用户还没有头像
-  avatar: "",
-  role: "系统管理员",
-  registrationDate: "2025-01-15",
-};
+import profileStyles from "./UserProfile.module.scss"; // 新的、独立的样式
+import { useAuthStore } from "@/stores";
+
+// // 模拟当前登录的用户数据
+// const currentUser = {
+//   username: "Admin",
+//   email: "admin@gemini-systems.io",
+//   phone: "138-0013-8000",
+//   // 假设用户还没有头像
+//   avatar: "",
+//   role: "系统管理员",
+//   registrationDate: "2025-01-15",
+// };
 
 const UserProfileModule: React.FC = () => {
   const [form] = Form.useForm();
   // 1. 创建 state 来管理头像 URL
-  const [imageUrl, setImageUrl] = useState<string>(currentUser.avatar);
+  // const [imageUrl, setImageUrl] = useState<string>(currentUser.avatar);
+
+  const currentUser = useAuthStore((state) => state.user)!;
+  const updateUser = useAuthStore((state) => state.updateUser);
 
   // 2. 定义上传前的处理逻辑
   const beforeUpload = (file: File) => {
@@ -45,7 +50,8 @@ const UserProfileModule: React.FC = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        setImageUrl(reader.result as string);
+        // setImageUrl(reader.result as string);
+        updateUser({ avatar: reader.result as string });
         message.success("头像已更新，点击保存以生效！");
       };
     }
@@ -62,12 +68,18 @@ const UserProfileModule: React.FC = () => {
 
   const onFinishInfo = (values: any) => {
     // 在实际应用中，这里会把 imageUrl 和表单数据一起提交
-    console.log("更新基本信息:", { ...values, avatar: imageUrl });
+    console.log("更新基本信息:", { ...values });
+    updateUser(values);
     message.success("基本信息更新成功！");
   };
 
   const onFinishPassword = (values: any) => {
-    /* ... 保持不变 ... */
+    console.log("更新基本信息:", { ...values });
+    if (values.currentPassword === currentUser.password) {
+      updateUser({ password: values.newPassword });
+      message.success("基本信息更新成功！");
+    } else {
+    }
   };
 
   return (
@@ -86,7 +98,7 @@ const UserProfileModule: React.FC = () => {
           {/* 左侧：用户信息展示 */}
           <Col xs={24} lg={8}>
             <Card
-              bordered={false}
+              // bordered={false}
               style={{ background: "rgba(29, 16, 63, 0.6)", textAlign: "center" }}
             >
               {/* 4. 将 Avatar 包裹在 Upload 组件中 */}
@@ -95,7 +107,7 @@ const UserProfileModule: React.FC = () => {
                   <Avatar
                     size={128}
                     icon={<UserOutlined />}
-                    src={imageUrl}
+                    src={currentUser?.avatar}
                     className={profileStyles.avatarImage}
                   />
                   <div className={profileStyles.uploadOverlay}>
@@ -105,13 +117,13 @@ const UserProfileModule: React.FC = () => {
               </div>
 
               <h3 style={{ color: "#fff", fontSize: "1.5rem" }}>{currentUser.username}</h3>
-              <p style={{ color: "#8b8a95" }}>{currentUser.role}</p>
+              {/* <p style={{ color: "#8b8a95" }}>{currentUser.role}</p> */}
             </Card>
             <Card
-              bordered={false}
+              // bordered={false}
               title="账户详情"
               style={{ background: "rgba(29, 16, 63, 0.6)", marginTop: 24 }}
-              headStyle={{ borderBottom: "1px solid rgba(0, 221, 255, 0.2)" }}
+              // headStyle={{ borderBottom: "1px solid rgba(0, 221, 255, 0.2)" }}
             >
               <Descriptions column={1}>
                 <Descriptions.Item
@@ -142,10 +154,10 @@ const UserProfileModule: React.FC = () => {
           {/* 右侧：信息修改表单 */}
           <Col xs={24} lg={16}>
             <Card
-              bordered={false}
+              // bordered={false}
               title="修改基本信息"
               style={{ background: "rgba(29, 16, 63, 0.6)" }}
-              headStyle={{ borderBottom: "1px solid rgba(0, 221, 255, 0.2)" }}
+              // headStyle={{ borderBottom: "1px solid rgba(0, 221, 255, 0.2)" }}
             >
               <Form
                 layout="vertical"
@@ -178,16 +190,43 @@ const UserProfileModule: React.FC = () => {
             </Card>
 
             <Card
-              bordered={false}
+              // bordered={false}
               title="修改密码"
               style={{ background: "rgba(29, 16, 63, 0.6)", marginTop: 24 }}
-              headStyle={{ borderBottom: "1px solid rgba(0, 221, 255, 0.2)" }}
+              // headStyle={{ borderBottom: "1px solid rgba(0, 221, 255, 0.2)" }}
             >
               <Form form={form} layout="vertical" onFinish={onFinishPassword}>
-                <Form.Item name="currentPassword" label="当前密码" rules={[{ required: true }]}>
+                <Form.Item
+                  name="currentPassword"
+                  label="旧密码"
+                  rules={[
+                    { required: true },
+                    ({ getFieldValue }) => ({
+                      // 它返回一个对象，这个对象就是一条校验规则
+                      validator(_, value) {
+                        if (value && currentUser.password !== value)
+                          return Promise.reject(new Error("不是旧密码!"));
+                        else return Promise.resolve();
+                      },
+                    }),
+                  ]}
+                >
                   <Input.Password prefix={<KeyOutlined />} />
                 </Form.Item>
-                <Form.Item name="newPassword" label="新密码" rules={[{ required: true }]}>
+                <Form.Item
+                  name="newPassword"
+                  label="新密码"
+                  rules={[
+                    { required: true },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (value && currentUser.password === value) {
+                          return Promise.reject(new Error("新密码不能和旧密码相同!"));
+                        } else return Promise.resolve();
+                      },
+                    }),
+                  ]}
+                >
                   <Input.Password prefix={<KeyOutlined />} />
                 </Form.Item>
                 <Form.Item
@@ -198,10 +237,11 @@ const UserProfileModule: React.FC = () => {
                     { required: true },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
-                        if (!value || getFieldValue("newPassword") === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(new Error("两次输入的密码不匹配!"));
+                        if (value && getFieldValue("newPassword") !== value)
+                          return Promise.reject(new Error("两次输入的密码不匹配!"));
+                        else if (value && currentUser.password === value) {
+                          return Promise.reject(new Error("新密码不能和旧密码相同!"));
+                        } else return Promise.resolve();
                       },
                     }),
                   ]}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Table, Button, Modal, Tag, Image } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import styles from "./Modules.module.scss"; // 复用现有样式
+import styles from "@/styles/Modules.module.scss";
 
 // 定义预测日志的数据结构
 interface PredictionDataType {

@@ -19,10 +19,10 @@ import { useAuthStore } from "@/stores";
 
 // 2. 更新导航项，加入 to 属性用于导航
 const navItems = [
-  { key: "1", to: "/", icon: <VideoCameraOutlined />, label: "画面监控" },
-  { key: "2", to: "/alarm", icon: <WarningOutlined />, label: "报警日志" },
-  { key: "3", to: "/prediction", icon: <ThunderboltOutlined />, label: "预测日志" },
-  { key: "4", to: "/analysis", icon: <PieChartOutlined />, label: "数据分析" },
+  { key: "1", to: "/analysis", icon: <PieChartOutlined />, label: "数据分析" },
+  { key: "2", to: "/", icon: <VideoCameraOutlined />, label: "画面监控" },
+  { key: "3", to: "/alarm", icon: <WarningOutlined />, label: "报警日志" },
+  { key: "4", to: "/prediction", icon: <ThunderboltOutlined />, label: "预测日志" },
 ];
 
 interface MainLayoutProps {

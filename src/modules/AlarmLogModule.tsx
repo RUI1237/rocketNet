@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Table, Button, Modal, Tag, Popconfirm, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import styles from "./Modules.module.scss";
+import styles from "@/styles/Modules.module.scss";
 
 interface DataType {
   key: string;
@@ -102,7 +102,12 @@ const AlarmLogModule: React.FC = () => {
       style={{ height: "100%", display: "flex", flexDirection: "column" }}
     >
       <h2>报警日志模块</h2>
-      <Table columns={columns} dataSource={logs} />
+      <Table
+        columns={columns}
+        dataSource={logs}
+        style={{ height: "100%", padding: "0 50px 0 20px" }}
+        pagination={{ position: ["topRight"] }}
+      />
       <Modal
         title={`日志详情 - ${selectedLog?.id}`}
         open={isModalVisible}

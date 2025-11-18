@@ -3,15 +3,16 @@ import React from "react";
 import { Form, Input, Button, type FormProps } from "antd";
 import { ApiOutlined, UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import styles from "@/styles/AuthForms/AuthForms.module.scss";
+import type { User } from "@/stores";
 
 // 2. 定义表单字段的 TypeScript 类型接口
 // 这为我们的表单数据提供了完整的类型安全
-interface RegistrationFormValues {
-  username: string;
-  email: string;
-  password?: string; // password 和 confirm 在提交时通常不需要再次传递，设为可选
-  confirm?: string;
-}
+// interface RegistrationFormValues {
+//   username: string;
+//   email: string;
+//   password: string; // password 和 confirm 在提交时通常不需要再次传递，设为可选
+//   confirm?: string;
+// }
 
 // 定义组件的 props 接口
 interface RegistrationFormProps {
@@ -22,7 +23,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
   // --- 逻辑分离 ---
   // 3. 将 onFinish 控制逻辑提取到组件函数体中
   //    并使用 antd 提供的 FormProps['onFinish'] 类型来约束它
-  const handleRegistration: FormProps<RegistrationFormValues>["onFinish"] = (values) => {
+  const handleRegistration: FormProps<User>["onFinish"] = (values) => {
     // 这里的 `values` 对象现在是强类型的，
     // 你可以安全地访问 values.username, values.email 等，并获得IDE的智能提示
     console.log("Registration Submitted:", values);
@@ -37,14 +38,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
     // }
   };
 
-  const handleRegistrationFailed: FormProps<RegistrationFormValues>["onFinishFailed"] = (
-    errorInfo
-  ) => {
+  const handleRegistrationFailed: FormProps<User>["onFinishFailed"] = (errorInfo) => {
     console.log("Validation Failed:", errorInfo);
     // 在这里可以处理校验失败的逻辑，例如上报日志
   };
-  // --- 逻辑分离结束 ---
-
   // --- 视图 (JSX) ---
   // 现在的 JSX 非常纯粹，只负责渲染
   return (
@@ -69,17 +66,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
           rules={[{ required: true, message: "请输入您的用户名!", whitespace: true }]}
         >
           <Input prefix={<UserOutlined />} placeholder="请输入用户名" size="large" />
-        </Form.Item>
-
-        <Form.Item
-          label="电子邮箱"
-          name="email"
-          rules={[
-            { required: true, message: "请输入您的电子邮件!" },
-            { type: "email", message: "请输入有效的电子邮件地址!" },
-          ]}
-        >
-          <Input prefix={<MailOutlined />} placeholder="请输入电子邮箱" size="large" />
         </Form.Item>
 
         <Form.Item
@@ -111,6 +97,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
           ]}
         >
           <Input.Password prefix={<LockOutlined />} placeholder="请再次输入密码" size="large" />
+        </Form.Item>
+
+        <Form.Item
+          label="电子邮箱"
+          name="email"
+          rules={[
+            // { required: true, message: "请输入您的电子邮件!" },
+            { type: "email", message: "请输入有效的电子邮件地址!" },
+          ]}
+        >
+          <Input prefix={<MailOutlined />} placeholder="请输入电子邮箱" size="large" />
         </Form.Item>
 
         <Form.Item>

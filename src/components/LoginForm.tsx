@@ -1,28 +1,33 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
-import { ApiOutlined, MailOutlined, LockOutlined, UserAddOutlined } from "@ant-design/icons";
+import {
+  ApiOutlined,
+  UserOutlined, // 引入 UserOutlined 图标
+  LockOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import styles from "@/styles/AuthForms/AuthForms.module.scss";
 import { useAuthStore } from "@/stores";
 
-// 1. 更新 props 接口，增加 onLoginSuccess
+// props 接口保持不变
 interface LoginFormProps {
   onSwitchToRegister: () => void;
-  // onLoginSuccess: () => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
-  // 2. 在 onFinish 函数中处理登录逻辑
   const onLoginSuccess = useAuthStore((state) => state.login);
-  const onFinish = (values: any) => {
-    // 在这里，您通常会调用 API 与后端进行验证
-    // 我们在这里模拟一个成功的登录
 
-    // 3. 调用从父组件传来的 onLoginSuccess 函数
-    // 这个调用会通知 App.tsx 更新 isLoggedIn 状态，从而触发路由跳转
-    const user = { username: "sdsd", email: "hdgshgd" };
-    onLoginSuccess(user);
-    // useAuthStore((state) => state.login)(user);
-    // console.log(useAuthStore((state) => state.isLoggedIn));
+  // 2. onFinish 函数现在会接收到包含所有表单数据的 values 对象
+  const onFinish = (values: any) => {
+    // 'values' 对象包含了表单数据, 例如: { username: "your_username", password: "your_password" }
+    console.log("表单提交的数据: ", values);
+
+    // 在这里，您通常会使用用户名和密码调用 API 进行后端验证
+    // 我们在这里模拟一个成功的登录
+    // const user = { username: values.username, password: values.password /* 其他用户数据 */ };
+
+    // 3. 使用从表单提取的用户数据调用 onLoginSuccess 函数
+    onLoginSuccess(values);
   };
 
   return (
@@ -33,15 +38,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
         <p>请输入您的凭证以继续</p>
       </div>
 
-      <Form name="login" autoComplete="off">
-        <Form.Item
-          name="email"
-          rules={[
-            { required: true, message: "请输入您的电子邮件!" },
-            { type: "email", message: "请输入有效的电子邮件地址!" },
-          ]}
-        >
-          <Input prefix={<MailOutlined />} placeholder="电子邮件" size="large" />
+      {/* 将 onFinish 回调函数添加到 Form 组件上 */}
+      <Form name="login" onFinish={onFinish} autoComplete="off">
+        {/* 从 email 改为 username */}
+        <Form.Item name="username" rules={[{ required: true, message: "请输入您的用户名!" }]}>
+          <Input
+            prefix={<UserOutlined />} // 更改了图标
+            placeholder="用户名"
+            size="large"
+          />
         </Form.Item>
 
         <Form.Item name="password" rules={[{ required: true, message: "请输入您的密码!" }]}>
@@ -49,12 +54,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
         </Form.Item>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className={styles.submitButton}
-            onClick={onFinish}
-          >
+          {/* 移除了 onClick，htmlType="submit" 会自动触发表单的 onFinish 事件 */}
+          <Button type="primary" htmlType="submit" className={styles.submitButton}>
             授 权 访 问
           </Button>
         </Form.Item>

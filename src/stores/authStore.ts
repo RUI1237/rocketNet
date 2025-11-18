@@ -1,12 +1,6 @@
 import { create } from "zustand";
-
+import type { User } from "@/types";
 // 1. 定义用户信息的类型接口
-interface User {
-  username: string;
-  email: string;
-  avatar?: string;
-  role?: string;
-}
 
 // 2. 定义 Store 的 state 和 actions 的类型接口
 interface AuthState {
@@ -18,7 +12,7 @@ interface AuthState {
 }
 
 // 3. 使用 create 函数创建 store
-export const useAuthStore = create<AuthState>((set) => ({
+const useAuthStore = create<AuthState>((set) => ({
   // --- State (状态) ---
   isLoggedIn: false,
   user: null,
@@ -57,3 +51,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     }));
   },
 }));
+
+export { useAuthStore };
+export type { User };
