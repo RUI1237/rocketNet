@@ -1,73 +1,38 @@
+// src/pages/MonitoringModule.tsx (或您的路径)
 import React from "react";
-import { Upload, Button, Image, message, Spin } from "antd";
+import { Upload, Button, Image, Spin } from "antd";
 import { UploadOutlined, ThunderboltOutlined } from "@ant-design/icons";
-import type { UploadFile } from "antd/es/upload/interface";
-import styles from "@/styles/Modules.module.scss"; // 您的科技感样式文件
-import { imageService } from "@/services";
+import styles from "@/styles/Modules.module.scss";
+import { useMonitoringStore } from "@/stores"; // 引入 Store
 
 const MonitoringModule: React.FC = () => {
-  // --- State Management ---
-  const [originalFile, setOriginalFile] = React.useState<File | null>(null);
-  const [originalImageUrl, setOriginalImageUrl] = React.useState<string>("");
-  const [processedImageUrl, setProcessedImageUrl] = React.useState<string>("");
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [fileList, setFileList] = React.useState<UploadFile[]>([]);
+  // --- 使用 Store ---
+  // 使用解构获取状态和方法
+  const {
+    originalFile,
+    originalImageUrl,
+    processedImageUrl,
+    isLoading,
+    fileList,
+    setFile,
+    clearFile,
+    analyzeImage,
+  } = useMonitoringStore();
 
   // --- Handlers ---
-
+  // 即使逻辑在 Store 里，Upload 组件的一些特定回调（如 beforeUpload 返回 false）
+  // 仍然需要在组件层作为“胶水”代码存在。
   const uploadProps = {
     fileList,
-    onRemove: () => {
-      setFileList([]);
-      setOriginalFile(null);
-      setOriginalImageUrl("");
-      setProcessedImageUrl("");
-    },
+    onRemove: clearFile,
     beforeUpload: (file: File) => {
-      const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-      if (!isJpgOrPng) {
-        message.error("您只能上传 JPG/PNG 格式的图片!");
-        return Upload.LIST_IGNORE;
-      }
-
-      setOriginalFile(file);
-      setFileList([file]);
-
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        setOriginalImageUrl(reader.result as string);
-        setProcessedImageUrl("");
-      };
-
+      setFile(file);
+      // 阻止自动上传（Antd 默认行为），因为我们是手动点击分析按钮才上传
       return false;
     },
   };
 
-  const handleAnalyze = async () => {
-    if (!originalFile) {
-      message.warn("请先选择一张图片！");
-      return;
-    }
-
-    setIsLoading(true);
-    setProcessedImageUrl("");
-
-    const formData = new FormData();
-    formData.append("image", originalFile);
-
-    try {
-      const response = await imageService.analyzeImage(formData);
-      setProcessedImageUrl(response.processedUrl);
-      message.success("图片分析完成！");
-    } catch (error) {
-      console.error("图片分析失败:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // --- Render ---
+  // --- Render Helpers ---
 
   const renderPreviewContent = (type: "original" | "processed") => {
     if (type === "original") {
@@ -103,31 +68,25 @@ const MonitoringModule: React.FC = () => {
   };
 
   return (
-    // 1. 让根容器占满父元素的高度
     <div
       className={styles.moduleContainer}
       style={{ height: "100%", display: "flex", flexDirection: "column" }}
     >
       <h2>画面监控与分析</h2>
 
-      {/* 2. 让这个 grid 容器占据所有剩余空间 */}
       <div className={styles.uploadSection} style={{ flex: 1, minHeight: 0 }}>
-        {/* --- 左侧控制区域 --- */}
-        {/* 3. 使用 Flexbox 布局，让内容垂直分布并居中 */}
         <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: "column" }}>
+          {/* 上传控制区 */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              // justifyContent: "center",
-              // alignItems: "center",
               gap: "40px",
               padding: "24px",
             }}
           >
             <div style={{ textAlign: "left" }}>
-              {/* 4. 放大上传组件 */}
-              <Upload {...uploadProps}>
+              <Upload {...uploadProps} maxCount={1}>
                 <Button
                   icon={<UploadOutlined style={{ fontSize: "24px" }} />}
                   size="large"
@@ -142,8 +101,7 @@ const MonitoringModule: React.FC = () => {
             </div>
           </div>
 
-          {/* --- 右侧预览区域 --- */}
-          {/* 6. 让这个嵌套的 grid 占满其父单元格的高度 */}
+          {/* 预览与操作区 */}
           <div
             style={{
               display: "grid",
@@ -152,15 +110,18 @@ const MonitoringModule: React.FC = () => {
               width: "2150px",
             }}
           >
+            {/* 左侧：原图 */}
             <div className={styles.preview} style={{ aspectRatio: "5 / 3", minHeight: "10px" }}>
               {renderPreviewContent("original")}
             </div>
+
+            {/* 中间：操作按钮 */}
             <div style={{ textAlign: "center", height: "200px" }}>
               <Button
                 type="primary"
                 icon={<ThunderboltOutlined style={{ fontSize: "24px" }} />}
                 size="large"
-                onClick={handleAnalyze}
+                onClick={analyzeImage} // 直接绑定 Store 中的方法
                 loading={isLoading}
                 disabled={!originalFile}
                 style={{ padding: "0 50px", height: "70px", fontSize: "22px" }}
@@ -168,7 +129,8 @@ const MonitoringModule: React.FC = () => {
                 开始分析
               </Button>
             </div>
-            {/* 6. 右侧的框：应用您的样式和 3:5 宽高比 */}
+
+            {/* 右侧：结果图 */}
             <div className={styles.preview} style={{ aspectRatio: "5 / 3", minHeight: "10px" }}>
               {renderPreviewContent("processed")}
             </div>

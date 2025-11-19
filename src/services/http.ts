@@ -4,12 +4,13 @@ import axios, { AxiosError } from "axios";
 import { message } from "antd";
 import { useAuthStore } from "@/stores/authStore"; // 假设你的 store 在这个路径
 import type { ApiResponse } from "@/types"; // 假设你有通用的响应类型
+import { BASE_URL, TIME_OUT } from "@/config";
 // 假设你有通用的响应类型
 
 // 创建 Axios 实例
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "/api",
-  timeout: 10000,
+  baseURL: BASE_URL,
+  timeout: TIME_OUT,
 });
 
 // 请求拦截器：为每个请求注入 Token
@@ -32,13 +33,14 @@ apiClient.interceptors.response.use(
     // 假设后端成功时总是返回 { code, message, data } 结构
     // 我们在这里直接返回 `data` 字段，简化组件中的使用
     // 注意：如果你的后端直接返回数据，而不是包裹一层，你可以直接返回 response.data
-    return response.data.data || response.data;
+    // return response.data.data || response.data;
+    return response.data;
   },
   (error: AxiosError<ApiResponse<null>>) => {
     // 全局错误处理
     if (error.response) {
       const status = error.response.status;
-      const errorMessage = error.response.data?.message || "请求失败，请稍后重试";
+      const errorMessage = error.response.data?.msg || "请求失败，请稍后重试";
 
       switch (status) {
         case 401:

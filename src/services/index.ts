@@ -3,6 +3,7 @@
 export * from "./auth.service";
 export * from "./log.service";
 export * from "./image.service";
+export * from "./alarm.service";
 
 // // src/pages/SomePage.tsx (示例)
 

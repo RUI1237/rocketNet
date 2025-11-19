@@ -1,12 +1,13 @@
 import { create } from "zustand";
 import type { User } from "@/types";
+import { authService } from "@/services";
 // 1. 定义用户信息的类型接口
 
 // 2. 定义 Store 的 state 和 actions 的类型接口
 interface AuthState {
   isLoggedIn: boolean;
   user: User | null;
-  login: (userData: User) => Promise<void>; // 登录是一个异步操作
+  login: (userData: User) => Promise<string>; // 登录是一个异步操作
   logout: () => void;
   updateUser: (newUserData: Partial<User>) => void; // 用于更新用户信息
 }
@@ -26,10 +27,11 @@ const useAuthStore = create<AuthState>((set) => ({
   login: async (userData) => {
     // 在这里你可以执行真实的 API 调用
     console.log("正在登录...", userData);
-    await new Promise((resolve) => setTimeout(resolve, 500)); // 模拟网络延迟
-
+    // const res = await authService.login(userData);
     // 登录成功后，使用 set 更新状态
+    // if (!res.code) return res.msg;
     set({ isLoggedIn: true, user: userData });
+    return "success";
   },
 
   /**

@@ -6,7 +6,7 @@ import ProfileView from "@/views/ProfileView/ProfileView";
 
 // 1. 引入所有模块组件
 import MonitoringModule from "@/modules/MonitoringModule";
-import AlarmLogModule from "@/modules/AlarmLogModule";
+import AlarmLogModule from "@/components/AlarmLog";
 import PredictionLogModule from "@/modules/PredictionLogModule";
 import DataAnalysisModule from "@/modules/DataAnalysisModule";
 import { useAuthStore } from "@/stores";
