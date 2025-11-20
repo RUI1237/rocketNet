@@ -11,7 +11,7 @@ export const authService = {
    * 用户登录
    * @param data - 包含用户名和密码
    */
-  login: (data: User): Promise<ApiResponse<User>> => {
+  login: (data: User): Promise<ApiResponse<string>> => {
     return apiClient.get("/user/login", {
       params: data,
     });

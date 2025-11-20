@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styles from "./AuthView.module.scss";
 
 // 确保这里的路径与您的项目结构完全匹配
-import LoginForm from "@/components/LoginForm";
-import RegistrationForm from "@/components/RegistrationForm";
+import LoginForm from "@/modules/AuthModule/LoginForm";
+import RegistrationForm from "@/modules/AuthModule/RegistrationForm";
 
 // 定义视图类型的别名
 type AuthViewMode = "login" | "register";

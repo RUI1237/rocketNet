@@ -1,4 +1,5 @@
 export interface AlarmLogType {
+  id: number;
   logId: string; // 格式化后的日志ID
   alarmTime: string; // 报警时间
   alarmType: string; // 报警类型
@@ -13,7 +14,12 @@ export interface AlarmLogType {
 
 // 这是一个辅助类型，用于前端提交处理请求
 export interface ProcessAlarmPayload {
-  logId: string;
-  notes: string;
-  operator: string; // 当前操作员
+  page: number;
+  pageSize: number;
+  operator?: string; // 当前操作员
+}
+
+export interface SolveAlarm {
+  id: number;
+  notes?: string; // 当前操作员
 }

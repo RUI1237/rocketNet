@@ -12,7 +12,7 @@ import {
 } from "@ant-design/icons";
 import commonStyles from "@/styles/Modules.module.scss";
 
-import profileStyles from "./UserProfile.module.scss"; // 新的、独立的样式
+import profileStyles from "@/styles/UserProfile.module.scss"; // 新的、独立的样式
 import { useAuthStore } from "@/stores";
 
 // // 模拟当前登录的用户数据

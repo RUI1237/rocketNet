@@ -16,10 +16,11 @@ const apiClient = axios.create({
 // 请求拦截器：为每个请求注入 Token
 apiClient.interceptors.request.use(
   (config) => {
-    const token = useAuthStore.getState().user?.username;
+    const token = useAuthStore.getState().user?.token;
     if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = token;
     }
+    console.log(token);
     return config;
   },
   (error) => {
@@ -30,11 +31,17 @@ apiClient.interceptors.request.use(
 // 响应拦截器：统一处理数据和错误
 apiClient.interceptors.response.use(
   (response) => {
-    // 假设后端成功时总是返回 { code, message, data } 结构
-    // 我们在这里直接返回 `data` 字段，简化组件中的使用
-    // 注意：如果你的后端直接返回数据，而不是包裹一层，你可以直接返回 response.data
-    // return response.data.data || response.data;
-    return response.data;
+    const res = response.data;
+
+    // 2. 判断业务状态码 (假设后端约定：code === 200 才是成功，其他都是失败)
+    if (res.code !== 200) {
+      // 3. 关键点：手动返回一个 rejected Promise
+      // 这会强制让代码跳到调用方的 .catch() 中
+      return Promise.reject(new Error(res.msg || "业务出错"));
+    }
+
+    // 业务成功，只返回数据部分
+    return res;
   },
   (error: AxiosError<ApiResponse<null>>) => {
     // 全局错误处理
