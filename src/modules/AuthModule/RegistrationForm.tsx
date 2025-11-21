@@ -12,6 +12,8 @@ interface RegistrationFormProps {
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) => {
   // 2. 【修改】handleRegistration 逻辑
+  const [modal, contextHolder] = Modal.useModal();
+
   const handleRegistration: FormProps<User>["onFinish"] = async (values) => {
     console.log("正在提交:", values);
 
@@ -20,26 +22,33 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
       const res = await logService.register(values);
 
       // 3. 【核心】使用 Modal.success (或 info) 弹出结果
-      console.log("sgdhs");
+      // console.log("sgdhs");
       // onSwitchToLogin();
-      // Modal.success({
-      //   title: "注册状态",
-      //   // 这里判断一下 res 的类型，如果是对象就转字符串，如果是字符串直接显示
-      //   content: res.msg,
-      //   okText: "前往登录", // 修改按钮文字
-      //   // 4. 【交互优化】只有当用户点击了“前往登录”按钮后，才切换页面
-      //   onOk: () => {
-      //     onSwitchToLogin();
-      //   },
-      // });
+      modal.success({
+        className: "theme-modal",
+        title: "注册成功",
+        // 这里判断一下 res 的类型，如果是对象就转字符串，如果是字符串直接显示
+        content: res.msg,
+        centered: true,
+
+        okText: "前往登录", // 修改按钮文字
+        // 4. 【交互优化】只有当用户点击了“前往登录”按钮后，才切换页面
+        onOk: () => {
+          // onSwitchToLogin();
+        },
+      });
 
       return res;
     } catch (error) {
       // 如果请求失败（且拦截器没有完全拦截住），可以在这里弹窗提示
-      // Modal.error({
-      //   title: "注册失败",
-      //   content: "请检查您的网络或稍后重试",
-      // });
+      // console.log("sgdhdsudsdgs");
+      modal.error({
+        className: "theme-modal",
+        centered: true,
+
+        title: "注册失败",
+        content: "请检查您的网络或稍后重试",
+      });
     }
   };
 
@@ -108,6 +117,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
         </Form.Item>
 
         <Form.Item>
+          {contextHolder}
           <Button type="primary" htmlType="submit" className={styles.submitButton} size="large">
             注 册 账 户
           </Button>

@@ -70,4 +70,88 @@ $font-tech: "Orbitron", sans-serif;
       color: $color-primary;
     }
   }
+} // --- 变量定义 (与您原文件保持一致) ---
+
+// --- 适配您主题的定制弹窗 ---
+
+$color-primary: #00ddff; // 赛博蓝
+$font-tech: "Orbitron", sans-serif;
+
+:global {
+  .theme-modal {
+    // 1. 弹窗主体：通透、玻璃感
+    .ant-modal-content {
+      // 背景：调低了不透明度 (0.8 -> 0.6)，让背景透出来
+      background-color: rgba(9, 15, 25, 0.75);
+
+      // 磨砂效果：模糊背后的元素
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      // 边框：极细的青色线，增加精致感
+      border: 1px solid rgba($color-primary, 0.3);
+
+      // 阴影：青色微光
+      box-shadow: 0 0 40px rgba(0, 221, 255, 0.15);
+
+      border-radius: 8px;
+      padding: 32px 40px;
+    }
+
+    // 2. 标题文字
+    .ant-modal-confirm-title {
+      color: #fff !important;
+      font-family: $font-tech;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      // text-shadow: 0 0 10px rgba($color-primary, 0.5); // 标题微发光
+    }
+
+    // 3. 内容文字
+    .ant-modal-confirm-content {
+      color: rgba(255, 255, 255, 0.85) !important;
+      font-size: 15px;
+    }
+
+    // 4. 左侧图标
+    .ant-modal-confirm-body .anticon {
+      color: $color-primary !important;
+      font-size: 32px;
+      margin-right: 20px;
+      // filter: drop-shadow(0 0 8px $color-primary); // 图标发光
+    }
+
+    // 5. 【核心修改】按钮样式：中空、透明、科技感
+    .ant-modal-confirm-btns {
+      margin-top: 32px;
+
+      .ant-btn {
+        height: 36px;
+        padding: 0 24px;
+        font-family: $font-tech; // 按钮文字也用科技字体
+        font-size: 13px;
+        letter-spacing: 1px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+
+        // 针对“确定”按钮 (Primary)
+        &.ant-btn-primary {
+          // 【改动点】背景透明，只有边框
+          background-color: transparent;
+          border: 1px solid $color-primary;
+          color: $color-primary; // 文字是青色
+          box-shadow: 0 0 10px rgba($color-primary, 0.2); // 微微发光
+
+          // 鼠标悬停效果
+          &:hover {
+            background-color: rgba($color-primary, 0.15); // 悬停时填充淡淡的青色
+            box-shadow: 0 0 20px rgba($color-primary, 0.4); // 光晕变强
+            text-shadow: 0 0 5px $color-primary;
+            transform: translateY(-1px);
+          }
+        }
+      }
+    }
+  }
 }

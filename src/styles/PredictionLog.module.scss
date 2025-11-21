@@ -1,0 +1,204 @@
+// src/styles/PredictionLog.module.scss
+
+// 变量定义 (可根据你的主题调整)
+$bg-dark: #0b1118;
+$bg-panel: #141a23;
+$border-color: rgba(255, 255, 255, 0.1);
+$text-primary: #e0e0e0;
+$text-secondary: #8b8a95;
+$color-accent: #00ddff;
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background-color: $bg-dark;
+  color: $text-primary;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+
+  .pageTitle {
+    margin: 0;
+    font-family: "Orbitron", sans-serif;
+    color: #fff;
+    font-size: 20px;
+  }
+}
+
+.tableContainer {
+  flex: 1;
+  min-height: 0;
+  border-radius: 8px;
+  background-color: $bg-panel;
+  padding: 16px;
+
+  // 简单的暗黑表格适配
+  :global {
+    .ant-table {
+      background: transparent;
+      color: $text-primary;
+    }
+    .ant-table-thead > tr > th {
+      background: rgba(255, 255, 255, 0.05);
+      color: $text-primary;
+      border-bottom: 1px solid $border-color;
+    }
+    .ant-table-tbody > tr > td {
+      border-bottom: 1px solid $border-color;
+      &:hover {
+        background: rgba(0, 221, 255, 0.05);
+      }
+    }
+    .ant-pagination {
+      color: $text-primary;
+      .ant-pagination-item a {
+        color: $text-primary;
+      }
+      .ant-pagination-item-active {
+        background: transparent;
+        border-color: $color-accent;
+        a {
+          color: $color-accent;
+        }
+      }
+    }
+  }
+}
+
+// --- Modal Styles ---
+
+.modalTitle {
+  font-family: "Orbitron", sans-serif;
+  color: $color-accent;
+}
+
+.loadingWrapper {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  padding-top: 10px;
+
+  .descTable {
+    :global {
+      .ant-descriptions-item-label {
+        background: rgba(255, 255, 255, 0.02);
+        color: $text-secondary;
+      }
+      .ant-descriptions-item-content {
+        color: $text-primary;
+      }
+    }
+  }
+}
+
+.eventsHeader {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: $color-accent;
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 8px;
+  font-family: "Orbitron", sans-serif;
+
+  span {
+    margin-right: 8px;
+  }
+}
+
+.eventsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 5px;
+
+  .emptyState {
+    grid-column: 1 / -1;
+    padding: 40px 0;
+  }
+}
+
+.eventCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba($color-accent, 0.4);
+  }
+
+  :global {
+    .ant-card-body {
+      padding: 12px;
+    }
+  }
+}
+
+.imageWrapper {
+  width: 100%;
+  background: #000;
+}
+
+.cardContent {
+  font-size: 12px;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .label {
+    color: $text-secondary;
+  }
+
+  .value {
+    color: $text-primary;
+  }
+
+  .highlightValue {
+    color: $color-accent;
+    font-weight: bold;
+    font-size: 14px;
+  }
+}
+
+// 针对 Modal 本身的暗黑适配
+:global {
+  .ant-modal-content {
+    background-color: #1f1f2e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .ant-modal-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .ant-modal-title {
+    color: #fff;
+  }
+  .ant-modal-close {
+    color: rgba(255, 255, 255, 0.6);
+    &:hover {
+      color: #fff;
+    }
+  }
+}

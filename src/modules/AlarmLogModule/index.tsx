@@ -31,7 +31,7 @@ const AlarmLogModule: React.FC = () => {
   // ----------------------------------------------------------------
   // 2. 本地 UI 状态
   // ----------------------------------------------------------------
-  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
+  const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
 
   // 分页参数状态
   const [tableParams, setTableParams] = useState<ProcessAlarmPayload>({
@@ -47,8 +47,6 @@ const AlarmLogModule: React.FC = () => {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   // ----------------------------------------------------------------
-  // 3. 生命周期 & 事件处理
-  // ----------------------------------------------------------------
 
   // 初始化加载：组件挂载时请求第一页数据
   useEffect(() => {
@@ -56,7 +54,7 @@ const AlarmLogModule: React.FC = () => {
   }, []);
 
   // 核心：处理表格翻页
-  const handleTableChange = (pagination: TablePaginationConfig) => {
+  const handleTableChange = async (pagination: TablePaginationConfig) => {
     const newPage = pagination.current || 1;
     const newPageSize = pagination.pageSize || 10;
 
@@ -68,26 +66,32 @@ const AlarmLogModule: React.FC = () => {
 
     // 2. 向后端请求对应页码的数据
     // 注意：后端需要返回该页的 list 以及 最新的 total
-    fetchLogs({
+    await fetchLogs({
       page: newPage,
       pageSize: newPageSize,
     });
   };
 
   // 手动刷新
-  const handleRefresh = () => {
-    fetchLogs(tableParams);
+  const handleRefresh = async () => {
+    await fetchLogs(tableParams);
   };
 
   // 处理展开/收起 (手风琴模式：一次只展开一行)
-  const toggleExpand = (id: number) => {
+  const toggleExpand = async (id: number) => {
+    // console.log("1", id);
+
     if (expandedRowKeys.includes(id)) {
       // 如果已展开，则收起
+      // console.log(expandedRowKeys);
       setExpandedRowKeys([]);
     } else {
       // 如果未展开，先触发业务埋点/懒加载，再展开
-      moreAlarm(id);
+      await moreAlarm(id);
+      // console.log("1", expandedRowKeys);
+
       setExpandedRowKeys([id]);
+      // console.log("2", expandedRowKeys);
     }
   };
 
@@ -103,18 +107,23 @@ const AlarmLogModule: React.FC = () => {
       await processAlarm(processingId, notes);
       setProcessModalVisible(false);
       setProcessingId(-1);
+      console.log("sshgdhs");
+      await handleRefresh();
     }
+    // handleRefresh();
   };
 
   // 查看图片 (由子组件调用)
-  const handleViewImage = (url: string) => {
-    // 这里处理一下本地路径问题，实际项目中后端应返回 http 地址
-    // 这里只是为了演示，如果 url 包含 E:/ 则使用 fallback 图片
-    const finalUrl = url;
-    setPreviewImage(finalUrl);
-    setPreviewVisible(true);
-  };
 
+  // ------------------------------------------------------------
+  // 2. 新增：点击查看图片的处理函数
+  //    (这个函数需要传给 AlarmDetail 或者直接在 Table 里调用)
+  // ------------------------------------------------------------
+  const onViewImage = (url: string) => {
+    if (!url) return; // 防止空 URL 报错
+    setPreviewImage(url); // 设置当前要看的图片
+    setPreviewVisible(true); // 打开预览弹窗
+  };
   // ----------------------------------------------------------------
   // 4. 表格列定义
   // ----------------------------------------------------------------
@@ -151,9 +160,11 @@ const AlarmLogModule: React.FC = () => {
       render: (_, record) => {
         // 判断当前行是否展开 (使用 id 进行比对)
         const isExpanded = expandedRowKeys.includes(record.id);
+        // console.log(isExpanded, record.id, expandedRowKeys);
+
         return (
           <span>
-            <Button type="link" onClick={() => toggleExpand(record.id)}>
+            <Button type="link" onClick={async () => await toggleExpand(record.id)}>
               {isExpanded ? (
                 <span>
                   收起 <UpOutlined />
@@ -232,11 +243,11 @@ const AlarmLogModule: React.FC = () => {
           // 展开配置
           expandable={{
             expandedRowKeys: expandedRowKeys,
-            onExpand: (expanded, record) => toggleExpand(record.id),
+            onExpand: async (expanded, record) => await toggleExpand(record.id),
             expandIconColumnIndex: -1, // 隐藏默认的 + 号图标，我们自定义了按钮
             expandedRowRender: (record) => (
               // 传递 record 给详情组件
-              <AlarmDetail record={record} onViewImage={() => {}} />
+              <AlarmDetail {...{ record, onViewImage }} />
             ),
           }}
           // 空状态自定义 (自适应高度)
@@ -267,15 +278,18 @@ const AlarmLogModule: React.FC = () => {
       />
 
       <Image
-        width={0}
-        height={0}
+        width={200} // 宽高随意，因为 display: none 隐藏了
+        style={{ display: "none" }} // 【关键】隐藏 DOM 元素，只留预览功能
+        // 【关键错误修复】这里必须是字符串 URL，不能是 logs 数组
+        // 当 previewImage 为空时，给一个空字符串即可
         src={previewImage}
-        style={{ display: "none" }} // 隐藏实际 DOM
         preview={{
           visible: previewVisible,
-          src: previewImage,
+          src: previewImage, // 确保预览图也是这张
           onVisibleChange: (value) => {
             setPreviewVisible(value);
+            // 关闭时可选：清空 URL
+            if (!value) setPreviewImage("");
           },
         }}
       />

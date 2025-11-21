@@ -1,5 +1,5 @@
 // src/pages/MonitoringModule.tsx
-import React from "react";
+import React, { useEffect } from "react";
 import { Upload, Button, Image, Spin } from "antd";
 import { UploadOutlined, ThunderboltOutlined } from "@ant-design/icons";
 import styles from "@/styles/Modules.module.scss";
@@ -61,7 +61,18 @@ const MonitoringModule: React.FC = () => {
       );
     }
   };
-
+  useEffect(() => {
+    // 这个 useEffect 不需要执行体，只需要清除函数
+    return () => {
+      // 这里的逻辑会在两种情况下执行：
+      // 1. previewImage 发生变化前（比如你切到了下一张图，它会把上一张的 URL 销毁）
+      // 2. 组件卸载时（比如你跳到了别的页面）
+      if (processedImageUrl && processedImageUrl.startsWith("blob:")) {
+        console.log("正在释放内存:", processedImageUrl);
+        window.URL.revokeObjectURL(processedImageUrl);
+      }
+    };
+  }, [processedImageUrl]);
   return (
     <div
       className={styles.moduleContainer}

@@ -53,6 +53,9 @@ export const useMonitoringStore = create<MonitoringState>((set, get) => ({
 
   // 清除/重置逻辑
   clearFile: () => {
+    const { processedImageUrl } = get();
+    window.URL.revokeObjectURL(processedImageUrl);
+
     set({
       originalFile: null,
       originalImageUrl: "",
@@ -76,8 +79,9 @@ export const useMonitoringStore = create<MonitoringState>((set, get) => ({
     formData.append("image", originalFile);
 
     try {
-      const response = await imageService.analyzeImage(formData);
-      set({ processedImageUrl: response.data.url });
+      const res = await imageService.analyzeImage(formData);
+      const blobUrl = window.URL.createObjectURL(res.data);
+      set({ processedImageUrl: blobUrl });
       message.success("图片分析完成！");
     } catch (error) {
       console.error("图片分析失败:", error);
