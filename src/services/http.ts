@@ -34,11 +34,11 @@ apiClient.interceptors.response.use(
     const res = response.data;
 
     // 2. 判断业务状态码 (假设后端约定：code === 200 才是成功，其他都是失败)
-    if (res.code !== 200) {
-      // 3. 关键点：手动返回一个 rejected Promise
-      // 这会强制让代码跳到调用方的 .catch() 中
-      return Promise.reject(new Error(res.msg || "业务出错"));
-    }
+    // if (res.code !== 200) {
+    //   // 3. 关键点：手动返回一个 rejected Promise
+    //   // 这会强制让代码跳到调用方的 .catch() 中
+    //   return Promise.reject(new Error(res.msg || "业务出错"));
+    // }
 
     // 业务成功，只返回数据部分
     return res;

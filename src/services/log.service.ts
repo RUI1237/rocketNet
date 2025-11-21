@@ -12,7 +12,7 @@ export const logService = {
    * @param params - 查询参数
    */
   register: (params: User): Promise<ApiResponse<User>> => {
-    return apiClient.post("user/register", { params });
+    return apiClient.post("/user/register", params);
   },
 
   /**

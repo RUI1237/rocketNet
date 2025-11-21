@@ -27,11 +27,11 @@ const useAuthStore = create<AuthState>((set) => ({
   login: async (userData) => {
     // 在这里你可以执行真实的 API 调用
     console.log("正在登录...", userData);
-    const res = await authService.login(userData);
-    // 登录成功后，使用 set 更新状态
-    if (!res.code) return res.msg;
-    set({ isLoggedIn: true, user: { ...userData, token: res.data } });
-    // set({ isLoggedIn: true, user: userData });
+    // const res = await authService.login(userData);
+    // console.log(res);
+    // if (!res.code) return res.msg;
+    // set({ isLoggedIn: true, user: { ...userData, token: res.data } });
+    set({ isLoggedIn: true, user: userData });
 
     return "success";
   },

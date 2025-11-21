@@ -22,7 +22,7 @@ const AuthView: React.FC = () => {
       <div className={styles.showcasePanel}>
         <div className={styles.showcaseContent}>
           <div className={styles.logo}>
-            <h1>GEMINI</h1>
+            <h1>RockNet</h1>
             <p>ARTIFICIAL INTELLIGENCE</p>
           </div>
           <div className={styles.techQuote}>

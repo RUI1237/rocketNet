@@ -38,7 +38,6 @@ interface AlarmDataType {
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const alarmService = {
-  // GET /api/alarms
   fetchLogs: async (data: ProcessAlarmPayload): Promise<ApiResponse<AlarmDataType>> => {
     return apiClient.get("/alarms/page", {
       params: data,

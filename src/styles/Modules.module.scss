@@ -40,9 +40,7 @@ $font-tech: "Orbitron", sans-serif;
 
 // 监控模块的特殊样式
 .uploadSection {
-  display: grid;
-  grid-template-columns: 618fr 1000fr;
-  gap: 24px;
+
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -53,7 +51,6 @@ $font-tech: "Orbitron", sans-serif;
     padding: 8px;
     border-radius: 8px;
     width: 100%;
-    min-height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
