@@ -1,12 +1,15 @@
 *
-!/src/**
+!src/
+!src/**
 !/public/**
+!/public/
 
 !package.json
 !package-lock.json
 !vite.config.ts
 !tsconfig.json
 !tsconfig.node.json
+!tsconfig.app.json
 !index.html
 !.gitignore
 !README.md
