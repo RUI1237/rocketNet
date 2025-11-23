@@ -9,9 +9,9 @@ import RegistrationForm from "@/modules/AuthModule/RegistrationForm";
 type AuthViewMode = "login" | "register";
 
 // 1. 定义 props 接口，用于接收从 App.tsx 传来的登录成功回调函数
-interface AuthViewProps {
-  // onLoginSuccess: () => void;
-}
+// interface AuthViewProps {
+//   // onLoginSuccess: () => void;
+// }
 
 const AuthView: React.FC = () => {
   const [viewMode, setViewMode] = useState<AuthViewMode>("login");
