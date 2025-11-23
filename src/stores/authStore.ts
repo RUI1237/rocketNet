@@ -25,7 +25,6 @@ const useAuthStore = create<AuthState>((set) => ({
    * @param userData - 登录成功后从API获取的用户数据
    */
   login: async (userData) => {
-    // 在这里你可以执行真实的 API 调用
     console.log("正在登录...", userData);
     const res = await authService.login(userData);
     console.log(res);

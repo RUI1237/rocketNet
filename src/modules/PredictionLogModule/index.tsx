@@ -232,8 +232,8 @@ const PredictionLogModule: React.FC = () => {
             current: tableParams.page,
             pageSize: tableParams.pageSize,
             total: total,
-            showTotal: (total) => `共 ${total} 条记录`,
-            showSizeChanger: true,
+            // showTotal: (total) => `共 ${total} 条记录`,
+            // showSizeChanger: true,
             position: ["topRight"],
           }}
           scroll={{ y: "calc(100vh - 280px)" }}

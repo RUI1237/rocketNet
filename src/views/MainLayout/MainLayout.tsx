@@ -64,7 +64,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
       }
     >
       <nav className={styles.mainNav}>
-        <div className={styles.logo}>GEMINI</div>
+        <div className={styles.logo}>RockNet</div>
         <div className={styles.navButtonsContainer}>
           {navItems.map((item) => (
             // 4. 使用 NavLink 组件替代 button
