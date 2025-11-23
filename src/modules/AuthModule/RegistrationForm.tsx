@@ -4,7 +4,7 @@ import { Form, Input, Button, type FormProps, Modal } from "antd";
 import { ApiOutlined, UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import styles from "@/styles/AuthForms.module.scss";
 import type { User } from "@/stores";
-import { logService } from "@/services";
+import { authService } from "@/services";
 
 interface RegistrationFormProps {
   onSwitchToLogin: () => void;
@@ -19,33 +19,25 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
 
     try {
       // 调用接口获取结果
-      const res = await logService.register(values);
+      const res = await authService.register(values);
 
-      // 3. 【核心】使用 Modal.success (或 info) 弹出结果
-      // console.log("sgdhs");
-      // onSwitchToLogin();
       modal.success({
         className: "theme-modal",
         title: "注册成功",
-        // 这里判断一下 res 的类型，如果是对象就转字符串，如果是字符串直接显示
         content: res.msg,
         centered: true,
 
-        okText: "前往登录", // 修改按钮文字
-        // 4. 【交互优化】只有当用户点击了“前往登录”按钮后，才切换页面
+        okText: "前往登录",
         onOk: () => {
-          // onSwitchToLogin();
+          onSwitchToLogin();
         },
       });
 
       return res;
     } catch (error) {
-      // 如果请求失败（且拦截器没有完全拦截住），可以在这里弹窗提示
-      // console.log("sgdhdsudsdgs");
       modal.error({
         className: "theme-modal",
         centered: true,
-
         title: "注册失败",
         content: "请检查您的网络或稍后重试",
       });

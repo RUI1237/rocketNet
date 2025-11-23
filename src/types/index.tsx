@@ -6,3 +6,5 @@ export interface ApiResponse<T> {
 
 export * from "./auth.types";
 export * from "./alarm.types";
+export * from "./prediction.types";
+export * from "./log.types";

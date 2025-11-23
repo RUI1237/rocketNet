@@ -39,7 +39,8 @@ const AuthenticatedRoutes: React.FC = () => {
       children: [
         {
           // index: true 表示当访问父路由 '/' 时，默认渲染这个组件
-          index: true,
+          // index: true,
+          path: "monitoring",
           element: <MonitoringModule />,
         },
         {
@@ -51,6 +52,7 @@ const AuthenticatedRoutes: React.FC = () => {
           element: <PredictionLogModule />,
         },
         {
+          index: true,
           path: "analysis", // 路径是 /analysis
           element: <DataAnalysisModule />,
         },

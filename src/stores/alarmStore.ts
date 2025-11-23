@@ -1,47 +1,29 @@
 import { create } from "zustand";
 import { message } from "antd";
-import type { AlarmLogType, ProcessAlarmPayload } from "@/types";
-import { alarmService } from "@/services";
+import type { AlarmLogType, QuaryLogs } from "@/types";
+import { logsService } from "@/services";
 import { useAuthStore } from "./authStore";
-// import { useEffect } from "react";
 
 interface AlarmStore {
   logs: AlarmLogType[];
   isLoading: boolean;
   total: number;
 
-  // Actions
-  // load: () => Promise<void>;
-  fetchLogs: (data: ProcessAlarmPayload) => Promise<void>;
-  // processAlarm 现在接收 logId 和 备注
+  fetchLogs: (data: QuaryLogs) => Promise<void>;
   processAlarm: (id: number, notes: string) => Promise<void>;
-  moreAlarm: (id: number) => Promise<void>;
+  fetchLogDetail: (id: number) => Promise<void>;
 }
-// const user = useAuthStore((state) => state.user);
 
-export const useAlarmStore = create<AlarmStore>((set, get) => ({
+export const useAlarmStore = create<AlarmStore>((set) => ({
   logs: [],
   isLoading: false,
   total: 1,
 
-  // load: async () => {
-  //   set({ isLoading: true });
-  //   try {
-  //     // const res = await alarmService.fetchLogs({ page: 1, pageSize: 10 });
-  //     // set({ logs: res.data.records, total: res.data.total });
-  //     set({ logs: mockAlarmLogs, total: 4 });
-  //   } catch (error) {
-  //     message.error("获取报警日志失败");
-  //   } finally {
-  //     set({ isLoading: false });
-  //   }
-  // },
-
-  fetchLogs: async (data: ProcessAlarmPayload) => {
+  fetchLogs: async (data: QuaryLogs) => {
     set({ isLoading: true });
     try {
       // set({ logs: mockAlarmLogs, total: 20 });
-      const res = await alarmService.fetchLogs(data);
+      const res = await logsService.fetchLogs<AlarmLogType>(data, "/alarms/page");
       set({ logs: res.data.records, total: res.data.total });
     } catch (error) {
       message.error("获取报警日志失败");
@@ -50,11 +32,11 @@ export const useAlarmStore = create<AlarmStore>((set, get) => ({
     }
   },
 
-  moreAlarm: async (id: number) => {
+  fetchLogDetail: async (id: number) => {
     // const user = useAuthStore((state) => state.user);
     // 模拟当前登录用户
     try {
-      const res = await alarmService.moreAlarm({ id });
+      const res = await logsService.fetchLogDetail<AlarmLogType>(id, `/alarms/${id}`);
 
       // 乐观更新本地状态
       set((state) => ({
@@ -70,7 +52,7 @@ export const useAlarmStore = create<AlarmStore>((set, get) => ({
     // 模拟当前登录用户
     const username = useAuthStore.getState().user?.username;
     try {
-      await alarmService.processLog({ id, notes });
+      await logsService.processLog({ id, notes }, `/alarms/${id}/process`);
 
       // 乐观更新本地状态
       set((state) => ({

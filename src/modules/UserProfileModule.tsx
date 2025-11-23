@@ -15,17 +15,6 @@ import commonStyles from "@/styles/Modules.module.scss";
 import profileStyles from "@/styles/UserProfile.module.scss"; // 新的、独立的样式
 import { useAuthStore } from "@/stores";
 
-// // 模拟当前登录的用户数据
-// const currentUser = {
-//   username: "Admin",
-//   email: "admin@gemini-systems.io",
-//   phone: "138-0013-8000",
-//   // 假设用户还没有头像
-//   avatar: "",
-//   role: "系统管理员",
-//   registrationDate: "2025-01-15",
-// };
-
 const UserProfileModule: React.FC = () => {
   const [form] = Form.useForm();
   // 1. 创建 state 来管理头像 URL

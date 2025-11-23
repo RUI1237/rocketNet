@@ -1,15 +1,6 @@
 import type { ApiResponse } from "@/types";
 import apiClient from "./http";
 
-// 假设后端返回的数据结构
-interface ImageData {
-  url: string;
-}
-
-/**
- * 封装图片处理相关的 API 调用
- */
-
 export const imageService = {
   /**
    * 上传图片进行分析

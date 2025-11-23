@@ -11,15 +11,3 @@ export interface AlarmLogType {
   acknowledgedTime?: string; // 处理时间
   notes?: string; // 处理备注
 }
-
-// 这是一个辅助类型，用于前端提交处理请求
-export interface ProcessAlarmPayload {
-  page: number;
-  pageSize: number;
-  operator?: string; // 当前操作员
-}
-
-export interface SolveAlarm {
-  id: number;
-  notes?: string; // 当前操作员
-}

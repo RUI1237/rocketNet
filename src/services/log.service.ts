@@ -1,25 +1,29 @@
-// src/services/log.service.ts
-
+// import dayjs from "dayjs"; // 建议安装 dayjs 处理时间: npm install dayjs
 import apiClient from "./http";
-import type { ApiResponse, User } from "@/types";
+import type { ApiResponse, ProcessPayload, QuaryLogs } from "@/types";
 
-/**
- * 封装日志相关的 API 调用
- */
-export const logService = {
-  /**
-   * 获取日志列表
-   * @param params - 查询参数
-   */
-  register: (params: User): Promise<ApiResponse<User>> => {
-    return apiClient.post("/user/register", params);
+interface DataType<LogType> {
+  total: number;
+  records: LogType[];
+}
+
+export const logsService = {
+  fetchLogs: async <LogType>(
+    data: QuaryLogs,
+    url: string
+  ): Promise<ApiResponse<DataType<LogType>>> => {
+    return apiClient.get(url, {
+      params: data,
+    });
   },
 
-  /**
-   * 根据 ID 获取单条日志详情 (示例)
-   * @param id - 日志 ID
-   */
-  // getLogById: (id: number): Promise<Log> => {
-  //   return apiClient.get(`/logs/${id}`);
-  // },
+  fetchLogDetail: async <LogType>(id: number, url: string): Promise<ApiResponse<LogType>> => {
+    return apiClient.get(url, {
+      params: id,
+    });
+  },
+
+  processLog: async (payload: ProcessPayload, url: string): Promise<ApiResponse<boolean>> => {
+    return apiClient.post(url, payload);
+  },
 };

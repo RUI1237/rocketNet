@@ -2,7 +2,7 @@ import React from "react";
 import { Descriptions, Button } from "antd";
 import { FileImageOutlined } from "@ant-design/icons";
 import type { AlarmLogType } from "@/types";
-import styles from "@/styles/AlarmLog.module.scss";
+import styles from "@/styles/Log.module.scss";
 
 interface AlarmDetailProps {
   record: AlarmLogType;

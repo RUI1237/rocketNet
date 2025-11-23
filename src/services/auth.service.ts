@@ -16,4 +16,7 @@ export const authService = {
       params: data,
     });
   },
+  register: (data: any): Promise<ApiResponse<string>> => {
+    return apiClient.post("/user/register", data);
+  },
 };

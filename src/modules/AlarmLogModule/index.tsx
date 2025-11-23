@@ -5,10 +5,10 @@ import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 
 // 引入您的 Store 和类型
 import { useAlarmStore } from "@/stores";
-import type { AlarmLogType, ProcessAlarmPayload } from "@/types";
+import type { AlarmLogType, QuaryLogs } from "@/types";
 
 // 引入样式
-import styles from "@/styles/AlarmLog.module.scss";
+import styles from "@/styles/Log.module.scss";
 
 // 引入子组件 (假设您已经有了)
 import AlarmDetail from "./AlarmDetail";
@@ -25,7 +25,7 @@ const AlarmLogModule: React.FC = () => {
     isLoading,
     fetchLogs,
     processAlarm,
-    moreAlarm,
+    fetchLogDetail,
   } = useAlarmStore();
 
   // ----------------------------------------------------------------
@@ -34,7 +34,7 @@ const AlarmLogModule: React.FC = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
 
   // 分页参数状态
-  const [tableParams, setTableParams] = useState<ProcessAlarmPayload>({
+  const [tableParams, setTableParams] = useState<QuaryLogs>({
     page: 1,
     pageSize: 10,
   });
@@ -87,7 +87,7 @@ const AlarmLogModule: React.FC = () => {
       setExpandedRowKeys([]);
     } else {
       // 如果未展开，先触发业务埋点/懒加载，再展开
-      await moreAlarm(id);
+      await fetchLogDetail(id);
       // console.log("1", expandedRowKeys);
 
       setExpandedRowKeys([id]);
@@ -243,7 +243,7 @@ const AlarmLogModule: React.FC = () => {
           // 展开配置
           expandable={{
             expandedRowKeys: expandedRowKeys,
-            onExpand: async (expanded, record) => await toggleExpand(record.id),
+            onExpand: async (_, record) => await toggleExpand(record.id),
             expandIconColumnIndex: -1, // 隐藏默认的 + 号图标，我们自定义了按钮
             expandedRowRender: (record) => (
               // 传递 record 给详情组件

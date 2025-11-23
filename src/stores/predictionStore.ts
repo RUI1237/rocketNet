@@ -1,63 +1,76 @@
-// src/stores/predictionStore.ts
 import { create } from "zustand";
-import { predictionService } from "@/services/prediction.service";
-import type { PredictionTask, PredictionQueryParams } from "@/types/prediction.types";
+import { message } from "antd";
+import type { PredictionLogType, QuaryLogs } from "@/types";
+import { logsService } from "@/services";
 
-interface PredictionState {
-  // --- State ---
-  list: PredictionTask[]; // 列表数据
-  total: number; // 总条数
-  isLoading: boolean; // 列表加载状态
+interface PredictionStore {
+  logs: PredictionLogType[];
+  isLoading: boolean;
+  total: number;
 
-  currentDetail: PredictionTask | null; // 当前选中的详情（包含图片列表）
-  isDetailLoading: boolean; // 详情加载状态
-
-  // --- Actions ---
-  fetchList: (params: PredictionQueryParams) => Promise<void>;
-  fetchDetail: (taskId: string) => Promise<void>;
-  clearDetail: () => void;
+  fetchLogs: (data: QuaryLogs) => Promise<void>;
+  // processPrediction: (id: number, notes: string) => Promise<void>;
+  fetchLogDetail: (id: number) => Promise<void>;
 }
 
-export const usePredictionStore = create<PredictionState>((set) => ({
-  list: [],
-  total: 0,
+export const usePredictionStore = create<PredictionStore>((set) => ({
+  logs: [],
   isLoading: false,
-  currentDetail: null,
-  isDetailLoading: false,
+  total: 1,
 
-  // 获取列表
-  fetchList: async (params) => {
+  fetchLogs: async (data: QuaryLogs) => {
     set({ isLoading: true });
     try {
-      const res = await predictionService.getTaskList(params);
-      if (res.code === 200) {
-        set({
-          list: res.data.list || [],
-          total: res.data.total || 0,
-        });
-      }
+      // set({ logs: mockPredictionLogs, total: 20 });
+      const res = await logsService.fetchLogs<PredictionLogType>(data, "/predictions/page");
+      set({ logs: res.data.records, total: res.data.total });
     } catch (error) {
-      console.error("Failed to fetch prediction list:", error);
+      message.error("获取报警日志失败");
     } finally {
       set({ isLoading: false });
     }
   },
 
-  // 获取详情
-  fetchDetail: async (taskId) => {
-    set({ isDetailLoading: true, currentDetail: null }); // 先置空，防止显示上一次的数据
+  fetchLogDetail: async (id: number) => {
+    // const user = useAuthStore((state) => state.user);
+    // 模拟当前登录用户
     try {
-      const res = await predictionService.getTaskDetail(taskId);
-      if (res.code === 200) {
-        set({ currentDetail: res.data });
-      }
+      const res = await logsService.fetchLogDetail<PredictionLogType>(id, `/predictions/${id}`);
+
+      // 乐观更新本地状态
+      set((state) => ({
+        logs: state.logs.map((log) => (log.id === id ? { ...log, ...res.data } : log)),
+      }));
+
+      message.success(`日志 ${id} 获取成功!`);
     } catch (error) {
-      console.error("Failed to fetch detail:", error);
-    } finally {
-      set({ isDetailLoading: false });
+      message.error("处理失败，请稍后重试");
     }
   },
+  // processPrediction: async (id: number, notes: string) => {
+  //   // 模拟当前登录用户
+  //   const username = useAuthStore.getState().user?.username;
+  //   try {
+  //     await logsService.processLog({ id, notes }, `/alarms/${id}/process`);
 
-  // 关闭弹窗时清理详情数据
-  clearDetail: () => set({ currentDetail: null }),
+  //     // 乐观更新本地状态
+  //     set((state) => ({
+  //       logs: state.logs.map((log) =>
+  //         log.id === id
+  //           ? {
+  //               ...log,
+  //               status: "已处理",
+  //               acknowledgedBy: username,
+  //               notes: notes,
+  //               acknowledgedTime: new Date().toLocaleString(), // 简单模拟时间
+  //             }
+  //           : log
+  //       ),
+  //     }));
+
+  //     message.success(`日志 ${id} 处理成功!`);
+  //   } catch (error) {
+  //     message.error("处理失败，请稍后重试");
+  //   }
+  // },
 }));
