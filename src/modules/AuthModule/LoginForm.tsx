@@ -9,22 +9,17 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
-  // 1. 【新增】创建表单实例，用于后续手动设置错误
   const [form] = Form.useForm();
 
   const onLoginSuccess = useAuthStore((state) => state.login);
 
-  // 2. 【修改】加上 async 关键字，因为我们需要等待 onLoginSuccess 的结果
   const onFinish = async (values: any) => {
     console.log("表单提交的数据: ", values);
 
     try {
-      // 3. 【关键】使用 await 拆包 Promise，拿到真正的字符串结果
       const res = await onLoginSuccess(values);
 
-      // 4. 【核心逻辑】根据返回的字符串，手动设置表单字段的错误
       if (res === "密码错误") {
-        // 在 'password' 字段下显示错误
         form.setFields([
           {
             name: "password", // 对应 Form.Item 的 name
@@ -32,7 +27,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
           },
         ]);
       } else if (res === "没有注册该用户") {
-        // 在 'username' 字段下显示错误
         form.setFields([
           {
             name: "username", // 对应 Form.Item 的 name
@@ -40,7 +34,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
           },
         ]);
       } else {
-        // 登录成功或其他情况，这里可以不处理，或者跳转页面
         console.log("登录成功或未知状态");
       }
     } catch (error) {
@@ -56,7 +49,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
         <p>请输入您的凭证以继续</p>
       </div>
 
-      {/* 5. 【绑定】将 form 实例绑定到 Form 组件上 */}
       <Form form={form} name="login" onFinish={onFinish} autoComplete="off">
         <Form.Item name="username" rules={[{ required: true, message: "请输入您的用户名!" }]}>
           {/* onChange 时自动清除错误提示，提升体验 */}
@@ -68,7 +60,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
           />
         </Form.Item>
 
-        <Form.Item name="password" rules={[{ required: true, message: "请输入您的密码!" }]}>
+        <Form.Item
+          name="password"
+          rules={[
+            { required: true, message: "请输入您的密码!" },
+            { min: 6, message: "密码长度至少为 6 位" },
+            { pattern: /^(?=.*[a-zA-Z])(?=.*\d).+$/, message: "密码需同时包含字母和数字" },
+          ]}
+          hasFeedback
+        >
           {/* onChange 时自动清除错误提示 */}
           <Input.Password
             prefix={<LockOutlined />}

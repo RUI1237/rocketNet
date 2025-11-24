@@ -1,25 +1,29 @@
 import React from "react";
-// 1. 【修改】引入 Modal 组件
 import { Form, Input, Button, type FormProps, Modal } from "antd";
-import { ApiOutlined, UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+// 1. 【修改】引入 MobileOutlined
+import {
+  ApiOutlined,
+  UserOutlined,
+  MailOutlined,
+  LockOutlined,
+  MobileOutlined,
+} from "@ant-design/icons";
 import styles from "@/styles/AuthForms.module.scss";
-import type { User } from "@/stores";
 import { authService } from "@/services";
 import { getErrorMessage } from "@/utils/getErrorMessage";
+import type { User } from "@/types";
 
 interface RegistrationFormProps {
   onSwitchToLogin: () => void;
 }
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) => {
-  // 2. 【修改】handleRegistration 逻辑
   const [modal, contextHolder] = Modal.useModal();
 
   const handleRegistration: FormProps<User>["onFinish"] = async (values) => {
     console.log("正在提交:", values);
 
     try {
-      // 调用接口获取结果
       const res = await authService.register(values);
 
       modal.success({
@@ -27,7 +31,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
         title: "注册成功",
         content: res.msg,
         centered: true,
-
         okText: "前往登录",
         onOk: () => {
           onSwitchToLogin();
@@ -75,10 +78,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
         <Form.Item
           label="密码"
           name="password"
-          rules={[{ required: true, message: "请输入您的密码!" }]}
+          // 2. 【修改】增加密码验证规则
+          rules={[
+            { required: true, message: "请输入您的密码!" },
+            { min: 6, message: "密码长度至少为 6 位" },
+            { pattern: /^(?=.*[a-zA-Z])(?=.*\d).+$/, message: "密码需同时包含字母和数字" },
+          ]}
           hasFeedback
         >
-          <Input.Password prefix={<LockOutlined />} placeholder="请输入密码" size="large" />
+          <Input.Password
+            prefix={<LockOutlined />}
+            placeholder="请输入密码（至少6位，包含字母数字）"
+            size="large"
+          />
         </Form.Item>
 
         <Form.Item
@@ -99,6 +111,23 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
           ]}
         >
           <Input.Password prefix={<LockOutlined />} placeholder="请再次输入密码" size="large" />
+        </Form.Item>
+
+        {/* 3. 【新增】手机号字段 */}
+        <Form.Item
+          label="手机号"
+          name="phone"
+          rules={[
+            { required: true, message: "请输入您的手机号!" },
+            { pattern: /^1[3-9]\d{9}$/, message: "请输入有效的11位手机号码!" },
+          ]}
+        >
+          <Input
+            prefix={<MobileOutlined />}
+            placeholder="请输入手机号"
+            size="large"
+            maxLength={11}
+          />
         </Form.Item>
 
         <Form.Item

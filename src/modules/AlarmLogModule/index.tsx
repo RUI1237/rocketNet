@@ -13,12 +13,8 @@ import styles from "@/styles/Log.module.scss";
 // 引入子组件 (假设您已经有了)
 import AlarmDetail from "./AlarmDetail";
 import ProcessModal from "./ProcessModal";
-// import ProcessModal from "./ProcessModal"; // 如果有弹窗组件请取消注释
 
 const AlarmLogModule: React.FC = () => {
-  // ----------------------------------------------------------------
-  // 1. Store 状态获取
-  // ----------------------------------------------------------------
   const {
     logs, // 当前页的数据列表 (例如 10 条)
     total, // 数据库总条数 (例如 500 条)
@@ -79,19 +75,12 @@ const AlarmLogModule: React.FC = () => {
 
   // 处理展开/收起 (手风琴模式：一次只展开一行)
   const toggleExpand = async (id: number) => {
-    // console.log("1", id);
-
     if (expandedRowKeys.includes(id)) {
-      // 如果已展开，则收起
-      // console.log(expandedRowKeys);
       setExpandedRowKeys([]);
     } else {
       // 如果未展开，先触发业务埋点/懒加载，再展开
       await fetchLogDetail(id);
-      // console.log("1", expandedRowKeys);
-
       setExpandedRowKeys([id]);
-      // console.log("2", expandedRowKeys);
     }
   };
 
@@ -110,23 +99,13 @@ const AlarmLogModule: React.FC = () => {
       console.log("sshgdhs");
       await handleRefresh();
     }
-    // handleRefresh();
   };
 
-  // 查看图片 (由子组件调用)
-
-  // ------------------------------------------------------------
-  // 2. 新增：点击查看图片的处理函数
-  //    (这个函数需要传给 AlarmDetail 或者直接在 Table 里调用)
-  // ------------------------------------------------------------
   const onViewImage = (url: string) => {
     if (!url) return; // 防止空 URL 报错
     setPreviewImage(url); // 设置当前要看的图片
     setPreviewVisible(true); // 打开预览弹窗
   };
-  // ----------------------------------------------------------------
-  // 4. 表格列定义
-  // ----------------------------------------------------------------
   const columns: ColumnsType<AlarmLogType> = [
     {
       title: "日志ID",
@@ -158,10 +137,7 @@ const AlarmLogModule: React.FC = () => {
       key: "action",
       width: "20%",
       render: (_, record) => {
-        // 判断当前行是否展开 (使用 id 进行比对)
         const isExpanded = expandedRowKeys.includes(record.id);
-        // console.log(isExpanded, record.id, expandedRowKeys);
-
         return (
           <span>
             <Button type="link" onClick={async () => await toggleExpand(record.id)}>
@@ -186,10 +162,6 @@ const AlarmLogModule: React.FC = () => {
       },
     },
   ];
-
-  // ----------------------------------------------------------------
-  // 5. 渲染视图
-  // ----------------------------------------------------------------
   return (
     <div
       className={styles.moduleContainer}
@@ -236,21 +208,13 @@ const AlarmLogModule: React.FC = () => {
             showSizeChanger: false,
             position: ["topRight"],
           }}
-          // 滚动区域配置
-          // calc(100vh - 280px) 需要根据您的 layout 实际情况微调
-          // 280px ≈ Header高度 + Padding + 分页器高度 + 顶部导航栏
           scroll={{ y: "100%" }}
-          // 展开配置
           expandable={{
             expandedRowKeys: expandedRowKeys,
             onExpand: async (_, record) => await toggleExpand(record.id),
             expandIconColumnIndex: -1, // 隐藏默认的 + 号图标，我们自定义了按钮
-            expandedRowRender: (record) => (
-              // 传递 record 给详情组件
-              <AlarmDetail {...{ record, onViewImage }} />
-            ),
+            expandedRowRender: (record) => <AlarmDetail {...{ record, onViewImage }} />,
           }}
-          // 空状态自定义 (自适应高度)
           locale={{
             emptyText: (
               <div

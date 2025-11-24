@@ -283,7 +283,9 @@ $text-gray: rgba(255, 255, 255, 0.65);
       color: $text-gray;
       font-size: 1rem;
     }
-
+    .ant-input-prefix {
+      padding-right: 10px;
+    }
     .ant-input,
     .ant-input-password .ant-input,
     .ant-input-affix-wrapper {
@@ -295,8 +297,8 @@ $text-gray: rgba(255, 255, 255, 0.65);
       color: #fff;
       height: 60px;
       font-size: 1.15rem;
-      padding: 0 24px;
-      transition: all 0.3s ease;
+      padding: 0 24px 0 15px;
+      transition: all 0.2s ease;
 
       input {
         background: transparent !important;

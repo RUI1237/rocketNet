@@ -10,10 +10,13 @@ interface AuthState {
   login: (userData: User) => Promise<string>; // 登录是一个异步操作
   logout: () => void;
   updateUser: (newUserData: Partial<User>) => void; // 用于更新用户信息
+  getInf: () => Promise<void>;
+  reSetInf: (user: User) => Promise<string>;
+  reSetPwd: (userData: User, oldPassword: string) => Promise<string>;
 }
 
 // 3. 使用 create 函数创建 store
-const useAuthStore = create<AuthState>((set) => ({
+const useAuthStore = create<AuthState>((set, get) => ({
   // --- State (状态) ---
   isLoggedIn: false,
   user: null,
@@ -28,11 +31,8 @@ const useAuthStore = create<AuthState>((set) => ({
     console.log("正在登录...", userData);
     const res = await authService.login(userData);
     console.log(res);
-    if (!res.code) return res.msg;
-    set({ isLoggedIn: true, user: { ...userData, token: res.data } });
-    // set({ isLoggedIn: true, user: userData });
-
-    return "success";
+    if (res.code) set({ isLoggedIn: true, user: { ...userData, token: res.data } });
+    return res.msg;
   },
 
   /**
@@ -53,7 +53,21 @@ const useAuthStore = create<AuthState>((set) => ({
       user: state.user ? { ...state.user, ...newUserData } : null,
     }));
   },
+
+  getInf: async () => {
+    const user = await authService.getInf(useAuthStore.getState().user?.username!);
+    get().updateUser(user.data);
+  },
+  reSetInf: async (newUser) => {
+    const res = await authService.reSetInf(newUser);
+    return res.msg;
+  },
+
+  reSetPwd: async (userData, newPassword) => {
+    const res = await get().login(userData);
+    if (res != "success") return res;
+    return await get().reSetInf({ ...userData, ...{ passward: newPassword } });
+  },
 }));
 
 export { useAuthStore };
-export type { User };
