@@ -233,13 +233,13 @@ const AlarmLogModule: React.FC = () => {
             pageSize: tableParams.pageSize,
             total: total, // 这里使用 Store 里的总数，而不是 logs.length
             // showTotal: (total) => `共 ${total} 条记录`,
-            // showSizeChanger: true,
+            showSizeChanger: false,
             position: ["topRight"],
           }}
           // 滚动区域配置
           // calc(100vh - 280px) 需要根据您的 layout 实际情况微调
           // 280px ≈ Header高度 + Padding + 分页器高度 + 顶部导航栏
-          scroll={{ y: "calc(100vh - 280px)" }}
+          scroll={{ y: "100%" }}
           // 展开配置
           expandable={{
             expandedRowKeys: expandedRowKeys,

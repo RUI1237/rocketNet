@@ -5,6 +5,7 @@ import { ApiOutlined, UserOutlined, MailOutlined, LockOutlined } from "@ant-desi
 import styles from "@/styles/AuthForms.module.scss";
 import type { User } from "@/stores";
 import { authService } from "@/services";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 interface RegistrationFormProps {
   onSwitchToLogin: () => void;
@@ -39,7 +40,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
         className: "theme-modal",
         centered: true,
         title: "注册失败",
-        content: "请检查您的网络或稍后重试",
+        content: getErrorMessage(error),
       });
     }
   };

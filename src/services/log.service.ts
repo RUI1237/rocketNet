@@ -19,7 +19,7 @@ export const logsService = {
 
   fetchLogDetail: async <LogType>(id: number, url: string): Promise<ApiResponse<LogType>> => {
     return apiClient.get(url, {
-      params: id,
+      params: { id },
     });
   },
 

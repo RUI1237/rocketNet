@@ -100,8 +100,8 @@ const PredictionLogModule: React.FC = () => {
   const columns: ColumnsType<PredictionLogType> = [
     {
       title: "任务 ID",
-      dataIndex: "taskId",
-      key: "taskId",
+      dataIndex: "id",
+      key: "id",
       width: "15%",
       ellipsis: true, // 如果ID太长则省略
     },
@@ -236,7 +236,7 @@ const PredictionLogModule: React.FC = () => {
             // showSizeChanger: true,
             position: ["topRight"],
           }}
-          scroll={{ y: "calc(100vh - 280px)" }}
+          scroll={{ y: "calc(100vh - 390px)" }}
           expandable={{
             expandedRowKeys: expandedRowKeys,
             onExpand: async (_, record) => {
@@ -247,7 +247,7 @@ const PredictionLogModule: React.FC = () => {
             expandIconColumnIndex: -1, // 隐藏默认 + 号
             expandedRowRender: (record) => (
               // 传递 events 数据和看图回调给子组件
-              <PredictionDetail events={record.events || []} onViewImage={onViewImage} />
+              <PredictionDetail {...{ record, onViewImage }} />
             ),
           }}
           locale={{
