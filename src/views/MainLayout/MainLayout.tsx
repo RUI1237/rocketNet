@@ -1,23 +1,19 @@
-import React from "react"; // 不再需要 useState
-import { Dropdown, Avatar, Space } from "antd";
-import type { MenuProps } from "antd";
-// 1. 引入 Outlet 和 NavLink
+import React, { useState, useRef, useEffect } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {
   PieChartOutlined,
   VideoCameraOutlined,
   WarningOutlined,
-  LogoutOutlined,
+  ThunderboltOutlined,
   UserOutlined,
   SettingOutlined,
-  ThunderboltOutlined,
+  BellOutlined,
+  PoweroffOutlined,
 } from "@ant-design/icons";
 import styles from "./MainLayout.module.scss";
-// 不再需要直接引入模块组件
 import { useMousePosition } from "@/hooks/useMousePosition";
 import { useAuthStore } from "@/stores";
 
-// 2. 更新导航项，加入 to 属性用于导航
 const navItems = [
   { key: "1", to: "/analysis", icon: <PieChartOutlined />, label: "数据分析" },
   { key: "2", to: "/monitoring", icon: <VideoCameraOutlined />, label: "画面监控" },
@@ -25,32 +21,26 @@ const navItems = [
   { key: "4", to: "/prediction", icon: <ThunderboltOutlined />, label: "预测日志" },
 ];
 
-interface MainLayoutProps {
-  // onLogout?: () => void;
-}
-
-const MainLayout: React.FC<MainLayoutProps> = () => {
-  const layoutRef = React.useRef<HTMLDivElement>(null!); // useRef 保持
+const MainLayout: React.FC = () => {
+  const layoutRef = useRef<HTMLDivElement>(null!);
+  const menuRef = useRef<HTMLDivElement>(null);
   const mousePosition = useMousePosition(layoutRef);
   const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const dropdownItems: MenuProps["items"] = [
-    {
-      key: "profile",
-      label: "个人中心",
-      icon: <UserOutlined />,
-      onClick: () => navigate("/profile"),
-    },
-    { key: "settings", label: "系统设置", icon: <SettingOutlined /> },
-    { type: "divider" },
-    {
-      key: "logout",
-      label: "退出登录",
-      icon: <LogoutOutlined />,
-      danger: true,
-      onClick: useAuthStore((state) => state.logout),
-    },
-  ];
+  // 点击外部关闭菜单
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <main
@@ -63,16 +53,14 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
         } as React.CSSProperties
       }
     >
+      {/* 侧边导航 */}
       <nav className={styles.mainNav}>
         <div className={styles.logo}>RockNet</div>
         <div className={styles.navButtonsContainer}>
           {navItems.map((item) => (
-            // 4. 使用 NavLink 组件替代 button
             <NavLink
               key={item.key}
               to={item.to}
-              // NavLink 会自动在匹配当前 URL 时添加 'active' class
-              // end={true} 确保 '/' 只在精确匹配时才激活
               end={item.to === "/"}
               className={({ isActive }) => `${styles.navButton} ${isActive ? styles.active : ""}`}
             >
@@ -83,20 +71,57 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
         </div>
       </nav>
 
+      {/* 顶部 Header */}
       <header className={styles.header}>
-        <Dropdown menu={{ items: dropdownItems }} trigger={["click"]}>
-          <a onClick={(e) => e.preventDefault()} className={styles.userProfile}>
-            <Space>
-              <Avatar className={styles.avatar} icon={<UserOutlined />} />
-              <span>Admin</span>
-            </Space>
-          </a>
-        </Dropdown>
+        <div className={styles.userProfileWrapper} ref={menuRef}>
+          {/* 头像按钮：无边框，颜色优化 */}
+          <div
+            className={styles.userAvatarBtn}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            title="User Profile"
+          >
+            <UserOutlined />
+          </div>
+
+          {/* 下拉菜单 */}
+          <div className={`${styles.userMenuDropdown} ${isMenuOpen ? styles.active : ""}`}>
+            <div className={styles.menuHeader}>
+              <span className={styles.userName}>COMMANDER</span>
+              <span className={styles.userEmail}>admin@rocknet.sys</span>
+            </div>
+
+            <div
+              className={styles.menuItem}
+              onClick={() => {
+                navigate("/profile");
+                setIsMenuOpen(false);
+              }}
+            >
+              <UserOutlined /> <span>个人中心</span>
+            </div>
+            <div className={styles.menuItem}>
+              <SettingOutlined /> <span>系统设置</span>
+            </div>
+            <div className={styles.menuItem}>
+              <BellOutlined /> <span>消息通知</span>
+            </div>
+
+            <div style={{ height: 1, background: "rgba(255,255,255,0.05)", margin: "4px 0" }} />
+
+            <div className={`${styles.menuItem} ${styles.logout}`} onClick={logout}>
+              <PoweroffOutlined /> <span>退出登录</span>
+            </div>
+          </div>
+        </div>
       </header>
 
+      {/* 内容区域：无框模式 */}
       <section className={styles.contentArea}>
-        {/* 5. 核心：在这里放置 Outlet，路由匹配的子组件将在这里渲染 */}
-        <Outlet />
+        <div className={styles.contentPanel}>
+          <div className={styles.panelBody}>
+            <Outlet />
+          </div>
+        </div>
       </section>
     </main>
   );

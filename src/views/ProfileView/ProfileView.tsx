@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import styles from "./ProfileView.module.scss";
-import UserProfileModule from "@/modules/UserProfileModule"; // 我们将复用这个模块的内容
+import UserProfileModule from "@/modules/UserProfileModule";
 
 const ProfileView: React.FC = () => {
   const navigate = useNavigate();
@@ -12,16 +12,18 @@ const ProfileView: React.FC = () => {
     <main className={styles.profileViewLayout}>
       <header className={styles.profileHeader}>
         <Button
-          type="primary"
+          // 🟢 1. 添加自定义样式类
+          className={styles.backBtn}
+          // 🟢 2. 建议去掉 type="primary"，避免 AntD 默认蓝色干扰，或者改为 "default"
+          type="default"
           icon={<ArrowLeftOutlined />}
-          onClick={() => navigate("/")} // 点击返回主仪表盘
+          onClick={() => navigate("/")}
         >
           返回仪表盘
         </Button>
         <div className={styles.headerTitle}>个人中心</div>
       </header>
       <section className={styles.profileContent}>
-        {/* 这里嵌入了我们之前创建的个人中心模块 */}
         <UserProfileModule />
       </section>
     </main>

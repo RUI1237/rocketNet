@@ -1,133 +1,157 @@
-// --- 变量和动画定义 ---
-$color-primary: #00ddff;
-$color-bg-dark: #0d0221;
-$border-color: rgba($color-primary, 0.3);
-$text-primary: #e0e0e0;
-$text-secondary: #8b8a95;
-$font-tech: "Orbitron", sans-serif;
+// =========================================
+// 1. 变量与基础配置
+// =========================================
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap");
 
+$color-primary: #00ddff; // 核心霓虹蓝
+$color-danger: #ff4d4d; // 警告红
+$color-bg-dark: #0d0221; // 全局深空背景
+$color-bg-panel: rgba(10, 5, 30, 0.85); // 下拉菜单背景(带透明度)
+$border-color: rgba($color-primary, 0.3);
+
+$text-primary: #ffffff;
+$text-secondary: #8b8a95;
+
+$font-tech: "Orbitron", sans-serif;
+$font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+$header-height: 90px;
+$sidebar-width-area: 380px;
+
+// =========================================
+// 2. 全局动画
+// =========================================
 @keyframes background-pulse {
   0% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0.4;
+    opacity: 0.3;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.5;
   }
   100% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0.4;
+    opacity: 0.3;
+  }
+}
+
+@keyframes menu-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes panel-enter {
   from {
     opacity: 0;
-    transform: scale(0.95) translateY(20px);
-    filter: blur(5px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
-    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
-// --- 主布局容器 ---
+// =========================================
+// 3. 主容器
+// =========================================
 .mainLayout {
   height: 100vh;
   width: 100vw;
-  background-color: $color-bg-dark !important;
+  background-color: $color-bg-dark;
   position: relative;
   overflow: hidden;
+  font-family: $font-base;
 
-  // 动态背景层
   &::before {
     content: "";
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100%;
-    height: 100%;
+    width: 120%;
+    height: 120%;
     z-index: 0;
     background-image: radial-gradient(
       circle at center,
-      rgba($color-primary, 0.1) 0%,
-      transparent 50%
+      rgba($color-primary, 0.08) 0%,
+      transparent 60%
     );
-    animation: background-pulse 15s infinite ease-in-out;
+    animation: background-pulse 12s infinite ease-in-out;
+    pointer-events: none;
   }
 
-  // “追光”效果
   &::after {
     content: "";
     position: absolute;
-    top: var(--mouse-y);
-    left: var(--mouse-x);
-    width: 0;
-    height: 0;
+    top: var(--mouse-y, 50%);
+    left: var(--mouse-x, 50%);
+    width: 600px;
+    height: 600px;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 300px 120px rgba($color-primary, 0.08);
-    border-radius: 50%;
+    background: radial-gradient(circle, rgba($color-primary, 0.06) 0%, transparent 70%);
     pointer-events: none;
-    opacity: 0;
-    opacity: 0.5s ease;
-  }
-  &:hover::after {
-    opacity: 1;
+    z-index: 1;
   }
 }
 
-// --- 左上角：浮动导航模块 ---
+// =========================================
+// 4. 侧边栏
+// =========================================
 .mainNav {
   position: absolute;
-  top: 40px;
-  left: 40px;
-  z-index: 10;
+  top: 50px;
+  left: 50px;
+  z-index: 50;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 3rem;
+  gap: 4rem;
 
   .logo {
     font-family: $font-tech;
-    font-size: 3rem;
+    font-size: 3.5rem;
+    font-weight: 700;
     color: #fff;
-    text-shadow: 0 0 15px rgba($color-primary, 0.8);
+    text-shadow: 0 0 20px rgba($color-primary, 0.8);
+    user-select: none;
   }
 
   .navButtonsContainer {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem; // 增加按钮间距
+    gap: 2rem;
+    width: 100%;
   }
 }
 
 .navButton {
-  background: transparent;
-  border: 1px solid transparent;
-  color: $text-secondary;
-  cursor: pointer;
+  position: relative;
   display: flex;
   align-items: center;
-
-  // 尺寸放大
-  gap: 1.25rem;
-  padding: 1rem 2rem;
-
+  gap: 1.5rem;
+  padding: 1.2rem 2rem;
+  color: $text-secondary;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
   transition: all 0.3s ease-out;
-  position: relative;
 
   .icon {
-    font-size: 1.75rem;
+    font-size: 2rem;
+    transition: transform 0.3s;
   }
   .label {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 500;
+    letter-spacing: 1px;
   }
 
-  // 动态下划线
   &::after {
     content: "";
     position: absolute;
@@ -136,11 +160,17 @@ $font-tech: "Orbitron", sans-serif;
     width: 0;
     height: 2px;
     background-color: $color-primary;
-    transition: width 0.3s ease;
+    box-shadow: 0 -2px 10px rgba($color-primary, 0.8);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   &:hover {
     color: #fff;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent);
+    .icon {
+      transform: scale(1.1);
+      text-shadow: 0 0 10px $color-primary;
+    }
     &::after {
       width: 100%;
     }
@@ -148,84 +178,270 @@ $font-tech: "Orbitron", sans-serif;
 
   &.active {
     color: $color-primary;
-    text-shadow: 0 0 8px rgba($color-primary, 0.7);
+    background: linear-gradient(90deg, rgba($color-primary, 0.1), transparent);
+    border-left: 4px solid $color-primary;
+    .icon {
+      text-shadow: 0 0 15px $color-primary;
+    }
     &::after {
       width: 100%;
     }
   }
 }
 
-// --- 右上角：用户信息模块 ---
+// =========================================
+// 5. Header (对齐优化) & 头像 (暗蓝风格)
+// =========================================
 .header {
   position: absolute;
-  top: 25px;
-  right: 70px;
-  z-index: 10;
-}
-
-.userProfile {
-  cursor: pointer;
-  .avatar {
-    background-color: $color-primary;
-    box-shadow: 0 0 10px rgba($color-primary, 0.5);
-  }
-  span {
-    color: $text-primary;
-    font-weight: 500;
-  }
-}
-
-// --- 中央内容区域 ---
-.contentArea {
+  top: 0;
+  right: 0;
   width: 100%;
-  height: 100%;
+  height: $header-height;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; // 垂直绝对居中
+  padding-right: 50px;
+  z-index: 100;
+}
+
+.userProfileWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// --- 头像按钮：暗蓝色风格 ---
+.userAvatarBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  // 【关键修改】：暗蓝色背景，带微弱透明度
+  background: rgba(0, 30, 60, 0.6);
+
+  // 边框：微弱的青色边框，增加科技感
+  border: 1px solid rgba($color-primary, 0.3);
+
+  // 图标颜色：青色
+  color: $color-primary;
+  font-size: 1.6rem;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  // 减少 padding, 扩大内容区
-  padding: 80px 50px 50px 300px;
+  transition: all 0.3s ease;
+
+  // 默认发光（暗光）
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  // 悬停：变亮
+  &:hover {
+    background: rgba(0, 60, 100, 0.8); // 背景变亮蓝
+    border-color: $color-primary; // 边框变亮
+    color: #fff; // 图标变白
+    box-shadow: 0 0 20px rgba($color-primary, 0.4); // 蓝色光晕
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
-// --- 内容浮动面板 ---
+// --- 下拉菜单：恢复精致 UI ---
+.userMenuDropdown {
+  position: absolute;
+  top: 65px;
+  right: 0;
+  width: 260px;
+
+  // 背景：深色 + 磨砂
+  background: $color-bg-panel;
+  backdrop-filter: blur(12px);
+
+  // 边框：细微的青色边框
+  border: 1px solid rgba($color-primary, 0.2);
+  border-radius: 8px;
+  padding: 10px 0;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-15px) scale(0.96);
+  transform-origin: top right;
+  transition: all 0.25s cubic-bezier(0.3, 0, 0.2, 1);
+
+  // 阴影：深邃阴影 + 内部微光
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.8),
+    inset 0 0 20px rgba($color-primary, 0.05);
+
+  // 小三角装饰
+  &::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 19px;
+    width: 10px;
+    height: 10px;
+    background: inherit;
+    border-top: 1px solid rgba($color-primary, 0.2);
+    border-left: 1px solid rgba($color-primary, 0.2);
+    transform: rotate(45deg);
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.menuHeader {
+  padding: 12px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 5px;
+  .userName {
+    display: block;
+    color: #fff;
+    font-family: $font-tech;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+  .userEmail {
+    display: block;
+    font-size: 0.85rem;
+    color: $text-secondary;
+    margin-top: 4px;
+  }
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 24px;
+  color: $text-primary;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+
+  i {
+    width: 20px;
+    text-align: center;
+    color: $text-secondary;
+    transition: color 0.2s;
+  }
+
+  &:hover {
+    background: rgba($color-primary, 0.1);
+    color: #fff;
+    padding-left: 28px;
+
+    i {
+      color: $color-primary;
+      text-shadow: 0 0 8px $color-primary;
+    }
+
+    // 侧边亮条
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: $color-primary;
+      box-shadow: 2px 0 10px $color-primary;
+    }
+  }
+
+  &.logout {
+    color: lighten($color-danger, 10%);
+    i {
+      color: lighten($color-danger, 10%);
+    }
+
+    &:hover {
+      background: rgba($color-danger, 0.1);
+      color: #fff;
+      i {
+        color: $color-danger;
+      }
+      &::after {
+        background: $color-danger;
+        box-shadow: 2px 0 10px $color-danger;
+      }
+    }
+  }
+}
+
+.menuDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 5px 0;
+}
+
+// =========================================
+// 6. 内容区域 (无边框、无背景)
+// =========================================
+.contentArea {
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+
+  // 布局留白
+  padding: ($header-height + 20px) 50px 50px $sidebar-width-area;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .contentPanel {
   width: 100%;
   height: 100%;
-  max-width: none;
-  background: rgba(13, 2, 33, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid $border-color;
-  border-radius: 12px;
-  overflow: hidden;
+
+  // 【保持透明】：无边框、无背景
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+
   display: flex;
   flex-direction: column;
-  animation: panel-enter 0.6s ease-out forwards;
-}
+  overflow: hidden;
 
-// 为 <a> 标签移除下划线
+  animation: panel-enter 0.8s ease-out forwards;
 
-.navButton {
-  background: transparent;
-  border: 1px solid transparent;
-  color: $text-secondary;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
+  .panelBody {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 20px 0;
 
-
-// 内部滚动条美化
-> div {
-  flex-grow: 1;
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: $color-primary;
-    border-radius: 3px;
+    // 滚动条样式
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      &:hover {
+        background: rgba($color-primary, 0.6);
+      }
+    }
   }
 }

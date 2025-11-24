@@ -1,251 +1,209 @@
 import React, { useState } from "react";
-import { Avatar, Button, Card, Col, Row, Descriptions, Form, Input, message, Upload } from "antd";
-import type { UploadProps } from "antd";
+import { Avatar, Button, Col, Row, Form, Input, message, Upload } from "antd";
 import {
   UserOutlined,
   MailOutlined,
   PhoneOutlined,
-  EditOutlined,
-  SaveOutlined,
+  SafetyCertificateOutlined,
+  IdcardOutlined,
+  LockOutlined,
   KeyOutlined,
+  CheckCircleOutlined,
+  RocketOutlined,
+  CalendarOutlined,
+  ApartmentOutlined,
+  NumberOutlined,
   CameraOutlined,
 } from "@ant-design/icons";
-import commonStyles from "@/styles/Modules.module.scss";
 
-import profileStyles from "@/styles/UserProfile.module.scss"; // 新的、独立的样式
-import { useAuthStore } from "@/stores";
+// 引入样式
+import styles from "@/styles/UserProfile.module.scss";
 
 const UserProfileModule: React.FC = () => {
-  const [form] = Form.useForm();
-  // 1. 创建 state 来管理头像 URL
-  // const [imageUrl, setImageUrl] = useState<string>(currentUser.avatar);
+  const [passForm] = Form.useForm();
 
-  const currentUser = useAuthStore((state) => state.user)!;
-  const updateUser = useAuthStore((state) => state.updateUser);
+  const [user, setUser] = useState({
+    username: "System_Admin",
+    email: "admin@nebula.io",
+    phone: "138-8888-9999",
+    avatar: "", // 默认无头像
+    userId: "A-001",
+    department: "指挥中心",
+    joinDate: "2024-05-01",
+  });
 
-  // 2. 定义上传前的处理逻辑
-  const beforeUpload = (file: File) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("您只能上传 JPG/PNG 格式的图片!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("图片大小必须小于 2MB!");
-    }
-
-    // 如果校验通过，则使用 FileReader 生成 Base64 预览
-    if (isJpgOrPng && isLt2M) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        // setImageUrl(reader.result as string);
-        updateUser({ avatar: reader.result as string });
-        message.success("头像已更新，点击保存以生效！");
-      };
-    }
-
-    return false; // 返回 false, 阻止 antd 的自动上传行为
+  const handleAvatarUpload = (file: File) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setUser((prev) => ({ ...prev, avatar: reader.result as string }));
+      message.success("头像更新成功");
+    };
+    return false;
   };
 
-  // 3. 定义 Upload 组件的 props
-  const uploadProps: UploadProps = {
-    name: "avatar",
-    showUploadList: false, // 不显示默认的文件列表
-    beforeUpload: beforeUpload,
+  const onUpdateInfo = () => {
+    message.success("基本资料已同步");
   };
 
-  const onFinishInfo = (values: any) => {
-    // 在实际应用中，这里会把 imageUrl 和表单数据一起提交
-    console.log("更新基本信息:", { ...values });
-    updateUser(values);
-    message.success("基本信息更新成功！");
-  };
-
-  const onFinishPassword = (values: any) => {
-    console.log("更新基本信息:", { ...values });
-    if (values.currentPassword === currentUser.password) {
-      updateUser({ password: values.newPassword });
-      message.success("基本信息更新成功！");
-    } else {
-    }
+  const onResetPass = () => {
+    message.success("密码修改指令已下发");
+    passForm.resetFields();
   };
 
   return (
-    <div className={commonStyles.moduleContainer} style={{ height: "100%" }}>
-      <h2
-        style={{
-          padding: "1.5rem 2rem",
-          margin: 0,
-          borderBottom: "1px solid rgba(0, 221, 255, 0.3)",
-        }}
-      >
-        个人中心
-      </h2>
-      <div className={`${commonStyles.scrollableContent}`} style={{ padding: "2rem" }}>
-        <Row gutter={[32, 32]}>
-          {/* 左侧：用户信息展示 */}
-          <Col xs={24} lg={8}>
-            <Card
-              // bordered={false}
-              style={{ background: "rgba(29, 16, 63, 0.6)", textAlign: "center" }}
-            >
-              {/* 4. 将 Avatar 包裹在 Upload 组件中 */}
-              <div className={profileStyles.avatarUploader}>
-                <Upload {...uploadProps}>
-                  <Avatar
-                    size={128}
-                    icon={<UserOutlined />}
-                    src={currentUser?.avatar}
-                    className={profileStyles.avatarImage}
-                  />
-                  <div className={profileStyles.uploadOverlay}>
-                    <CameraOutlined />
-                  </div>
-                </Upload>
+    <div className={styles.container}>
+      <div className={styles.layoutGrid}>
+        {/* --- 左侧：固定展示区 --- */}
+        <div className={styles.leftSidebar}>
+          <div className={styles.avatarUploader}>
+            <Upload showUploadList={false} beforeUpload={handleAvatarUpload}>
+              <div style={{ width: "100%", height: "100%", position: "relative" }}>
+                <div className={styles.uploadOverlay}>
+                  <CameraOutlined />
+                </div>
+                <Avatar
+                  src={user.avatar || undefined}
+                  icon={!user.avatar && <UserOutlined style={{ fontSize: 70 }} />}
+                  className={styles.avatarIcon}
+                />
               </div>
+            </Upload>
+          </div>
 
-              <h3 style={{ color: "#fff", fontSize: "1.5rem" }}>{currentUser.username}</h3>
-              {/* <p style={{ color: "#8b8a95" }}>{currentUser.role}</p> */}
-            </Card>
-            <Card
-              // bordered={false}
-              title="账户详情"
-              style={{ background: "rgba(29, 16, 63, 0.6)", marginTop: 24 }}
-              // headStyle={{ borderBottom: "1px solid rgba(0, 221, 255, 0.2)" }}
-            >
-              <Descriptions column={1}>
-                <Descriptions.Item
-                  label={
-                    <>
-                      <MailOutlined /> 邮箱
-                    </>
-                  }
-                >
-                  {currentUser.email}
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={
-                    <>
-                      <PhoneOutlined /> 手机
-                    </>
-                  }
-                >
-                  {currentUser.phone}
-                </Descriptions.Item>
-                <Descriptions.Item label="注册日期">
-                  {currentUser.registrationDate}
-                </Descriptions.Item>
-              </Descriptions>
-            </Card>
-          </Col>
+          <div className={styles.userInfo}>
+            <h2>{user.username}</h2>
+          </div>
 
-          {/* 右侧：信息修改表单 */}
-          <Col xs={24} lg={16}>
-            <Card
-              // bordered={false}
-              title="修改基本信息"
-              style={{ background: "rgba(29, 16, 63, 0.6)" }}
-              // headStyle={{ borderBottom: "1px solid rgba(0, 221, 255, 0.2)" }}
-            >
-              <Form
-                layout="vertical"
-                initialValues={{
-                  username: currentUser.username,
-                  email: currentUser.email,
-                  phone: currentUser.phone,
-                }}
-                onFinish={onFinishInfo}
-              >
-                <Form.Item name="username" label="用户名" rules={[{ required: true }]}>
-                  <Input prefix={<UserOutlined />} />
-                </Form.Item>
-                <Form.Item
-                  name="email"
-                  label="电子邮箱"
-                  rules={[{ required: true, type: "email" }]}
-                >
-                  <Input prefix={<MailOutlined />} />
-                </Form.Item>
-                <Form.Item name="phone" label="手机号码">
-                  <Input prefix={<PhoneOutlined />} />
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
-                    保存更改
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Card>
+          <div className={styles.infoList}>
+            <div className={styles.infoItem}>
+              <span className={styles.label}>
+                <NumberOutlined /> 员工编号
+              </span>
+              <span className={styles.value}>{user.userId}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.label}>
+                <ApartmentOutlined /> 所属部门
+              </span>
+              <span className={styles.value}>{user.department}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.label}>
+                <CalendarOutlined /> 入职日期
+              </span>
+              <span className={styles.value}>{user.joinDate}</span>
+            </div>
+          </div>
+        </div>
 
-            <Card
-              // bordered={false}
-              title="修改密码"
-              style={{ background: "rgba(29, 16, 63, 0.6)", marginTop: 24 }}
-              // headStyle={{ borderBottom: "1px solid rgba(0, 221, 255, 0.2)" }}
+        {/* --- 右侧：输入交互区 --- */}
+        <div className={styles.rightContent}>
+          <div className={styles.card}>
+            <div className={styles.cardHeader}>
+              <IdcardOutlined />
+              <h3>基本资料配置</h3>
+            </div>
+
+            <Form
+              layout="vertical"
+              initialValues={user}
+              className={styles.bigForm}
+              onFinish={onUpdateInfo}
             >
-              <Form form={form} layout="vertical" onFinish={onFinishPassword}>
-                <Form.Item
-                  name="currentPassword"
-                  label="旧密码"
-                  rules={[
-                    { required: true },
-                    ({ getFieldValue }) => ({
-                      // 它返回一个对象，这个对象就是一条校验规则
-                      validator(_, value) {
-                        if (value && currentUser.password !== value)
-                          return Promise.reject(new Error("不是旧密码!"));
-                        else return Promise.resolve();
-                      },
-                    }),
-                  ]}
+              <Row gutter={40}>
+                <Col span={12}>
+                  <Form.Item name="username" label="用户昵称">
+                    <Input prefix={<UserOutlined />} />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item name="phone" label="联系电话">
+                    <Input prefix={<PhoneOutlined />} />
+                  </Form.Item>
+                </Col>
+                <Col span={24}>
+                  <Form.Item
+                    name="email"
+                    label="电子邮箱"
+                    rules={[{ type: "email", message: "格式不正确" }]}
+                  >
+                    <Input prefix={<MailOutlined />} />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <div style={{ marginTop: "auto", textAlign: "right" }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  icon={<RocketOutlined />}
+                  style={{ minWidth: 160 }}
                 >
-                  <Input.Password prefix={<KeyOutlined />} />
-                </Form.Item>
-                <Form.Item
-                  name="newPassword"
-                  label="新密码"
-                  rules={[
-                    { required: true },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (value && currentUser.password === value) {
-                          return Promise.reject(new Error("新密码不能和旧密码相同!"));
-                        } else return Promise.resolve();
-                      },
-                    }),
-                  ]}
+                  保存更改
+                </Button>
+              </div>
+            </Form>
+          </div>
+
+          <div className={styles.card}>
+            <div className={styles.cardHeader}>
+              <SafetyCertificateOutlined style={{ color: "#d946ef" }} />
+              <h3>账户安全</h3>
+            </div>
+
+            <Form
+              form={passForm}
+              layout="vertical"
+              className={styles.bigForm}
+              onFinish={onResetPass}
+            >
+              <Row gutter={40}>
+                <Col span={24}>
+                  <Form.Item name="oldPassword" label="验证旧密码" rules={[{ required: true }]}>
+                    <Input.Password prefix={<LockOutlined />} placeholder="请输入旧密码" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item name="newPassword" label="新密码" rules={[{ required: true }]}>
+                    <Input.Password prefix={<KeyOutlined />} placeholder="设置新密码" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    name="confirmPassword"
+                    label="确认密码"
+                    dependencies={["newPassword"]}
+                    rules={[
+                      { required: true },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue("newPassword") === value)
+                            return Promise.resolve();
+                          return Promise.reject(new Error("密码不一致"));
+                        },
+                      }),
+                    ]}
+                  >
+                    <Input.Password prefix={<CheckCircleOutlined />} placeholder="再次确认" />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <div style={{ marginTop: "auto", textAlign: "right" }}>
+                <Button
+                  type="primary"
+                  danger
+                  htmlType="submit"
+                  icon={<KeyOutlined />}
+                  style={{ minWidth: 160 }}
                 >
-                  <Input.Password prefix={<KeyOutlined />} />
-                </Form.Item>
-                <Form.Item
-                  name="confirmPassword"
-                  label="确认新密码"
-                  dependencies={["newPassword"]}
-                  rules={[
-                    { required: true },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (value && getFieldValue("newPassword") !== value)
-                          return Promise.reject(new Error("两次输入的密码不匹配!"));
-                        else if (value && currentUser.password === value) {
-                          return Promise.reject(new Error("新密码不能和旧密码相同!"));
-                        } else return Promise.resolve();
-                      },
-                    }),
-                  ]}
-                >
-                  <Input.Password prefix={<KeyOutlined />} />
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" icon={<EditOutlined />} danger>
-                    更新密码
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Card>
-          </Col>
-        </Row>
+                  重置密码
+                </Button>
+              </div>
+            </Form>
+          </div>
+        </div>
       </div>
     </div>
   );
