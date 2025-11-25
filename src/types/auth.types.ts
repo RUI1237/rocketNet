@@ -1,16 +1,12 @@
 export interface User {
   username: string;
   password?: string;
+  oldPassword?: string;
   token: string;
   email?: string;
-  avatar?: string;
+  // avatar?: File;
+  processedaAatarUrl?: string;
   phone?: string;
   registrationDate?: string;
   // role?: string;
 }
-
-// export interface loginData {
-//   username: string;
-//   passward: string;
-//   token: string;
-// }

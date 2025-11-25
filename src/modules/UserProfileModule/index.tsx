@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { message } from "antd";
+import React, { useEffect } from "react";
 import styles from "@/styles/UserProfile.module.scss";
 
 // 引入拆分的组件和类型
@@ -9,23 +8,22 @@ import SecuritySettingsForm from "./SecuritySettingsForm";
 import { useAuthStore } from "@/stores";
 
 const UserProfileModule: React.FC = () => {
-  const { getInf } = useAuthStore((state) => state);
-  // 头像上传处理
+  const { user, getInf } = useAuthStore((state) => state);
+  // console.log("shdfahjsfgdah");
 
   useEffect(() => {
     getInf();
-  });
+    return () => {
+      if (user?.processedaAatarUrl) URL.revokeObjectURL(user?.processedaAatarUrl);
+    };
+  }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.layoutGrid}>
-        {/* 左侧：固定展示区 */}
         <UserInfoSidebar />
-
-        {/* 右侧：输入交互区 */}
         <div className={styles.rightContent}>
           <BasicInfoForm />
-
           <SecuritySettingsForm />
         </div>
       </div>

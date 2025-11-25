@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Row, Form, Input } from "antd";
 import {
   UserOutlined,
@@ -8,7 +8,6 @@ import {
   RocketOutlined,
 } from "@ant-design/icons";
 import styles from "@/styles/UserProfile.module.scss";
-import type { User } from "@/types";
 import { useAuthStore } from "@/stores";
 
 interface BasicInfoFormProps {
@@ -17,11 +16,19 @@ interface BasicInfoFormProps {
 }
 
 const BasicInfoForm: React.FC<BasicInfoFormProps> = () => {
-  // 注意：如果在父组件中 user 数据是异步获取的，这里可能需要使用 useEffect + form.setFieldsValue
-  // 或者在父组件控制 key 来强制重新渲染
-  // const initialValues = useAuthStore((state) => state.user)!;
-  const { user, updateUser } = useAuthStore((state) => state);
+  const { user, reSetInf } = useAuthStore((state) => state);
+  console.log("basicl", user);
+  const [form] = Form.useForm();
 
+  useEffect(() => {
+    if (user) {
+      form.setFieldsValue({
+        username: user.username,
+        phone: user.phone,
+        email: user.email,
+      });
+    }
+  }, [user]);
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
@@ -30,10 +37,11 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = () => {
       </div>
 
       <Form
+        form={form}
         layout="vertical"
-        initialValues={user!}
+        // initialValues={user!}
         className={styles.bigForm}
-        onFinish={async (data) => await updateUser(data)}
+        onFinish={async (data) => await reSetInf({ ...user, ...data })}
       >
         <Row gutter={40}>
           <Col span={12}>

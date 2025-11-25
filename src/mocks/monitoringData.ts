@@ -23,7 +23,7 @@ export const monitoringData = [
 
     // 3. 模拟一点网络延迟 (比如 1.5秒)，让 loading 效果能展示出来
     await delay(1000);
-
+    console.log(file);
     // 4. 直接把文件对象返回！
     // File 对象本身就是一种特殊的 Blob，可以直接作为 HttpResponse 的 body
     return new HttpResponse(file, {

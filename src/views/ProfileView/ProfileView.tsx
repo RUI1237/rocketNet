@@ -7,7 +7,6 @@ import UserProfileModule from "@/modules/UserProfileModule";
 
 const ProfileView: React.FC = () => {
   const navigate = useNavigate();
-
   return (
     <main className={styles.profileViewLayout}>
       <header className={styles.profileHeader}>

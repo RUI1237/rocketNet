@@ -15,11 +15,15 @@ interface SecuritySettingsFormProps {
 
 const SecuritySettingsForm: React.FC<SecuritySettingsFormProps> = () => {
   const [passForm] = Form.useForm();
-  const { user, reSetPwd } = useAuthStore((state) => state);
+  const { user, reSetInf } = useAuthStore((state) => state);
 
   const handleFinish = async (values: any) => {
     // onResetPass(values);
-    await reSetPwd({ ...user!, ...{ password: values.oldPassword } }, values.newPassword);
+    await reSetInf({
+      ...user!,
+      password: values.newPassword,
+      oldPassword: values.oldPassword,
+    });
     passForm.resetFields(); // 提交成功后重置表单
   };
 
