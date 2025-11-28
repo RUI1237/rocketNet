@@ -9,7 +9,6 @@ interface PredictionStore {
   total: number;
 
   fetchLogs: (data: QuaryLogs) => Promise<void>;
-  // processPrediction: (id: number, notes: string) => Promise<void>;
   fetchLogDetail: (id: number) => Promise<void>;
 }
 
@@ -21,7 +20,6 @@ export const usePredictionStore = create<PredictionStore>((set) => ({
   fetchLogs: async (data: QuaryLogs) => {
     set({ isLoading: true });
     try {
-      // set({ logs: mockPredictionLogs, total: 20 });
       const res = await logsService.fetchLogs<PredictionLogType>(data, "/predictions/page");
       set({ logs: res.data.records, total: res.data.total });
     } catch (error) {
@@ -32,12 +30,8 @@ export const usePredictionStore = create<PredictionStore>((set) => ({
   },
 
   fetchLogDetail: async (id: number) => {
-    // const user = useAuthStore((state) => state.user);
-    // 模拟当前登录用户
     try {
       const res = await logsService.fetchLogDetail<PredictionLogType>(id, `/predictions/${id}`);
-
-      // 乐观更新本地状态
       set((state) => ({
         logs: state.logs.map((log) => (log.id === id ? { ...log, ...res.data } : log)),
       }));

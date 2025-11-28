@@ -18,7 +18,7 @@ export interface PredictionLogType {
 
 export interface PredictionEvent {
   // 假设事件也有唯一ID，如果没有可忽略
-  id?: string | number;
+  // id?: string | number;
   // 帧时间戳 (视频任务特有)
   frameTimestamp?: string;
   // 是否触发报警: "true" | "false" | "是" | "否"

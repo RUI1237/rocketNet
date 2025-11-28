@@ -11,9 +11,7 @@ const ProfileView: React.FC = () => {
     <main className={styles.profileViewLayout}>
       <header className={styles.profileHeader}>
         <Button
-          // 🟢 1. 添加自定义样式类
           className={styles.backBtn}
-          // 🟢 2. 建议去掉 type="primary"，避免 AntD 默认蓝色干扰，或者改为 "default"
           type="default"
           icon={<ArrowLeftOutlined />}
           onClick={() => navigate("/")}

@@ -1,4 +1,3 @@
-// export interface LogType<T> extends T;
 export interface QuaryLogs {
   page: number;
   pageSize: number;

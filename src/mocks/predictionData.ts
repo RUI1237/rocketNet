@@ -31,17 +31,7 @@ const allPredictions: PredictionLogType[] = Array.from({ length: 50 }).map((_, i
   };
 });
 
-// ==========================================
-// 3. Handlers
-// ==========================================
-
 export const predictionData = [
-  // ... 之前的 alarms 相关的 handler ...
-
-  // ------------------------------------------------
-  // 接口 A: 预测记录分页查询 (列表不返回 events 详情)
-  // URL: GET /predictions/page?page=1&pageSize=10
-  // ------------------------------------------------
   http.get("/predictions/page", ({ request }) => {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get("page")) || 1;
@@ -67,10 +57,6 @@ export const predictionData = [
     });
   }),
 
-  // ------------------------------------------------
-  // 接口 B: 预测记录详情查询 (返回完整的 events)
-  // URL: GET /predictions/:id
-  // ------------------------------------------------
   http.get("/predictions/:id", ({ params }) => {
     // 1. 转换 ID 类型 (确保安全转换)
     const targetId = Number(params.id);

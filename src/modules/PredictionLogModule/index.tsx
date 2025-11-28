@@ -17,9 +17,6 @@ import styles from "@/styles/Log.module.scss";
 import PredictionDetail from "./PredictionDetail";
 
 const PredictionLogModule: React.FC = () => {
-  // ----------------------------------------------------------------
-  // 1. Store 状态获取
-  // ----------------------------------------------------------------
   const {
     logs, // 对应 PredictionLogType[]
     total, // 总条数
@@ -28,9 +25,6 @@ const PredictionLogModule: React.FC = () => {
     fetchLogDetail, // 获取详情 API (用于填充 events)
   } = usePredictionStore();
 
-  // ----------------------------------------------------------------
-  // 2. 本地 UI 状态
-  // ----------------------------------------------------------------
   const [expandedRowKeys, setExpandedRowKeys] = useState<number[]>([]);
 
   // 分页参数状态
@@ -42,11 +36,6 @@ const PredictionLogModule: React.FC = () => {
   // 图片查看相关状态
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-
-  // ----------------------------------------------------------------
-  // 3. 生命周期与交互逻辑
-  // ----------------------------------------------------------------
-
   // 初始化加载
   useEffect(() => {
     fetchLogs(tableParams);
@@ -94,16 +83,13 @@ const PredictionLogModule: React.FC = () => {
     setPreviewVisible(true);
   };
 
-  // ----------------------------------------------------------------
-  // 4. 表格列定义 (适配 PredictionLogType)
-  // ----------------------------------------------------------------
   const columns: ColumnsType<PredictionLogType> = [
     {
       title: "任务 ID",
       dataIndex: "id",
       key: "id",
       width: "15%",
-      ellipsis: true, // 如果ID太长则省略
+      ellipsis: true,
     },
     {
       title: "原始文件名",
@@ -186,10 +172,6 @@ const PredictionLogModule: React.FC = () => {
       },
     },
   ];
-
-  // ----------------------------------------------------------------
-  // 5. 渲染视图
-  // ----------------------------------------------------------------
   return (
     <div
       className={styles.moduleContainer}
@@ -245,10 +227,7 @@ const PredictionLogModule: React.FC = () => {
               }
             },
             expandIconColumnIndex: -1, // 隐藏默认 + 号
-            expandedRowRender: (record) => (
-              // 传递 events 数据和看图回调给子组件
-              <PredictionDetail {...{ record, onViewImage }} />
-            ),
+            expandedRowRender: (record) => <PredictionDetail {...{ record, onViewImage }} />,
           }}
           locale={{
             emptyText: (

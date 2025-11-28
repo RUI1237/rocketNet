@@ -1,17 +1,9 @@
 import React, { useState } from "react";
 import styles from "./AuthView.module.scss";
-
-// 确保这里的路径与您的项目结构完全匹配
 import LoginForm from "@/modules/AuthModule/LoginForm";
 import RegistrationForm from "@/modules/AuthModule/RegistrationForm";
 
-// 定义视图类型的别名
 type AuthViewMode = "login" | "register";
-
-// 1. 定义 props 接口，用于接收从 App.tsx 传来的登录成功回调函数
-// interface AuthViewProps {
-//   // onLoginSuccess: () => void;
-// }
 
 const AuthView: React.FC = () => {
   const [viewMode, setViewMode] = useState<AuthViewMode>("login");
@@ -34,11 +26,7 @@ const AuthView: React.FC = () => {
       {/* --- 右侧表单区域 --- */}
       <div className={styles.formPanel}>
         {viewMode === "login" ? (
-          <LoginForm
-            onSwitchToRegister={() => setViewMode("register")}
-            // 2. 将登录成功的回调函数传递给 LoginForm 组件
-            // onLoginSuccess={onLoginSuccess}
-          />
+          <LoginForm onSwitchToRegister={() => setViewMode("register")} />
         ) : (
           <RegistrationForm onSwitchToLogin={() => setViewMode("login")} />
         )}

@@ -62,7 +62,6 @@ const MonitoringModule: React.FC = () => {
     }
   };
   useEffect(() => {
-    // 这个 useEffect 不需要执行体，只需要清除函数
     return () => {
       // 这里的逻辑会在两种情况下执行：
       // 1. previewImage 发生变化前（比如你切到了下一张图，它会把上一张的 URL 销毁）
@@ -114,17 +113,11 @@ const MonitoringModule: React.FC = () => {
           <div
             style={{
               display: "grid",
-              // 保持 5fr 1fr 5fr 比例，这本质上就是百分比布局
               gridTemplateColumns: "5fr 1fr 5fr",
-              // 【修改点】gap 改为百分比，适应屏幕宽度
               gap: "2%",
-              // 【修改点】width 这里的 2150px 必须改为 100% 才能自适应
               width: "100%",
-              // 确保 grid 容器高度也是撑满的（如果需要）
               height: "auto",
-              // 垂直居中对齐所有子元素
               alignItems: "center",
-              // 增加底部 padding 防止贴底
               paddingBottom: "2%",
             }}
           >
@@ -134,7 +127,6 @@ const MonitoringModule: React.FC = () => {
             </div>
 
             {/* 中间：操作按钮 */}
-            {/* 【修改点】去掉了 height: 200px，改为 Flex 居中，让它随左右高度自动居中 */}
             <div
               style={{
                 display: "flex",
@@ -150,8 +142,6 @@ const MonitoringModule: React.FC = () => {
                 onClick={analyzeImage}
                 loading={isLoading}
                 disabled={!originalFile}
-                // 按钮本身的尺寸建议保持 px 或者用 rem，以免在高分屏变得过大或过小
-                // 这里保留 px 确保按钮手感，但外部容器已变为自适应
                 style={{ padding: "0 50px", height: "70px", fontSize: "22px" }}
               >
                 开始分析

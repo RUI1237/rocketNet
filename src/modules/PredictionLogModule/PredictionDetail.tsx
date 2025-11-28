@@ -11,7 +11,6 @@ interface PredictionDetailProps {
 }
 
 const PredictionDetail: React.FC<PredictionDetailProps> = ({ record, onViewImage }) => {
-  // 表格列定义保持不变，用于展示子事件
   const columns: ColumnsType<PredictionEvent> = [
     {
       title: "帧时间戳",
@@ -52,7 +51,6 @@ const PredictionDetail: React.FC<PredictionDetailProps> = ({ record, onViewImage
 
   return (
     <div className={styles.detailContainer}>
-      {/* 1. 模仿 AlarmDetail：使用 Descriptions 展示顶部基础信息 */}
       <Descriptions title="预测任务概览" size="small" column={2} bordered>
         <Descriptions.Item label="原始文件名">{record.originalFilename}</Descriptions.Item>
         <Descriptions.Item label="预测时间">{record.creationTime}</Descriptions.Item>
@@ -93,9 +91,8 @@ const PredictionDetail: React.FC<PredictionDetailProps> = ({ record, onViewImage
           事件详情列表 ({record.events?.length || 0})
         </h4>
         <Table
-          rowKey={(row) => row.id || row.frameTimestamp || Math.random()}
+          rowKey={(row) => row.frameTimestamp || Math.random()}
           columns={columns}
-          // 注意：这里要从 record 中取 events，并处理可能为空的情况
           dataSource={record.events || []}
           pagination={false}
           size="small"

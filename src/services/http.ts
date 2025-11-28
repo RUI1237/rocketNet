@@ -1,19 +1,14 @@
-// src/services/http.ts
-
 import axios, { AxiosError } from "axios";
 import { message } from "antd";
-import { useAuthStore } from "@/stores/authStore"; // 假设你的 store 在这个路径
-import type { ApiResponse } from "@/types"; // 假设你有通用的响应类型
+import { useAuthStore } from "@/stores/authStore";
+import type { ApiResponse } from "@/types";
 import { BASE_URL, TIME_OUT } from "@/config";
-// 假设你有通用的响应类型
 
-// 创建 Axios 实例
 const apiClient = axios.create({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
 });
 
-// 请求拦截器：为每个请求注入 Token
 apiClient.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().user?.token;
@@ -28,23 +23,17 @@ apiClient.interceptors.request.use(
   }
 );
 
-// 响应拦截器：统一处理数据和错误
 apiClient.interceptors.response.use(
   (response) => {
     const res = response.data;
 
-    // 2. 判断业务状态码 (假设后端约定：code === 200 才是成功，其他都是失败)
     if (res.code === 0) {
-      // 3. 关键点：手动返回一个 rejected Promise
-      // 这会强制让代码跳到调用方的 .catch() 中
       return Promise.reject(new Error(res.msg || "业务出错"));
     }
 
-    // 业务成功，只返回数据部分
     return res;
   },
   (error: AxiosError<ApiResponse<null>>) => {
-    // 全局错误处理
     if (error.response) {
       const status = error.response.status;
       const errorMessage = error.response.data?.msg || "请求失败，请稍后重试";

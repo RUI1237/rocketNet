@@ -22,7 +22,6 @@ export const useAlarmStore = create<AlarmStore>((set) => ({
   fetchLogs: async (data: QuaryLogs) => {
     set({ isLoading: true });
     try {
-      // set({ logs: mockAlarmLogs, total: 20 });
       const res = await logsService.fetchLogs<AlarmLogType>(data, "/alarms/page");
       set({ logs: res.data.records, total: res.data.total });
     } catch (error) {
@@ -33,12 +32,9 @@ export const useAlarmStore = create<AlarmStore>((set) => ({
   },
 
   fetchLogDetail: async (id: number) => {
-    // const user = useAuthStore((state) => state.user);
-    // 模拟当前登录用户
     try {
       const res = await logsService.fetchLogDetail<AlarmLogType>(id, `/alarms/${id}`);
 
-      // 乐观更新本地状态
       set((state) => ({
         logs: state.logs.map((log) => (log.id === id ? { ...log, ...res.data } : log)),
       }));
@@ -49,12 +45,9 @@ export const useAlarmStore = create<AlarmStore>((set) => ({
     }
   },
   processAlarm: async (id: number, notes: string) => {
-    // 模拟当前登录用户
     const username = useAuthStore.getState().user?.username;
     try {
       await logsService.processLog({ id, notes }, `/alarms/${id}/process`);
-
-      // 乐观更新本地状态
       set((state) => ({
         logs: state.logs.map((log) =>
           log.id === id
@@ -63,7 +56,7 @@ export const useAlarmStore = create<AlarmStore>((set) => ({
                 status: "已处理",
                 acknowledgedBy: username,
                 notes: notes,
-                acknowledgedTime: new Date().toLocaleString(), // 简单模拟时间
+                acknowledgedTime: new Date().toLocaleString(),
               }
             : log
         ),
