@@ -4,9 +4,9 @@ export interface User {
   oldPassword?: string;
   token: string;
   email?: string;
-  // avatar?: File;
-  processedaAatarUrl?: string;
-  phone?: string;
+  avatar?: File;
+  avatarUrl?: string;
+  // phone?: string;
   registrationDate?: string;
   // role?: string;
 }

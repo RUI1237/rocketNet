@@ -6,9 +6,9 @@ export const imageService = {
    * 上传图片进行分析
    * @param data - 包含图片文件的 FormData
    */
-  analyzeImage: (data: FormData): Promise<Blob> => {
+  analyzeImage: (data: FormData): Promise<ApiResponse<string>> => {
     return apiClient.post("detection/image", data, {
-      responseType: "blob",
+      // responseType: "blob",
       headers: {
         "Content-Type": "multipart/form-data",
       },

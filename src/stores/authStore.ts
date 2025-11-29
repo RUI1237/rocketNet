@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import type { User } from "@/types";
 import { authService } from "@/services";
-import { base64ToFile } from "@/utils/fileUtils";
+// import { base64ToFile } from "@/utils/fileUtils";
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -35,11 +35,11 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
   getInf: async () => {
     let user = await authService.getInf(useAuthStore.getState().user?.username!);
-    if (user.data.processedaAatarUrl) {
-      user.data.processedaAatarUrl = URL.createObjectURL(
-        base64ToFile(user.data.processedaAatarUrl, "uploaded_avatar.png")
-      );
-    }
+    // if (user.data.processedaAatarUrl) {
+    //   user.data.processedaAatarUrl = URL.createObjectURL(
+    //     base64ToFile(user.data.processedaAatarUrl, "uploaded_avatar.png")
+    //   );
+    // }
 
     set((state) => ({
       user: state.user ? { ...state.user, ...user.data } : null,
@@ -47,6 +47,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   reSetInf: async (newUser) => {
+    console.log("reset newUser", newUser);
     const res = await authService.reSetInf(newUser);
     return res.msg;
   },

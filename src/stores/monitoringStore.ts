@@ -70,9 +70,9 @@ export const useMonitoringStore = create<MonitoringState>((set, get) => ({
     try {
       const res = await imageService.analyzeImage(formData);
       console.log("调试 analyzeImage 返回值:", res);
-
-      const blobUrl = window.URL.createObjectURL(res);
-      set({ processedImageUrl: blobUrl });
+      // const blobUrl = window.URL.createObjectURL(res);
+      // set({ processedImageUrl: blobUrl });
+      set({ processedImageUrl: res.data });
       message.success("图片分析完成！");
     } catch (error) {
       console.error("图片分析失败:", error);

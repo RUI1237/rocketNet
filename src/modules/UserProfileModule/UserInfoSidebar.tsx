@@ -23,16 +23,18 @@ const UserInfoSidebar: React.FC<UserInfoSidebarProps> = () => {
     // console.log("都会受到噶");
     // await reSetInf({ ...user!, avatar: file });
     // await getInf();
-    const reader = new FileReader()!;
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      await reSetInf({ ...user!, processedaAatarUrl: reader.result as string });
-      await getInf();
-      console.log("头像更新成功");
-    };
-    return false; // 阻止自动上传，仅做前端预览演示
+    // const reader = new FileReader()!;
+    // reader.readAsDataURL(file);
+    // reader.onload = async () => {
+
+    await reSetInf({ ...user!, avatar: file });
+
+    await getInf();
+    console.log("userinf", user);
+    console.log("头像更新成功");
+    // };
+    // return false; // 阻止自动上传，仅做前端预览演示
   };
-  console.log("userinf", user?.processedaAatarUrl);
   return (
     <div className={styles.leftSidebar}>
       <div className={styles.avatarUploader}>
@@ -42,8 +44,8 @@ const UserInfoSidebar: React.FC<UserInfoSidebarProps> = () => {
               <CameraOutlined />
             </div>
             <Avatar
-              src={user!.processedaAatarUrl || undefined}
-              icon={!user!.processedaAatarUrl && <UserOutlined style={{ fontSize: 70 }} />}
+              src={user!.avatarUrl || undefined}
+              icon={!user!.avatarUrl && <UserOutlined style={{ fontSize: 70 }} />}
               className={styles.avatarIcon}
             />
           </div>
@@ -61,12 +63,12 @@ const UserInfoSidebar: React.FC<UserInfoSidebarProps> = () => {
           </span>
           <span className={styles.value}>{user!.email}</span>
         </div>
-        <div className={styles.infoItem}>
+        {/* <div className={styles.infoItem}>
           <span className={styles.label}>
             <ApartmentOutlined /> 联系方式
           </span>
           <span className={styles.value}>{user!.phone}</span>
-        </div>
+        </div> */}
         <div className={styles.infoItem}>
           <span className={styles.label}>
             <CalendarOutlined /> 注册日期

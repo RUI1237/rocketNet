@@ -17,14 +17,14 @@ interface BasicInfoFormProps {
 
 const BasicInfoForm: React.FC<BasicInfoFormProps> = () => {
   const { user, reSetInf } = useAuthStore((state) => state);
-  console.log("basicl", user);
+  // console.log("basicl", user);
   const [form] = Form.useForm();
 
   useEffect(() => {
     if (user) {
       form.setFieldsValue({
         username: user.username,
-        phone: user.phone,
+        // phone: user.phone,
         email: user.email,
       });
     }
@@ -44,16 +44,16 @@ const BasicInfoForm: React.FC<BasicInfoFormProps> = () => {
         onFinish={async (data) => await reSetInf({ ...user, ...data })}
       >
         <Row gutter={40}>
-          <Col span={12}>
+          <Col span={24}>
             <Form.Item name="username" label="用户昵称">
               <Input prefix={<UserOutlined />} />
             </Form.Item>
           </Col>
-          <Col span={12}>
+          {/* <Col span={12}>
             <Form.Item name="phone" label="联系电话">
               <Input prefix={<PhoneOutlined />} />
             </Form.Item>
-          </Col>
+          </Col> */}
           <Col span={24}>
             <Form.Item
               name="email"

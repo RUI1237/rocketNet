@@ -66,10 +66,10 @@ const MonitoringModule: React.FC = () => {
       // 这里的逻辑会在两种情况下执行：
       // 1. previewImage 发生变化前（比如你切到了下一张图，它会把上一张的 URL 销毁）
       // 2. 组件卸载时（比如你跳到了别的页面）
-      if (processedImageUrl && processedImageUrl.startsWith("blob:")) {
-        console.log("正在释放内存:", processedImageUrl);
-        window.URL.revokeObjectURL(processedImageUrl);
-      }
+      // if (processedImageUrl && processedImageUrl.startsWith("blob:")) {
+      //   console.log("正在释放内存:", processedImageUrl);
+      //   window.URL.revokeObjectURL(processedImageUrl);
+      // }
     };
   }, [processedImageUrl]);
   return (

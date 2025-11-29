@@ -6,9 +6,8 @@ import App from "./App";
 async function enableMocking() {
   // 1. 检查环境：如果是生产环境 (production)，直接跳过
   // Vite 使用 import.meta.env.PROD 或 import.meta.env.DEV
-  if (import.meta.env.PROD) {
-    return;
-  }
+  return;
+  if (import.meta.env.PROD) return;
 
   // 2. 动态导入 browser.ts
   // 这样可以确保 mock 代码不会被打包到生产环境的 bundle 中

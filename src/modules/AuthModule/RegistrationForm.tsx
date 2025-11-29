@@ -113,14 +113,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
           <Input.Password prefix={<LockOutlined />} placeholder="请再次输入密码" size="large" />
         </Form.Item>
 
-        {/* 3. 【新增】手机号字段 */}
+        {/* 3. 【新增】手机号字段
         <Form.Item
           label="手机号"
           name="phone"
-          rules={[
-            { required: true, message: "请输入您的手机号!" },
-            { pattern: /^1[3-9]\d{9}$/, message: "请输入有效的11位手机号码!" },
-          ]}
+          rules={[{ pattern: /^1[3-9]\d{9}$/, message: "请输入有效的11位手机号码!" }]}
         >
           <Input
             prefix={<MobileOutlined />}
@@ -128,7 +125,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSwitchToLogin }) 
             size="large"
             maxLength={11}
           />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           label="电子邮箱"

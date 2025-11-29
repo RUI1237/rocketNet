@@ -14,7 +14,7 @@ const UserProfileModule: React.FC = () => {
   useEffect(() => {
     getInf();
     return () => {
-      if (user?.processedaAatarUrl) URL.revokeObjectURL(user?.processedaAatarUrl);
+      if (user?.avatarUrl) URL.revokeObjectURL(user?.avatarUrl);
     };
   }, []);
 
