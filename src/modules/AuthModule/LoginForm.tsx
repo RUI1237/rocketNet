@@ -1,8 +1,9 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Modal } from "antd";
 import { ApiOutlined, UserOutlined, LockOutlined, UserAddOutlined } from "@ant-design/icons";
 import styles from "@/styles/AuthForms.module.scss";
 import { useAuthStore } from "@/stores";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 interface LoginFormProps {
   onSwitchToRegister: () => void;
@@ -10,6 +11,7 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
   const [form] = Form.useForm();
+  const [modal, contextHolder] = Modal.useModal();
 
   const onLoginSuccess = useAuthStore((state) => state.login);
 
@@ -19,23 +21,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
     try {
       const res = await onLoginSuccess(values);
 
-      if (res === "密码错误") {
-        form.setFields([
-          {
-            name: "password", // 对应 Form.Item 的 name
-            errors: ["密码错误，请检查后重试"], // 显示的红色错误文字
-          },
-        ]);
-      } else if (res === "没有注册该用户") {
-        form.setFields([
-          {
-            name: "username", // 对应 Form.Item 的 name
-            errors: ["该用户未注册"], // 显示的红色错误文字
-          },
-        ]);
-      } else {
-        console.log("登录成功或未知状态");
-      }
+      modal.success({
+        className: "theme-modal",
+        centered: true,
+        title: "登录失败",
+        content: getErrorMessage(res),
+      });
     } catch (error) {
       console.error("登录过程发生意外错误:", error);
     }
@@ -79,6 +70,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
         </Form.Item>
 
         <Form.Item>
+          {contextHolder}
           <Button type="primary" htmlType="submit" className={styles.submitButton}>
             授 权 访 问
           </Button>

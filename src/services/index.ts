@@ -3,3 +3,4 @@
 export * from "./auth.service";
 export * from "./log.service";
 export * from "./image.service";
+export * from "./dataAnalysis.service";

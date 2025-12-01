@@ -12,7 +12,7 @@ const initialUser: User = {
   username: "test_user",
   token: "mock-jwt-token-123456",
   email: "test@example.com",
-  phone: "13800138000",
+  // phone: "13800138000",
   registrationDate: "2023-01-01",
   // 注意：数据库里暂时不存 avatar，我们在 get 时动态生成
 };

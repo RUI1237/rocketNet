@@ -1,0 +1,145 @@
+@use "./Modules.module.scss" as modules;
+
+.dashboardRoot {
+  // @extend modules.moduleContainer;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+}
+
+// 顶部四个 KPI 卡片
+.kpiRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kpiCard {
+  background: rgba(7, 5, 20, 0.9);
+  border-radius: 10px;
+  padding: 16px 20px;
+  border: 1px solid rgba(0, 221, 255, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kpiLabel {
+  font-size: 12px;
+  opacity: 0.65;
+  color: rgba(31, 219, 204, 0.9);
+}
+
+.kpiValue {
+  font-family:
+    "Orbitron",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #00ddff;
+}
+
+// 中部图表区域
+.chartsRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: rgba(12, 9, 35, 0.85);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 221, 255, 0.2);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+
+  .title {
+    color: #00ddff;
+    font-weight: 500;
+  }
+
+  .subTitle {
+    opacity: 0.6;
+    font-size: 12px;
+  }
+}
+
+.chartBody {
+  flex: 1;
+  min-height: 220px;
+}
+
+// 最新报警图片墙
+.latestAlarmsGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.alarmCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.4);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.alarmMeta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 6px 8px;
+  font-size: 11px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+}
