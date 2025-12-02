@@ -245,7 +245,8 @@ $font-tech: "Orbitron", sans-serif; // 科技字体
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.3); // 图片区稍微深一点
-  max-height: 90vh;
+  max-height: 300px;
+  max-width: 500px;
   position: relative;
 
   img {

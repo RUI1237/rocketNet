@@ -137,8 +137,9 @@ const PredictionLogModule: React.FC = () => {
       width: "10%",
       render: (result: string) => {
         // 假设结果是 "正常" 或 "异常"
-        const isAbnormal = result === "异常" || result === "Abnormal";
-        const color = isAbnormal ? "volcano" : "green";
+        let color = "green";
+        if (result === "预测失败") color = "red";
+        else if (result === "触发报警") color = "orange";
         return result ? <Tag color={color}>{result}</Tag> : "-";
       },
     },
@@ -178,7 +179,6 @@ const PredictionLogModule: React.FC = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100%", // 确保容器高度
       }}
     >
       {/* --- 头部区域 --- */}
@@ -215,7 +215,7 @@ const PredictionLogModule: React.FC = () => {
             pageSize: tableParams.pageSize,
             total: total,
             // showTotal: (total) => `共 ${total} 条记录`,
-            // showSizeChanger: true,
+            // showSizeChanger: false,
             position: ["topRight"],
           }}
           scroll={{ y: "calc(100vh - 390px)" }}

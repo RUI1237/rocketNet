@@ -30,14 +30,14 @@ export const KpiOverview: React.FC<KpiOverviewProps> = ({ kpi }) => {
         <div className={styles.kpiLabel}>累计拦截超规石块</div>
         <div className={styles.kpiValue}>{kpi?.totalAlarms ?? "--"}</div>
         <Text type="secondary" style={{ fontSize: 12, color: "#d9d9d9" }}>
-          展示系统上线以来帮助拦截的超规风险总量
+          系统上线以来帮助拦截的超规风险总量
         </Text>
       </div>
       <div className={styles.kpiCard}>
         <div className={styles.kpiLabel}>待处理报警</div>
         <div className={styles.kpiValue}>{kpi?.pendingAlarms ?? "--"}</div>
         <Text type="secondary" style={{ fontSize: 12, color: "#d9d9d9" }}>
-          当前仍在排队的告警数量，提示运维压力
+          当前仍在排队的告警数量
         </Text>
       </div>
     </div>

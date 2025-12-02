@@ -4,6 +4,7 @@ import { EyeOutlined } from "@ant-design/icons";
 import type { PredictionLogType, PredictionEvent } from "@/types"; // 确保引入了父类型
 import type { ColumnsType } from "antd/es/table";
 import styles from "@/styles/Log.module.scss";
+import type { Color } from "echarts";
 
 interface PredictionDetailProps {
   record: PredictionLogType; // 修改这里：接收整个记录对象，不仅仅是 events 数组
@@ -73,7 +74,12 @@ const PredictionDetail: React.FC<PredictionDetailProps> = ({ record, onViewImage
           {record.predictionResult ? (
             <span
               style={{
-                color: record.predictionResult === "异常" ? "#cf1322" : "#389e0d",
+                color:
+                  record.predictionResult === "预测失败"
+                    ? "red"
+                    : record.predictionResult === "触发报警"
+                      ? "orange"
+                      : "green",
                 fontWeight: "bold",
               }}
             >

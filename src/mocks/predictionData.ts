@@ -26,7 +26,7 @@ const allPredictions: PredictionLogType[] = Array.from({ length: 50 }).map((_, i
     creationTime: faker.date.recent({ days: 7 }).toLocaleString(),
     taskStatus: status,
     // 只有完成的任务才有预测结果
-    predictionResult: isCompleted ? faker.helpers.arrayElement(["正常", "异常"]) : undefined,
+    predictionResult: isCompleted ? faker.helpers.arrayElement(["正常", "触发报警"]) : undefined,
     events: events,
   };
 });

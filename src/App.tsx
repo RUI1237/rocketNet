@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Navigate } from "react-router-dom";
 import { ConfigProvider, theme } from "antd";
 import { AppRouter } from "@/router"; // 1. 引入我们新的路由组件
 import "antd/dist/reset.css";
 import { useAuthStore } from "./stores";
 
 function App() {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const handleLoginSuccess = () => setIsLoggedIn(true);
-  // const handleLogout = () => setIsLoggedIn(false);
-  // const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  // const token = sessionStorage.getItem("token");
 
+  // if (!token) {
+  //   return <Navigate to="/login" replace state={{ from: location }} />;
+  // }
   return (
     <ConfigProvider
       theme={{

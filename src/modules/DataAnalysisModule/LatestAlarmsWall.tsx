@@ -80,6 +80,9 @@ export const LatestAlarmsWall: React.FC<LatestAlarmsWallProps> = ({ latestAlarms
             padding: 0,
             background: "transparent",
             boxShadow: "none",
+            transform: "scale(1.5)", // 放大1.5倍
+            // 为了防止溢出可考虑加 transformOrigin
+            transformOrigin: "center center",
           },
           body: {
             padding: 0,

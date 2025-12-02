@@ -206,3 +206,123 @@ $font-tech: "Orbitron", sans-serif;
     font-family: monospace;
   }
 }
+
+/* =========================================
+   处理备注弹窗 (Handle Note Modal) 样式
+   ========================================= */
+
+// 弹窗标题
+.handleModalTitle {
+  font-family: "Orbitron", sans-serif; // 确保你有引入这个字体，如果没有则回退 sans-serif
+  color: #00ddff;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(0, 221, 255, 0.2);
+  padding-bottom: 12px;
+
+  // 装饰性光标块 (左侧发光条)
+  &::before {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 18px;
+    background: #00ddff;
+    box-shadow: 0 0 8px rgba(0, 221, 255, 0.5);
+  }
+}
+
+// 自定义 Form Label 样式
+.techFormLabel {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: block;
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+// 科技风输入框
+.techInput {
+  background: rgba(0, 0, 0, 0.3) !important; // 覆盖 ant 默认
+  border: 1px solid rgba(0, 221, 255, 0.3) !important;
+  color: #fff !important;
+  border-radius: 6px;
+  font-family: monospace; // 等宽字体适合备注
+  transition: all 0.3s;
+  box-shadow: none !important; // 去掉 ant 默认发光
+  resize: none !important; // 禁止拖动大小
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+    font-style: italic;
+  }
+
+  &:focus,
+  &:hover {
+    border-color: #00ddff !important;
+    box-shadow: 0 0 15px rgba(0, 221, 255, 0.15) !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+  }
+}
+
+// 自定义 Footer 按钮区
+.techFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+// 通用科技按钮
+.techBtn {
+  background: transparent;
+  border: 1px solid rgba(0, 221, 255, 0.3);
+  color: #00ddff;
+  padding: 8px 24px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 4px;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1px;
+  outline: none;
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 221, 255, 0.2);
+    border-color: #00ddff;
+  }
+}
+
+// 主操作按钮 (实心/发光)
+.techBtnPrimary {
+  @extend .techBtn;
+  background: rgba(0, 221, 255, 0.1);
+  border-color: #00ddff;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(0, 221, 255, 0.5);
+
+  &:hover {
+    background: #00ddff;
+    color: #1d103f; // 悬停变黑字
+    box-shadow: 0 0 20px rgba(0, 221, 255, 0.6);
+  }
+}
+
+// 取消按钮 (灰色/半透明)
+.techBtnCancel {
+  @extend .techBtn;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.5);
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.05);
+  }
+}

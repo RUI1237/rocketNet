@@ -19,15 +19,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
     console.log("表单提交的数据: ", values);
 
     try {
-      const res = await onLoginSuccess(values);
-
-      modal.success({
+      await onLoginSuccess(values);
+    } catch (error) {
+      modal.warning({
         className: "theme-modal",
         centered: true,
         title: "登录失败",
-        content: getErrorMessage(res),
+        content: getErrorMessage(error),
       });
-    } catch (error) {
       console.error("登录过程发生意外错误:", error);
     }
   };

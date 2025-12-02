@@ -27,14 +27,43 @@ const SecuritySettingsForm: React.FC<SecuritySettingsFormProps> = () => {
     passForm.resetFields(); // 提交成功后重置表单
   };
 
+  // 账户安全卡片，点击非表单区域时清除验证报错
   return (
-    <div className={styles.card}>
+    <div
+      className={styles.card}
+      // onClick={(e) => {
+      //   // 如果点击的是card区域但不是Form中的元素，则清除所有表单校验
+      //   // 判断点击的目标是否在表单内
+      //   // 只在点击卡片时（不在表单内），并且表单有规则校验报错时才清除
+      //   const formElem = document.querySelector(`.${styles.bigForm}`);
+      //   if (formElem && !(formElem as HTMLElement).contains(e.target as Node)) {
+      //     // 只在有显示的校验报错时(即规则还在)清除显示
+      //     const errorFields = passForm
+      //       .getFieldsError(["oldPassword", "newPassword", "confirmPassword"])
+      //       .filter(({ errors }) => errors.length > 0)
+      //       .map(({ name }) => ({
+      //         name,
+      //         errors: [],
+      //       }));
+      //     if (errorFields.length) {
+      //       passForm.setFields(errorFields);
+      //     }
+      //   }
+      // }}
+      style={{ position: "relative" }}
+    >
       <div className={styles.cardHeader}>
         <SafetyCertificateOutlined style={{ color: "#d946ef" }} />
         <h3>账户安全</h3>
       </div>
 
-      <Form form={passForm} layout="vertical" className={styles.bigForm} onFinish={handleFinish}>
+      <Form
+        form={passForm}
+        layout="vertical"
+        className={styles.bigForm}
+        onFinish={handleFinish}
+        validateTrigger={["onSubmit"]}
+      >
         <Row gutter={40}>
           <Col span={24}>
             <Form.Item name="oldPassword" label="验证旧密码" rules={[{ required: true }]}>
@@ -42,7 +71,15 @@ const SecuritySettingsForm: React.FC<SecuritySettingsFormProps> = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="newPassword" label="新密码" rules={[{ required: true }]}>
+            <Form.Item
+              name="newPassword"
+              label="新密码"
+              rules={[
+                { required: true, message: "请输入新密码!" },
+                { min: 6, message: "密码长度至少为 6 位" },
+                { pattern: /^(?=.*[a-zA-Z])(?=.*\d).+$/, message: "密码需同时包含字母和数字" },
+              ]}
+            >
               <Input.Password prefix={<KeyOutlined />} placeholder="设置新密码" />
             </Form.Item>
           </Col>

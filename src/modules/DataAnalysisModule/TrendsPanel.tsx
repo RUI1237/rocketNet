@@ -101,7 +101,7 @@ export const TrendsPanel: React.FC<TrendsPanelProps> = ({ trends24h, loading }) 
           24 小时任务 / 报警趋势
         </span>
         <span className="subTitle" style={{ color: "#d9d9d9" }}>
-          体现系统 24 小时不间断智能监控能力
+          系统 24 小时不间断智能监控能力
         </span>
       </div>
       <div className={styles.chartBody}>

@@ -61,7 +61,7 @@ export const AppRouter: React.FC<AppRouterProps> = () => {
     },
     {
       path: "/*",
-      element: isLoggedIn ? <AuthenticatedRoutes /> : <Navigate to="/login" />,
+      element: isLoggedIn ? <AuthenticatedRoutes /> : <Navigate to="/login" replace />,
     },
   ]);
   return routes;

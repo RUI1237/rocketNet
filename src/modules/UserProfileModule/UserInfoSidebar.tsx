@@ -44,8 +44,8 @@ const UserInfoSidebar: React.FC<UserInfoSidebarProps> = () => {
               <CameraOutlined />
             </div>
             <Avatar
-              src={user!.avatarUrl || undefined}
-              icon={!user!.avatarUrl && <UserOutlined style={{ fontSize: 70 }} />}
+              src={user?.avatarUrl || undefined}
+              icon={!user?.avatarUrl && <UserOutlined style={{ fontSize: 70 }} />}
               className={styles.avatarIcon}
             />
           </div>
@@ -53,7 +53,7 @@ const UserInfoSidebar: React.FC<UserInfoSidebarProps> = () => {
       </div>
 
       <div className={styles.userInfo}>
-        <h2>{user!.username}</h2>
+        <h2>{user?.username}</h2>
       </div>
 
       <div className={styles.infoList}>
@@ -61,7 +61,7 @@ const UserInfoSidebar: React.FC<UserInfoSidebarProps> = () => {
           <span className={styles.label}>
             <NumberOutlined /> 员工邮箱
           </span>
-          <span className={styles.value}>{user!.email}</span>
+          <span className={styles.value}>{user?.email}</span>
         </div>
         {/* <div className={styles.infoItem}>
           <span className={styles.label}>
@@ -73,7 +73,7 @@ const UserInfoSidebar: React.FC<UserInfoSidebarProps> = () => {
           <span className={styles.label}>
             <CalendarOutlined /> 注册日期
           </span>
-          <span className={styles.value}>{user!.registrationDate}</span>
+          <span className={styles.value}>{user?.registrationDate}</span>
         </div>
       </div>
     </div>

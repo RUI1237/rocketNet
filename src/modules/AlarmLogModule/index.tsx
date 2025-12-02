@@ -205,10 +205,11 @@ const AlarmLogModule: React.FC = () => {
             pageSize: tableParams.pageSize,
             total: total, // 这里使用 Store 里的总数，而不是 logs.length
             // showTotal: (total) => `共 ${total} 条记录`,
-            showSizeChanger: false,
+            showSizeChanger: true,
+
             position: ["topRight"],
           }}
-          scroll={{ y: "100%" }}
+          scroll={{ y: "calc(100vh - 390px)" }}
           expandable={{
             expandedRowKeys: expandedRowKeys,
             onExpand: async (_, record) => await toggleExpand(record.id),

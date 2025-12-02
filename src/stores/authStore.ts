@@ -13,7 +13,7 @@ interface AuthState {
 }
 
 const useAuthStore = create<AuthState>((set, get) => ({
-  isLoggedIn: false,
+  isLoggedIn: !!sessionStorage.getItem("authToken"),
   user: null,
 
   /**
@@ -24,12 +24,16 @@ const useAuthStore = create<AuthState>((set, get) => ({
     console.log("正在登录...", userData);
     const res = await authService.login(userData);
     console.log(res);
-    if (res.code) set({ isLoggedIn: true, user: { ...userData, token: res.data, password: "" } });
+    if (res.code) {
+      sessionStorage.setItem("authToken", res.data);
+      set({ isLoggedIn: true, user: { ...userData, token: res.data, password: "" } });
+    }
     console.log(get().user);
     return res.msg;
   },
 
   logout: () => {
+    sessionStorage.removeItem("authToken");
     set({ isLoggedIn: false, user: null });
   },
 
