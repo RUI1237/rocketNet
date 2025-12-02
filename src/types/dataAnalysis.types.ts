@@ -40,5 +40,3 @@ export interface DataAnalysisLatestAlarmSnapshot {
   measuredLength: number;
   alarmTime: string;
 }
-
-

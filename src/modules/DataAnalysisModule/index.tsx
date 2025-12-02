@@ -46,10 +46,9 @@ const DataAnalysisModule: React.FC = () => {
             sizeDistribution={sizeDistribution}
             loading={loadingSizeDistribution}
           />
+          <LatestAlarmsWall latestAlarms={latestAlarms} loading={loadingLatestAlarms} />
         </div>
       </div>
-
-      {/* <LatestAlarmsWall latestAlarms={latestAlarms} loading={loadingLatestAlarms} /> */}
 
       {isAnyLoading && (
         <div

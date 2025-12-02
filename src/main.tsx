@@ -22,8 +22,8 @@ async function enableMocking() {
 // 4. 等待 MSW 启动后再渲染 App
 enableMocking().then(() => {
   createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-      <App />
-    </StrictMode>
+    // <StrictMode>
+    <App />
+    // </StrictMode>
   );
 });
