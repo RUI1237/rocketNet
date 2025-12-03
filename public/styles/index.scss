@@ -1,1 +1,13 @@
 // @import "./message";
+/* index.css / global.css */
+
+/* 强制覆盖 Message 的背景和文字颜色 */
+.ant-message .ant-message-notice-content {
+  background-color: rgb(49, 48, 48) !important; /* 你的纯黑背景 */
+  color: #dddddd !important; /* 你的深红文字 */
+}
+
+/* 如果你想让图标也变成深红色，加上这一句 */
+// .ant-message .ant-message-notice-content .anticon {
+//   color: #cecece !important;
+// }

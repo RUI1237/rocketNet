@@ -35,11 +35,10 @@ userDatabase.set("test_user", initialUser);
 export const handlers = [
   // --- Login ---
   http.get("/user/login", async ({ request }) => {
-    const body = (await request.json()) as {
-      username: string;
-      password?: string;
-    };
+    const url = new URL(request.url);
 
+    // 2. 从查询参数中获取数据
+    const username = url.searchParams.get("username");
     // 实际场景可能需要验证密码，这里简化
     // 我们可以从 URL 获取参数来模拟不同用户登录
     // 默认返回 test_user 的 token
@@ -48,7 +47,7 @@ export const handlers = [
     return HttpResponse.json<ApiResponse<User>>({
       code: 1,
       msg: "success",
-      data: user ? { ...user } : { username: body.username, token: "default-token" },
+      data: user ? { ...user } : { username: username, token: "default-token" },
     });
   }),
 

@@ -1,17 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
-import { Button, ConfigProvider, message, theme } from "antd";
+import { ConfigProvider, theme } from "antd";
 import { AppRouter } from "@/router"; // 1. 引入我们新的路由组件
 import "antd/dist/reset.css";
 
 function App() {
-  // const token = sessionStorage.getItem("token");
-
-  // if (!token) {
-  //   return <Navigate to="/login" replace state={{ from: location }} />;
-  // }
-  const handleError = () => {
-    message.error("系统入侵警告：数据获取失败");
-  };
   return (
     <ConfigProvider
       theme={{
@@ -28,6 +20,10 @@ function App() {
         components: {
           Table: { headerBg: "#150c30" },
           Modal: { headerBg: "#1d103f" },
+          // Message: {
+          //   colorBgElevated: "rgb(0, 0, 0)", // 这才是悬浮容器的背景色
+          //   colorText: "#5c0011",
+          // },
         },
       }}
     >
@@ -35,9 +31,6 @@ function App() {
       <BrowserRouter>
         {/* 2. 在这里渲染 AppRouter，并传入所需的状态和函数 */}
         <AppRouter />
-        {/* <Button type="primary" danger onClick={handleError}>
-          模拟获取日志失败
-        </Button> */}
       </BrowserRouter>
     </ConfigProvider>
   );

@@ -1,170 +1,170 @@
-/* ==========================================================
-   Ant Design Message - Final Corrected HUD
-   修复点：
-   1. 屏蔽 Antd 原生动画干扰 (解决向右下推的问题)
-   2. 强制坐标系：Start(-X, +Y) -> End(0,0)
-   3. 布局：绝对底部对齐，新消息把旧消息顶上去
-   ========================================================== */
+// /* ==========================================================
+//    Ant Design Message - Final Corrected HUD
+//    修复点：
+//    1. 屏蔽 Antd 原生动画干扰 (解决向右下推的问题)
+//    2. 强制坐标系：Start(-X, +Y) -> End(0,0)
+//    3. 布局：绝对底部对齐，新消息把旧消息顶上去
+//    ========================================================== */
 
-// --- 变量定义 ---
-$hud-bg: rgba(5, 8, 12, 0.95);
-$hud-border: rgba(255, 255, 255, 0.12);
-$hud-radius: 2px;
+// // --- 变量定义 ---
+// $hud-bg: rgba(5, 8, 12, 0.95);
+// $hud-border: rgba(255, 255, 255, 0.12);
+// $hud-radius: 2px;
 
-// --- 状态色 ---
-$c-error: #ff3b30;
-$c-success: #39ff14;
-$c-warning: #ffcc00;
+// // --- 状态色 ---
+// $c-error: #ff3b30;
+// $c-success: #39ff14;
+// $c-warning: #ffcc00;
 
-// --- 混合器 ---
-@mixin hud-skin($color) {
-  // 左侧光条
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 4px;
-    background: $color;
-    box-shadow: 2px 0 12px rgba($color, 0.6);
-  }
-  // 图标
-  .anticon {
-    color: $color !important;
-    text-shadow: 0 0 10px rgba($color, 0.6);
-  }
-}
+// // --- 混合器 ---
+// @mixin hud-skin($color) {
+//   // 左侧光条
+//   &::before {
+//     content: "";
+//     position: absolute;
+//     top: 0;
+//     bottom: 0;
+//     left: 0;
+//     width: 4px;
+//     background: $color;
+//     box-shadow: 2px 0 12px rgba($color, 0.6);
+//   }
+//   // 图标
+//   .anticon {
+//     color: $color !important;
+//     text-shadow: 0 0 10px rgba($color, 0.6);
+//   }
+// }
 
-// --- 核心重置 ---
-.ant-message {
-  // 1. 强制固定在左下角
-  position: fixed !important;
-  // top: auto !important;
-  // right: auto !important;
-  bottom: 200px !important;
-  left: 300px !important;
+// // --- 核心重置 ---
+// .ant-message {
+//   // 1. 强制固定在左下角
+//   position: fixed !important;
+//   // top: auto !important;
+//   // right: auto !important;
+//   bottom: 200px !important;
+//   left: 300px !important;
 
-  // 2. 布局逻辑：垂直排列，底部对齐
-  display: flex !important;
+//   // 2. 布局逻辑：垂直排列，底部对齐
+//   display: flex !important;
 
-  /* 1. 垂直排列，新消息在最后 */
-  flex-direction: column !important;
+//   /* 1. 垂直排列，新消息在最后 */
+//   flex-direction: column !important;
 
-  /* 2. 【关键修正】垂直方向靠底部对齐 */
-  /* 这样当容器高度变化时，内容是沉底的，而不是浮在顶部的 */
-  justify-content: flex-end !important;
+//   /* 2. 【关键修正】垂直方向靠底部对齐 */
+//   /* 这样当容器高度变化时，内容是沉底的，而不是浮在顶部的 */
+//   justify-content: flex-end !important;
 
-  /* 3. 水平方向靠左对齐 */
-  align-items: flex-start !important;
+//   /* 3. 水平方向靠左对齐 */
+//   align-items: flex-start !important;
 
-  width: auto !important;
-  height: auto !important;
-  // pointer-events: none;
-  z-index: 10000;
+//   width: auto !important;
+//   height: auto !important;
+//   // pointer-events: none;
+//   z-index: 10000;
 
-  // 3. 屏蔽 Antd 原生动画容器的影响
-  .ant-message-notice {
-    width: auto !important;
-    padding: 0 !important;
-    margin-bottom: 0 !important;
-    margin-top: 12px !important; // 给上面留空隙
-    text-align: left;
-    pointer-events: auto;
+//   // 3. 屏蔽 Antd 原生动画容器的影响
+//   .ant-message-notice {
+//     width: auto !important;
+//     padding: 0 !important;
+//     margin-bottom: 0 !important;
+//     margin-top: 12px !important; // 给上面留空隙
+//     text-align: left;
+//     pointer-events: auto;
 
-    // 【关键】禁止 Antd 默认的 transition 干扰我们的 animation
-    transition: none !important;
+//     // 【关键】禁止 Antd 默认的 transition 干扰我们的 animation
+//     transition: none !important;
 
-    // --- 内容卡片 ---
-    &-content {
-      position: relative;
-      display: flex;
-      align-items: center;
+//     // --- 内容卡片 ---
+//     &-content {
+//       position: relative;
+//       display: flex;
+//       align-items: center;
 
-      // 1. 放大尺寸：更宽、更厚实
-      padding: 18px 36px 18px 28px;
-      min-width: 380px;
+//       // 1. 放大尺寸：更宽、更厚实
+//       padding: 18px 36px 18px 28px;
+//       min-width: 380px;
 
-      // 2. 字体：大号、宽间距、微发光
-      font-family: "Segoe UI", "Roboto", sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      color: #fff !important;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); // 文字自带辉光
+//       // 2. 字体：大号、宽间距、微发光
+//       font-family: "Segoe UI", "Roboto", sans-serif;
+//       font-size: 16px;
+//       font-weight: 600;
+//       letter-spacing: 1.5px;
+//       color: #fff !important;
+//       text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); // 文字自带辉光
 
-      // --- 【核心：透明全息玻璃配方】 ---
+//       // --- 【核心：透明全息玻璃配方】 ---
 
-      // 背景：极淡的蓝黑色 (30% 不透明度)，绝大部分是透明的
-      background: rgba(10, 20, 30, 0.3) !important;
+//       // 背景：极淡的蓝黑色 (30% 不透明度)，绝大部分是透明的
+//       background: rgba(10, 20, 30, 0.3) !important;
 
-      // 模糊：把背后的网页内容模糊化 (这是高级感的关键)
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+//       // 模糊：把背后的网页内容模糊化 (这是高级感的关键)
+//       backdrop-filter: blur(20px);
+//       -webkit-backdrop-filter: blur(20px);
 
-      // 边框：模拟光线打在玻璃边缘
-      border: 1px solid rgba(255, 255, 255, 0.1) !important; // 基础微弱边框
-      border-top: 1px solid rgba(255, 255, 255, 0.5) !important; // 顶部高光 (模拟顶灯反射)
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important; // 底部暗边
+//       // 边框：模拟光线打在玻璃边缘
+//       border: 1px solid rgba(255, 255, 255, 0.1) !important; // 基础微弱边框
+//       border-top: 1px solid rgba(255, 255, 255, 0.5) !important; // 顶部高光 (模拟顶灯反射)
+//       border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important; // 底部暗边
 
-      border-radius: 4px !important;
+//       border-radius: 4px !important;
 
-      // 光影：
-      // 层1 (inset): 内部的微弱反光，模拟玻璃厚度
-      // 层2: 外部的深色投影，让它浮起来
-      box-shadow:
-        inset 0 0 20px rgba(255, 255, 255, 0.05),
-        0 10px 40px rgba(0, 0, 0, 0.4) !important;
+//       // 光影：
+//       // 层1 (inset): 内部的微弱反光，模拟玻璃厚度
+//       // 层2: 外部的深色投影，让它浮起来
+//       box-shadow:
+//         inset 0 0 20px rgba(255, 255, 255, 0.05),
+//         0 10px 40px rgba(0, 0, 0, 0.4) !important;
 
-      overflow: hidden;
+//       overflow: hidden;
 
-      // 动画
-      animation: hud-slide-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-      opacity: 0;
-    }
-  }
+//       // 动画
+//       animation: hud-slide-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+//       opacity: 0;
+//     }
+//   }
 
-  // --- 状态皮肤 ---
-  .ant-message-error {
-    @include hud-skin($c-error);
-  }
-  .ant-message-success {
-    @include hud-skin($c-success);
-  }
-  .ant-message-warning {
-    @include hud-skin($c-warning);
-  }
-  .ant-message-info,
-  .ant-message-loading {
-    @include hud-skin($c-success);
-  }
-}
+//   // --- 状态皮肤 ---
+//   .ant-message-error {
+//     @include hud-skin($c-error);
+//   }
+//   .ant-message-success {
+//     @include hud-skin($c-success);
+//   }
+//   .ant-message-warning {
+//     @include hud-skin($c-warning);
+//   }
+//   .ant-message-info,
+//   .ant-message-loading {
+//     @include hud-skin($c-success);
+//   }
+// }
 
-// --- 动画关键帧 (物理学修正版) ---
-@keyframes hud-slide-in {
-  0% {
-    opacity: 0;
-    // X轴: -50px (在左边)
-    // Y轴: 50px  (在下面)
-    // 结果 = 左下角
-    transform: translate(-500px, 500px) scale(0.9);
-  }
+// // --- 动画关键帧 (物理学修正版) ---
+// @keyframes hud-slide-in {
+//   0% {
+//     opacity: 0;
+//     // X轴: -50px (在左边)
+//     // Y轴: 50px  (在下面)
+//     // 结果 = 左下角
+//     transform: translate(-500px, 500px) scale(0.9);
+//   }
 
-  100% {
-    opacity: 1;
-    // 回到原点
-    transform: translate(0, 0) scale(1);
-  }
-}
+//   100% {
+//     opacity: 1;
+//     // 回到原点
+//     transform: translate(0, 0) scale(1);
+//   }
+// }
 
---- 【暴力补丁】覆盖 Antd 可能存在的默认动画 ---
-只要类名里包含 move-up 或 move-down，全部强制隐藏或重置，防止“向右下推动”的残影
-:global {
-  .ant-message-move-up-leave,
-  .ant-message-move-up-leave-active,
-  .ant-message-move-down-leave,
-  .ant-message-move-down-leave-active {
-    display: none !important;
-    animation: none !important;
-  }
-}
+// --- 【暴力补丁】覆盖 Antd 可能存在的默认动画 ---
+// 只要类名里包含 move-up 或 move-down，全部强制隐藏或重置，防止“向右下推动”的残影
+// :global {
+//   .ant-message-move-up-leave,
+//   .ant-message-move-up-leave-active,
+//   .ant-message-move-down-leave,
+//   .ant-message-move-down-leave-active {
+//     display: none !important;
+//     animation: none !important;
+//   }
+// }
