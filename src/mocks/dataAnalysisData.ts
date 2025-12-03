@@ -95,6 +95,3 @@ export const dataAnalysisData = [
     });
   }),
 ];
-
-
-

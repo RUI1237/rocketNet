@@ -1,13 +1,7 @@
 import React from "react";
 import { Form, Input, Button, type FormProps, Modal } from "antd";
 // 1. 【修改】引入 MobileOutlined
-import {
-  ApiOutlined,
-  UserOutlined,
-  MailOutlined,
-  LockOutlined,
-  MobileOutlined,
-} from "@ant-design/icons";
+import { ApiOutlined, UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import styles from "@/styles/AuthForms.module.scss";
 import { authService } from "@/services";
 import { getErrorMessage } from "@/utils/getErrorMessage";

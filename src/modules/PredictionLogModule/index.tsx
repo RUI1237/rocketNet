@@ -249,19 +249,21 @@ const PredictionLogModule: React.FC = () => {
       </div>
 
       {/* --- 图片预览组件 (全局单例模式) --- */}
-      <Image
-        width={200}
-        style={{ display: "none" }}
-        src={previewImage}
-        preview={{
-          visible: previewVisible,
-          src: previewImage,
-          onVisibleChange: (value) => {
-            setPreviewVisible(value);
-            if (!value) setPreviewImage("");
-          },
-        }}
-      />
+      {previewImage && (
+        <Image
+          width={200}
+          style={{ display: "none" }}
+          src={previewImage}
+          preview={{
+            visible: previewVisible,
+            src: previewImage,
+            onVisibleChange: (value) => {
+              setPreviewVisible(value);
+              if (!value) setPreviewImage("");
+            },
+          }}
+        />
+      )}
     </div>
   );
 };

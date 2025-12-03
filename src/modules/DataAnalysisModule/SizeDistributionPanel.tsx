@@ -73,7 +73,7 @@ export const SizeDistributionPanel: React.FC<SizeDistributionPanelProps> = ({
       </div>
       <div className={styles.chartBody}>
         {loading ? (
-          <Spin tip="尺寸分布数据加载中..." />
+          <Spin tip="尺寸分布数据加载中..." fullscreen />
         ) : sizeDistribution ? (
           <ReactECharts
             option={option}

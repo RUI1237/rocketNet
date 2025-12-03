@@ -242,22 +242,24 @@ const AlarmLogModule: React.FC = () => {
         onCancel={() => setProcessModalVisible(false)}
       />
 
-      <Image
-        width={200} // 宽高随意，因为 display: none 隐藏了
-        style={{ display: "none" }} // 【关键】隐藏 DOM 元素，只留预览功能
-        // 【关键错误修复】这里必须是字符串 URL，不能是 logs 数组
-        // 当 previewImage 为空时，给一个空字符串即可
-        src={previewImage}
-        preview={{
-          visible: previewVisible,
-          src: previewImage, // 确保预览图也是这张
-          onVisibleChange: (value) => {
-            setPreviewVisible(value);
-            // 关闭时可选：清空 URL
-            if (!value) setPreviewImage("");
-          },
-        }}
-      />
+      {previewImage && (
+        <Image
+          width={200} // 宽高随意，因为 display: none 隐藏了
+          style={{ display: "none" }} // 【关键】隐藏 DOM 元素，只留预览功能
+          // 【关键错误修复】这里必须是字符串 URL，不能是 logs 数组
+          // 当 previewImage 为空时，给一个空字符串即可
+          src={previewImage}
+          preview={{
+            visible: previewVisible,
+            src: previewImage, // 确保预览图也是这张
+            onVisibleChange: (value) => {
+              setPreviewVisible(value);
+              // 关闭时可选：清空 URL
+              if (!value) setPreviewImage("");
+            },
+          }}
+        />
+      )}
     </div>
   );
 };

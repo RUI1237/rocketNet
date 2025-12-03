@@ -20,7 +20,7 @@ const AlarmDetail: React.FC<AlarmDetailProps> = ({ record, onViewImage }) => {
           <>
             <Descriptions.Item label="处理人">{record.acknowledgedBy}</Descriptions.Item>
             <Descriptions.Item label="处理时间">{record.acknowledgedTime}</Descriptions.Item>
-            <Descriptions.Item label="备注信息" span={2}>
+            <Descriptions.Item label="备注信息">
               <span style={{ color: "#cf1322" }}>{record.notes}</span>
             </Descriptions.Item>
           </>

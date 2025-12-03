@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { Spin } from "antd";
 import { useDataAnalysisStore } from "@/stores";
-import { DataAnalysisStyles as styles } from "@/styles";
+import styles from "@/styles/DataAnalysis.module.scss";
 import { KpiOverview } from "./KpiOverview";
 import { TrendsPanel } from "./TrendsPanel";
 import { EfficiencyPanel } from "./EfficiencyPanel";
@@ -60,9 +59,7 @@ const DataAnalysisModule: React.FC = () => {
             justifyContent: "center",
             pointerEvents: "none",
           }}
-        >
-          <Spin />
-        </div>
+        ></div>
       )}
     </div>
   );

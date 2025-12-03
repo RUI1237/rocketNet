@@ -27,7 +27,7 @@ export const LatestAlarmsWall: React.FC<LatestAlarmsWallProps> = ({ latestAlarms
         </div>
 
         {loading ? (
-          <Spin tip="最新报警加载中..." />
+          <Spin tip="最新报警加载中..." fullscreen />
         ) : latestAlarms.length ? (
           // 移除滚动条，通过样式覆盖 overflow-y
           <div
@@ -43,7 +43,7 @@ export const LatestAlarmsWall: React.FC<LatestAlarmsWallProps> = ({ latestAlarms
                 className={styles.alarmCard}
                 onClick={() => setPreviewImage(item.imageUrl)}
               >
-                <img src={item.imageUrl} alt={`alarm-${item.alarmId}`} />
+                {item.imageUrl && <img src={item.imageUrl} alt={`alarm-${item.alarmId}`} />}
 
                 <div className={styles.alarmMeta}>
                   <div className={styles.metaValue}>

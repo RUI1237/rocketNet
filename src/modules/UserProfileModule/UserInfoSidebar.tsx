@@ -1,12 +1,6 @@
 import React from "react";
 import { Avatar, Upload } from "antd";
-import {
-  UserOutlined,
-  CameraOutlined,
-  NumberOutlined,
-  ApartmentOutlined,
-  CalendarOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, CameraOutlined, NumberOutlined, CalendarOutlined } from "@ant-design/icons";
 import styles from "@/styles/UserProfile.module.scss";
 import { useAuthStore } from "@/stores";
 

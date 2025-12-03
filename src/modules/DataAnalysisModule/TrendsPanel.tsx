@@ -1,9 +1,8 @@
 import React, { useMemo } from "react";
 import { Spin, Typography } from "antd";
-import { BarChartOutlined } from "@ant-design/icons";
 import ReactECharts from "echarts-for-react"; // 需要安装依赖：npm i echarts echarts-for-react
 import type { DataAnalysisTrends24h } from "@/types";
-import { DataAnalysisStyles as styles } from "@/styles";
+import styles from "@/styles/DataAnalysis.module.scss";
 
 const { Text } = Typography;
 
@@ -106,7 +105,7 @@ export const TrendsPanel: React.FC<TrendsPanelProps> = ({ trends24h, loading }) 
       </div>
       <div className={styles.chartBody}>
         {loading ? (
-          <Spin tip="趋势数据加载中..." />
+          <Spin tip="趋势数据加载中..." fullscreen />
         ) : trends24h ? (
           // 保证折线图为有幅度，无 "平滑过度"
           <ReactECharts

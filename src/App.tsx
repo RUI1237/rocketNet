@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { BrowserRouter, Navigate } from "react-router-dom";
-import { ConfigProvider, theme } from "antd";
+import { BrowserRouter } from "react-router-dom";
+import { Button, ConfigProvider, message, theme } from "antd";
 import { AppRouter } from "@/router"; // 1. 引入我们新的路由组件
 import "antd/dist/reset.css";
-import { useAuthStore } from "./stores";
 
 function App() {
   // const token = sessionStorage.getItem("token");
@@ -11,6 +9,9 @@ function App() {
   // if (!token) {
   //   return <Navigate to="/login" replace state={{ from: location }} />;
   // }
+  const handleError = () => {
+    message.error("系统入侵警告：数据获取失败");
+  };
   return (
     <ConfigProvider
       theme={{
@@ -33,11 +34,10 @@ function App() {
       {/* BrowserRouter 需要在 AppRouter 的外部 */}
       <BrowserRouter>
         {/* 2. 在这里渲染 AppRouter，并传入所需的状态和函数 */}
-        <AppRouter
-        // isLoggedIn={isLoggedIn}
-        // onLoginSuccess={handleLoginSuccess}
-        // onLogout={handleLogout}
-        />
+        <AppRouter />
+        {/* <Button type="primary" danger onClick={handleError}>
+          模拟获取日志失败
+        </Button> */}
       </BrowserRouter>
     </ConfigProvider>
   );

@@ -13,6 +13,7 @@ import {
 import styles from "./MainLayout.module.scss";
 import { useMousePosition } from "@/hooks/useMousePosition";
 import { useAuthStore } from "@/stores";
+import { Avatar } from "antd";
 
 const navItems = [
   { key: "1", to: "/analysis", icon: <PieChartOutlined />, label: "数据分析" },
@@ -28,7 +29,7 @@ const MainLayout: React.FC = () => {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const user = useAuthStore((state) => state.user);
   // 点击外部关闭菜单
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -80,7 +81,12 @@ const MainLayout: React.FC = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             title="User Profile"
           >
-            <UserOutlined />
+            <Avatar
+              src={user?.avatarUrl || undefined}
+              icon={!user?.avatarUrl && <UserOutlined style={{ fontSize: 30 }} />}
+              // className={styles.avatarIcon}
+              style={{ height: "100%", width: "100%" }}
+            />
           </div>
 
           {/* 下拉菜单 */}

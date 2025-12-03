@@ -46,7 +46,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
             prefix={<UserOutlined />}
             placeholder="用户名"
             size="large"
-            onChange={() => form.setFields([{ name: "username", errors: [] }])}
+            // onChange={() => form.setFields([{ name: "username", errors: [] }])}
           />
         </Form.Item>
 
@@ -64,7 +64,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
             prefix={<LockOutlined />}
             placeholder="密码"
             size="large"
-            onChange={() => form.setFields([{ name: "password", errors: [] }])}
+            // onChange={() => form.setFields([{ name: "password", errors: [] }])}
           />
         </Form.Item>
 

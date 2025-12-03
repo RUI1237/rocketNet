@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Spin, Typography, Progress, Card } from "antd";
 import type { DataAnalysisEfficiency } from "@/types";
-import { DataAnalysisStyles as styles } from "@/styles";
+import styles from "@/styles/DataAnalysis.module.scss";
 
 const { Text } = Typography;
 
@@ -28,7 +28,7 @@ export const EfficiencyPanel: React.FC<EfficiencyPanelProps> = ({ efficiency, lo
       </div>
       <div className={styles.chartBody}>
         {loading ? (
-          <Spin tip="效率数据加载中..." />
+          <Spin tip="效率数据加载中..." fullscreen />
         ) : efficiency ? (
           <div
             style={{
@@ -60,12 +60,12 @@ export const EfficiencyPanel: React.FC<EfficiencyPanelProps> = ({ efficiency, lo
 
             {/* 右侧：平均处理时长指标卡片 */}
             <Card
+              styles={{ body: { padding: 20 } }}
               style={{
                 background: "linear-gradient(135deg, rgba(31,219,204,0.15), rgba(64,169,255,0.1))",
                 borderColor: "rgba(31,219,204,0.4)",
                 color: "#ffffff",
               }}
-              bodyStyle={{ padding: 20 }}
             >
               <Text style={{ color: "#d9d9d9", fontSize: 13 }}>平均处理时长</Text>
               <div style={{ marginTop: 10, marginBottom: 4, fontSize: 28, fontWeight: 600 }}>

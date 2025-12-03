@@ -46,7 +46,7 @@ const MonitoringModule: React.FC = () => {
 
     if (type === "processed") {
       if (isLoading) {
-        return <Spin tip="分析中..." size="large" />;
+        return <Spin tip="分析中..." size="large" fullscreen />;
       }
       return processedImageUrl ? (
         <Image

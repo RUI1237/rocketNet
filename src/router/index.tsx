@@ -32,7 +32,7 @@ const PageLoader = () => (
     }}
   >
     {/* 如果项目没装 Antd，可以将 <Spin /> 换成简单的文字 <div>加载中...</div> */}
-    <Spin size="large" tip="页面加载中..." />
+    <Spin size="large" tip="页面加载中..." fullscreen />
   </div>
 );
 

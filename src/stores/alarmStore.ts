@@ -39,9 +39,9 @@ export const useAlarmStore = create<AlarmStore>((set) => ({
         logs: state.logs.map((log) => (log.id === id ? { ...log, ...res.data } : log)),
       }));
 
-      console.log(`日志 ${id} 获取成功!`);
+      message.success(`日志 ${id} 获取成功!`);
     } catch (error) {
-      console.log("处理失败，请稍后重试", error);
+      message.error("处理失败，请稍后重试");
     }
   },
   processAlarm: async (id: number, notes: string) => {

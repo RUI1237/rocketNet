@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "antd";
 import type { DataAnalysisKpi } from "@/types";
-import { DataAnalysisStyles as styles } from "@/styles";
+import styles from "@/styles/DataAnalysis.module.scss";
 
 const { Text } = Typography;
 

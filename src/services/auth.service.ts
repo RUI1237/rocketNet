@@ -2,7 +2,7 @@ import apiClient from "./http";
 import type { ApiResponse, User } from "@/types";
 
 export const authService = {
-  login: (data: User): Promise<ApiResponse<string>> => {
+  login: (data: User): Promise<ApiResponse<User>> => {
     return apiClient.get("/user/login", {
       params: data,
     });
