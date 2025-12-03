@@ -1,6 +1,6 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, RouterProvider } from "react-router-dom";
 import { ConfigProvider, theme } from "antd";
-import { AppRouter } from "@/router"; // 1. 引入我们新的路由组件
+import { router } from "@/router"; // 1. 引入我们新的路由组件
 import "antd/dist/reset.css";
 
 function App() {
@@ -28,10 +28,10 @@ function App() {
       }}
     >
       {/* BrowserRouter 需要在 AppRouter 的外部 */}
-      <BrowserRouter>
-        {/* 2. 在这里渲染 AppRouter，并传入所需的状态和函数 */}
-        <AppRouter />
-      </BrowserRouter>
+      {/* <BrowserRouter> */}
+      {/* 2. 在这里渲染 AppRouter，并传入所需的状态和函数 */}
+      <RouterProvider router={router} />
+      {/* </BrowserRouter> */}
     </ConfigProvider>
   );
 }
