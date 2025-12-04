@@ -42,3 +42,6 @@
 # *.sln
 # *.sw?
 node_modules
+dist
+.vercel
+.env*.local
