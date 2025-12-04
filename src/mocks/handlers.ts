@@ -47,7 +47,7 @@ export const handlers = [
     return HttpResponse.json<ApiResponse<User>>({
       code: 1,
       msg: "success",
-      data: user ? { ...user } : { username: username, token: "default-token" },
+      data: user ? { ...user } : { username: username!, token: "default-token" },
     });
   }),
 

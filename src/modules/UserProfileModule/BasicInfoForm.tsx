@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import { Button, Col, Row, Form, Input } from "antd";
-import {
-  UserOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  IdcardOutlined,
-  RocketOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, MailOutlined, IdcardOutlined, RocketOutlined } from "@ant-design/icons";
 import styles from "@/styles/UserProfile.module.scss";
 import { useAuthStore } from "@/stores";
 

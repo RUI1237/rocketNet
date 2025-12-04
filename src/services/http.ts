@@ -1,5 +1,4 @@
 import axios, { AxiosError } from "axios";
-import { message } from "antd";
 import { useAuthStore } from "@/stores/authStore";
 import type { ApiResponse } from "@/types";
 import { BASE_URL, TIME_OUT } from "@/config";

@@ -1,4 +1,4 @@
-import { BrowserRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { ConfigProvider, theme } from "antd";
 import { router } from "@/router"; // 1. 引入我们新的路由组件
 import "antd/dist/reset.css";
