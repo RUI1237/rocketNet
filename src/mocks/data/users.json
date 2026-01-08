@@ -1,0 +1,11 @@
+[
+  {
+    "username": "admin",
+    "password": "123456",
+    "token": "mock-jwt-token-admin-123456",
+    "email": "admin@rocknet.com",
+    "registrationDate": "2023-01-01",
+    "avatarUrl": "public/defaultAvatar/纵火猫.jpg",
+    "role": "admin"
+  }
+]

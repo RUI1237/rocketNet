@@ -45,3 +45,13 @@ node_modules
 dist
 .vercel
 .env*.local
+.history
+.vscode
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.kiro

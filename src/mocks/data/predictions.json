@@ -1,0 +1,1456 @@
+[
+  {
+    "id": 1,
+    "originalFilename": "1号输送带监控_001.mp4",
+    "creationTime": "2025/12/31 00:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "originalFilename": "2号输送带监控_002.mp4",
+    "creationTime": "2025/12/31 00:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "originalFilename": "破碎机入口监控_003.mp4",
+    "creationTime": "2025/12/31 00:25:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:12",
+        "isAlarm": "true",
+        "measuredLength": 1.25,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "originalFilename": "筛分机监控_004.mp4",
+    "creationTime": "2025/12/31 00:35:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.38,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "originalFilename": "堆料场监控_005.mp4",
+    "creationTime": "2025/12/31 00:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.55,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "originalFilename": "1号输送带监控_006.mp4",
+    "creationTime": "2025/12/31 01:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "originalFilename": "2号输送带监控_007.mp4",
+    "creationTime": "2025/12/31 01:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:11",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "originalFilename": "破碎机入口监控_008.mp4",
+    "creationTime": "2025/12/31 01:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:15",
+        "isAlarm": "true",
+        "measuredLength": 1.08,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "originalFilename": "筛分机监控_009.mp4",
+    "creationTime": "2025/12/31 01:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.62,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "originalFilename": "堆料场监控_010.mp4",
+    "creationTime": "2025/12/31 02:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "originalFilename": "1号输送带监控_011.mp4",
+    "creationTime": "2025/12/31 02:20:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "originalFilename": "2号输送带监控_012.mp4",
+    "creationTime": "2025/12/31 02:35:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:12",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "originalFilename": "破碎机入口监控_013.mp4",
+    "creationTime": "2025/12/31 02:50:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:18",
+        "isAlarm": "true",
+        "measuredLength": 1.32,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "originalFilename": "筛分机监控_014.mp4",
+    "creationTime": "2025/12/31 03:10:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "originalFilename": "堆料场监控_015.mp4",
+    "creationTime": "2025/12/31 03:25:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:10",
+        "isAlarm": "false",
+        "measuredLength": 0.55,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "originalFilename": "1号输送带监控_016.mp4",
+    "creationTime": "2025/12/31 03:40:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "originalFilename": "2号输送带监控_017.mp4",
+    "creationTime": "2025/12/31 04:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.65,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "originalFilename": "破碎机入口监控_018.mp4",
+    "creationTime": "2025/12/31 04:20:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:14",
+        "isAlarm": "true",
+        "measuredLength": 1.15,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "originalFilename": "筛分机监控_019.mp4",
+    "creationTime": "2025/12/31 04:35:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.38,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "originalFilename": "堆料场监控_020.mp4",
+    "creationTime": "2025/12/31 04:50:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:11",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "originalFilename": "1号输送带监控_021.mp4",
+    "creationTime": "2025/12/31 05:10:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "originalFilename": "2号输送带监控_022.mp4",
+    "creationTime": "2025/12/31 05:25:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "originalFilename": "破碎机入口监控_023.mp4",
+    "creationTime": "2025/12/31 05:40:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:16",
+        "isAlarm": "true",
+        "measuredLength": 1.42,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "originalFilename": "筛分机监控_024.mp4",
+    "creationTime": "2025/12/31 05:55:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "originalFilename": "堆料场监控_025.mp4",
+    "creationTime": "2025/12/31 06:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "originalFilename": "1号输送带监控_026.mp4",
+    "creationTime": "2025/12/31 06:20:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:10",
+        "isAlarm": "false",
+        "measuredLength": 0.55,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "originalFilename": "2号输送带监控_027.mp4",
+    "creationTime": "2025/12/31 06:35:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:13",
+        "isAlarm": "true",
+        "measuredLength": 1.18,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "originalFilename": "破碎机入口监控_028.mp4",
+    "creationTime": "2025/12/31 06:50:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.62,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "originalFilename": "筛分机监控_029.mp4",
+    "creationTime": "2025/12/31 07:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "originalFilename": "堆料场监控_030.mp4",
+    "creationTime": "2025/12/31 07:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "originalFilename": "1号输送带监控_031.mp4",
+    "creationTime": "2025/12/31 07:25:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:15",
+        "isAlarm": "true",
+        "measuredLength": 1.38,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "originalFilename": "2号输送带监控_032.mp4",
+    "creationTime": "2025/12/31 07:40:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "originalFilename": "破碎机入口监控_033.mp4",
+    "creationTime": "2025/12/31 07:55:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:17",
+        "isAlarm": "true",
+        "measuredLength": 1.22,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "originalFilename": "筛分机监控_034.mp4",
+    "creationTime": "2025/12/31 08:10:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "originalFilename": "堆料场监控_035.mp4",
+    "creationTime": "2025/12/31 08:25:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:11",
+        "isAlarm": "false",
+        "measuredLength": 0.65,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "originalFilename": "1号输送带监控_036.mp4",
+    "creationTime": "2025/12/31 08:40:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:19",
+        "isAlarm": "true",
+        "measuredLength": 1.45,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "originalFilename": "2号输送带监控_037.mp4",
+    "creationTime": "2025/12/31 08:55:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "originalFilename": "破碎机入口监控_038.mp4",
+    "creationTime": "2025/12/31 09:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.55,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "originalFilename": "筛分机监控_039.mp4",
+    "creationTime": "2025/12/31 09:20:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:14",
+        "isAlarm": "true",
+        "measuredLength": 1.28,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "originalFilename": "堆料场监控_040.mp4",
+    "creationTime": "2025/12/31 09:35:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "originalFilename": "1号输送带监控_041.mp4",
+    "creationTime": "2025/12/31 09:50:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "originalFilename": "2号输送带监控_042.mp4",
+    "creationTime": "2025/12/31 10:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:10",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "originalFilename": "破碎机入口监控_043.mp4",
+    "creationTime": "2025/12/31 10:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:16",
+        "isAlarm": "true",
+        "measuredLength": 1.12,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "originalFilename": "筛分机监控_044.mp4",
+    "creationTime": "2025/12/31 10:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "originalFilename": "堆料场监控_045.mp4",
+    "creationTime": "2025/12/31 10:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:18",
+        "isAlarm": "true",
+        "measuredLength": 1.35,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "originalFilename": "1号输送带监控_046.mp4",
+    "creationTime": "2025/12/31 11:00:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "originalFilename": "2号输送带监控_047.mp4",
+    "creationTime": "2025/12/31 11:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.62,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "originalFilename": "破碎机入口监控_048.mp4",
+    "creationTime": "2025/12/31 11:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:13",
+        "isAlarm": "true",
+        "measuredLength": 1.18,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "originalFilename": "筛分机监控_049.mp4",
+    "creationTime": "2025/12/31 11:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "originalFilename": "堆料场监控_050.mp4",
+    "creationTime": "2025/12/31 12:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.55,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "originalFilename": "1号输送带监控_051.mp4",
+    "creationTime": "2025/12/31 12:20:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:15",
+        "isAlarm": "true",
+        "measuredLength": 1.48,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "originalFilename": "2号输送带监控_052.mp4",
+    "creationTime": "2025/12/31 12:35:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "originalFilename": "破碎机入口监控_053.mp4",
+    "creationTime": "2025/12/31 12:50:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:10",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "originalFilename": "筛分机监控_054.mp4",
+    "creationTime": "2025/12/31 13:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "originalFilename": "堆料场监控_055.mp4",
+    "creationTime": "2025/12/31 13:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:17",
+        "isAlarm": "true",
+        "measuredLength": 1.05,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "originalFilename": "1号输送带监控_056.mp4",
+    "creationTime": "2025/12/31 13:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.65,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "originalFilename": "2号输送带监控_057.mp4",
+    "creationTime": "2025/12/31 13:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:14",
+        "isAlarm": "true",
+        "measuredLength": 1.32,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "originalFilename": "破碎机入口监控_058.mp4",
+    "creationTime": "2025/12/31 14:00:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "originalFilename": "筛分机监控_059.mp4",
+    "creationTime": "2025/12/31 14:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:11",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "originalFilename": "堆料场监控_060.mp4",
+    "creationTime": "2025/12/31 14:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:16",
+        "isAlarm": "true",
+        "measuredLength": 1.25,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "originalFilename": "1号输送带监控_061.mp4",
+    "creationTime": "2025/12/31 14:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "originalFilename": "2号输送带监控_062.mp4",
+    "creationTime": "2025/12/31 15:00:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "originalFilename": "破碎机入口监控_063.mp4",
+    "creationTime": "2025/12/31 15:10:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:18",
+        "isAlarm": "true",
+        "measuredLength": 1.42,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "originalFilename": "筛分机监控_064.mp4",
+    "creationTime": "2025/12/31 15:25:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.55,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "originalFilename": "堆料场监控_065.mp4",
+    "creationTime": "2025/12/31 15:40:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:13",
+        "isAlarm": "true",
+        "measuredLength": 1.15,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "originalFilename": "1号输送带监控_066.mp4",
+    "creationTime": "2025/12/31 15:55:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "originalFilename": "2号输送带监控_067.mp4",
+    "creationTime": "2025/12/31 16:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:10",
+        "isAlarm": "false",
+        "measuredLength": 0.62,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "originalFilename": "破碎机入口监控_068.mp4",
+    "creationTime": "2025/12/31 16:20:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:15",
+        "isAlarm": "true",
+        "measuredLength": 1.38,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "originalFilename": "筛分机监控_069.mp4",
+    "creationTime": "2025/12/31 16:35:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "originalFilename": "堆料场监控_070.mp4",
+    "creationTime": "2025/12/31 16:50:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:11",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "originalFilename": "1号输送带监控_071.mp4",
+    "creationTime": "2025/12/31 17:05:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "originalFilename": "2号输送带监控_072.mp4",
+    "creationTime": "2025/12/31 17:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "触发报警",
+    "events": [
+      {
+        "frameTimestamp": "00:00:17",
+        "isAlarm": "true",
+        "measuredLength": 1.22,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "originalFilename": "破碎机入口监控_073.mp4",
+    "creationTime": "2025/12/31 17:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "originalFilename": "筛分机监控_074.mp4",
+    "creationTime": "2025/12/31 17:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.65,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "originalFilename": "堆料场监控_075.mp4",
+    "creationTime": "2025/12/31 18:00:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "originalFilename": "1号输送带监控_076.mp4",
+    "creationTime": "2025/12/31 18:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:12",
+        "isAlarm": "false",
+        "measuredLength": 0.55,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "originalFilename": "2号输送带监控_077.mp4",
+    "creationTime": "2025/12/31 18:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "originalFilename": "破碎机入口监控_078.mp4",
+    "creationTime": "2025/12/31 18:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:10",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "originalFilename": "筛分机监控_079.mp4",
+    "creationTime": "2025/12/31 19:00:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "originalFilename": "堆料场监控_080.mp4",
+    "creationTime": "2025/12/31 19:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "originalFilename": "1号输送带监控_081.mp4",
+    "creationTime": "2025/12/31 19:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:11",
+        "isAlarm": "false",
+        "measuredLength": 0.62,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "originalFilename": "2号输送带监控_082.mp4",
+    "creationTime": "2025/12/31 19:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "originalFilename": "破碎机入口监控_083.mp4",
+    "creationTime": "2025/12/31 20:00:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.55,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "originalFilename": "筛分机监控_084.mp4",
+    "creationTime": "2025/12/31 20:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "originalFilename": "堆料场监控_085.mp4",
+    "creationTime": "2025/12/31 20:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:12",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "originalFilename": "1号输送带监控_086.mp4",
+    "creationTime": "2025/12/31 20:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "originalFilename": "2号输送带监控_087.mp4",
+    "creationTime": "2025/12/31 21:00:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "originalFilename": "破碎机入口监控_088.mp4",
+    "creationTime": "2025/12/31 21:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:10",
+        "isAlarm": "false",
+        "measuredLength": 0.62,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "originalFilename": "筛分机监控_089.mp4",
+    "creationTime": "2025/12/31 21:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "originalFilename": "堆料场监控_090.mp4",
+    "creationTime": "2025/12/31 21:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.55,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "originalFilename": "1号输送带监控_091.mp4",
+    "creationTime": "2025/12/31 22:00:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:06",
+        "isAlarm": "false",
+        "measuredLength": 0.42,
+        "resultImageUrl": "/src/mocks/data/deal/301495b59d3d36d2f4666744765f1a91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "originalFilename": "2号输送带监控_092.mp4",
+    "creationTime": "2025/12/31 22:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:11",
+        "isAlarm": "false",
+        "measuredLength": 0.58,
+        "resultImageUrl": "/src/mocks/data/deal/48d900e87a1e28441694f87e00878b0e_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "originalFilename": "破碎机入口监控_093.mp4",
+    "creationTime": "2025/12/31 22:30:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:08",
+        "isAlarm": "false",
+        "measuredLength": 0.45,
+        "resultImageUrl": "/src/mocks/data/deal/51d8f68c51e6d55ff53de703a0bdc420_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "originalFilename": "筛分机监控_094.mp4",
+    "creationTime": "2025/12/31 22:45:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:05",
+        "isAlarm": "false",
+        "measuredLength": 0.52,
+        "resultImageUrl": "/src/mocks/data/deal/828b153bdf1725a404dcdb75d48a8e91_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "originalFilename": "堆料场监控_095.mp4",
+    "creationTime": "2025/12/31 23:00:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:09",
+        "isAlarm": "false",
+        "measuredLength": 0.62,
+        "resultImageUrl": "/src/mocks/data/deal/ab13ed56d4307210b125eb82e3df8526.jpg"
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "originalFilename": "1号输送带监控_096.mp4",
+    "creationTime": "2025/12/31 23:15:00",
+    "taskStatus": "COMPLETED",
+    "predictionResult": "正常",
+    "events": [
+      {
+        "frameTimestamp": "00:00:07",
+        "isAlarm": "false",
+        "measuredLength": 0.48,
+        "resultImageUrl": "/src/mocks/data/deal/e0779d964a1b3491fc0db002bcda7ce5_720.jpg"
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "originalFilename": "2号输送带监控_097.mp4",
+    "creationTime": "2025/12/31 23:30:00",
+    "taskStatus": "PROCESSING",
+    "events": []
+  },
+  {
+    "id": 98,
+    "originalFilename": "破碎机入口监控_098.mp4",
+    "creationTime": "2025/12/31 23:45:00",
+    "taskStatus": "PROCESSING",
+    "events": []
+  }
+]

@@ -1,0 +1,241 @@
+// --- 变量定义 ---
+$color-primary: #00ddff;
+$color-bg-panel: #1d103f;
+$border-color: rgba($color-primary, 0.2);
+$text-primary: #e0e0e0;
+$text-secondary: #8b8a95;
+$font-tech: "Orbitron", sans-serif;
+
+// --- 动画定义 ---
+@keyframes module-load {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// --- 主容器 ---
+.moduleContainer {
+  width: 100%;
+  height: 100%;
+  background: $color-bg-panel;
+  border: 1px solid $border-color;
+  padding: 24px;
+  border-radius: 8px;
+  color: $text-primary;
+  display: flex;
+  flex-direction: column;
+  animation: module-load 0.5s ease-out forwards;
+  position: relative;
+  overflow: hidden;
+
+  h2 {
+    color: $color-primary;
+    font-family: $font-tech;
+    font-size: 1.5rem;
+    margin: 0 0 24px 0;
+    text-shadow: 0 0 8px rgba($color-primary, 0.6);
+    letter-spacing: 1px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+// --- 上传区域 ---
+.uploadSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+// --- 内容包装器 ---
+.contentWrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+// --- 上传控制区 ---
+.uploadControls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.uploadArea {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.uploadHint {
+  margin: 0;
+  color: $text-secondary;
+  font-size: 14px;
+}
+
+// --- 预览与操作区 ---
+.previewOperationArea {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+}
+
+// --- 预览区域 ---
+.preview {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px dashed $border-color;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-secondary;
+  font-family: $font-tech;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: rgba($color-primary, 0.5);
+    box-shadow: 0 0 15px rgba($color-primary, 0.1);
+  }
+}
+
+.previewPlaceholder {
+  font-size:24px;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+.previewImage {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+// --- 操作按钮区 ---
+.actionButtonArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+// --- 按钮样式 ---
+.uploadButton {
+  height: 64px;
+  padding: 0 48px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 180px;
+}
+
+.analyzeButton {
+  height: 64px;
+  padding: 0 48px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 180px;
+}
+
+.iconLarge {
+  font-size: 24px;
+}
+
+// --- Ant Design 组件样式覆盖 ---
+:global {
+  .ant-btn-primary {
+    background: rgba($color-primary, 0.2);
+    border-color: $color-primary;
+    color: $color-primary;
+    font-family: $font-tech;
+    text-shadow: 0 0 5px $color-primary;
+    box-shadow: 0 0 10px rgba($color-primary, 0.2);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: $color-primary;
+      color: $color-bg-panel;
+      border-color: $color-primary;
+      box-shadow: 0 0 20px rgba($color-primary, 0.4);
+    }
+
+    &:disabled {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.25);
+      box-shadow: none;
+      text-shadow: none;
+    }
+  }
+
+  .ant-btn-default {
+    background: transparent;
+    border-color: $border-color;
+    color: $text-primary;
+    border-radius: 6px;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+  }
+
+  .ant-upload-list {
+    color: $text-primary;
+
+    .ant-upload-list-item {
+      border-color: $border-color;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      margin-top: 8px;
+
+      &:hover {
+        background: rgba($color-primary, 0.05);
+      }
+    }
+
+    .ant-upload-list-item-name {
+      color: $text-primary;
+    }
+
+    .ant-upload-list-item-actions {
+      .anticon {
+        color: $text-secondary;
+
+        &:hover {
+          color: #ff4d4f;
+        }
+      }
+    }
+  }
+
+  .ant-spin {
+    .ant-spin-text {
+      color: $color-primary;
+      font-family: $font-tech;
+    }
+
+    .ant-spin-dot-item {
+      background-color: $color-primary;
+    }
+  }
+}

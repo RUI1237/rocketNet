@@ -1,0 +1,362 @@
+@use "sass:map";
+
+// --- 变量定义 ---
+$color-primary: #00ddff;
+$color-bg-panel: #1d103f;
+$border-color: rgba($color-primary, 0.2);
+$text-primary: #e0e0e0;
+$text-secondary: #8b8a95;
+$font-tech: "Orbitron", sans-serif;
+
+// --- 动画定义 ---
+@keyframes module-load {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// --- 主容器 ---
+.dashboardRoot {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  color: $text-primary;
+  overflow: hidden;
+  animation: module-load 0.5s ease-out forwards;
+}
+
+// --- KPI 卡片行 ---
+.kpiRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  flex-shrink: 0;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kpiCard {
+  background: rgba($color-bg-panel, 0.9);
+  border-radius: 8px;
+  padding: 20px 24px;
+  border: 1px solid $border-color;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: rgba($color-primary, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.kpiLabel {
+  font-size: 13px;
+  color: $text-secondary;
+  letter-spacing: 0.5px;
+}
+
+.kpiValue {
+  font-family: $font-tech;
+  font-size: 32px;
+  font-weight: 600;
+  color: $color-primary;
+  text-shadow: 0 0 8px rgba($color-primary, 0.3);
+  line-height: 1.2;
+}
+
+// --- 图表区域 ---
+.chartsRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// --- 通用面板 ---
+.panel {
+  background: rgba($color-bg-panel, 0.85);
+  border-radius: 8px;
+  border: 1px solid $border-color;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  min-height: 0;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba($color-primary, 0.1);
+  flex-shrink: 0;
+
+  .title {
+    color: $color-primary;
+    font-weight: 500;
+    font-family: $font-tech;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .subTitle {
+    color: $text-secondary;
+    font-size: 12px;
+  }
+}
+
+.chartBody {
+  flex: 1;
+  min-height: 200px;
+  overflow: hidden;
+}
+
+// --- 右侧列 ---
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+  overflow: hidden;
+
+  > * {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+// --- 报警图片墙 ---
+.latestAlarmsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.alarmCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid rgba($color-primary, 0.15);
+  background: rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  aspect-ratio: 4/3;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: contrast(1.05) saturate(1.05);
+  }
+
+  &:hover {
+    border-color: $color-primary;
+    box-shadow: 0 0 20px rgba($color-primary, 0.25);
+
+    img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.alarmMeta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  background: linear-gradient(to top, rgba(13, 7, 28, 0.95), rgba(13, 7, 28, 0));
+  pointer-events: none;
+
+  .metaValue {
+    color: $color-primary;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: $font-tech;
+
+    span {
+      font-size: 11px;
+      font-weight: 400;
+      color: $text-primary;
+      opacity: 0.8;
+      margin-left: 2px;
+      font-family: sans-serif;
+    }
+  }
+
+  .metaTime {
+    color: $text-secondary;
+    font-size: 11px;
+    font-family: monospace;
+  }
+}
+
+// --- Modal 样式 ---
+.modalContent {
+  position: relative;
+  max-width: 96vw;
+  max-height: 90vh;
+  border: 1px solid rgba($color-primary, 0.3);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  background: darken($color-bg-panel, 5%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  animation: module-load 0.3s ease-out forwards;
+}
+
+.modalImageArea {
+  flex: 0 1 70%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  max-height: 300px;
+  max-width: 500px;
+  position: relative;
+
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    user-select: none;
+  }
+}
+
+.modalInfoArea {
+  flex: 0 0 30%;
+  min-width: 260px;
+  max-width: 400px;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba($color-bg-panel, 0.95) 0%,
+    darken($color-bg-panel, 5%) 100%
+  );
+  border-left: 1px solid rgba($color-primary, 0.1);
+  padding: 40px;
+  position: relative;
+
+  .label {
+    color: $text-secondary;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .valueRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+
+  .valueText {
+    color: $color-primary;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba($color-primary, 0.3);
+    font-family: $font-tech;
+  }
+
+  .unitText {
+    color: $text-primary;
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-bottom: 6px;
+  }
+
+  .timeText {
+    color: $text-primary;
+    font-size: 18px;
+    font-family: monospace;
+    letter-spacing: 1px;
+    font-weight: 500;
+    background: rgba($color-primary, 0.1);
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba($color-primary, 0.3);
+  color: $text-primary;
+  font-size: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $color-primary;
+    color: darken($color-bg-panel, 10%);
+    border-color: $color-primary;
+    box-shadow: 0 0 15px rgba($color-primary, 0.4);
+  }
+}

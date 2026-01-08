@@ -1,154 +1,292 @@
-import type { ApiResponse, User } from "@/types";
+import type { ApiResponse } from "@/shared/types";
+import type { User } from "@/features/auth/types/auth.types";
 import { delay, http, HttpResponse } from "msw";
+import usersJson from "./data/users.json";
 
 // ==========================================
-// 1. 模拟数据库 (Dynamic Storage)
+// 用户数据类型
 // ==========================================
-// 使用 Map 来存储所有用户，实现真正的动态增删改查
-const userDatabase = new Map<string, User>();
+interface StoredUser extends User {
+  password: string;
+  role?: string;
+}
 
-// 初始化一个默认用户
-const initialUser: User = {
-  username: "test_user",
-  token: "mock-jwt-token-123456",
-  email: "test@example.com",
-  // phone: "13800138000",
-  registrationDate: "2023-01-01",
-  avatarUrl: "",
-  // 注意：数据库里暂时不存 avatar，我们在 get 时动态生成
+// ==========================================
+// 用户数据库（从 JSON 初始化，运行时可修改）
+// ==========================================
+const userDatabase = new Map<string, StoredUser>();
+
+// 从 JSON 初始化用户数据
+(usersJson as StoredUser[]).forEach((user) => userDatabase.set(user.username, user));
+
+// 登录日志
+const loginLogs: Array<{
+  username: string;
+  loginTime: string;
+  ip: string;
+  device: string;
+  status: string;
+}> = [];
+
+// 生成随机 IP
+const randomIp = () =>
+  `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+
+// 生成随机设备
+const randomDevice = () => {
+  const devices = [
+    "Chrome/Windows",
+    "Firefox/MacOS",
+    "Safari/iOS",
+    "Edge/Windows",
+    "Chrome/Android",
+  ];
+  return devices[Math.floor(Math.random() * devices.length)];
 };
 
-userDatabase.set("test_user", initialUser);
-
 // ==========================================
-// 2. 辅助函数：生成图片 Blob (Base64格式)
-// ==========================================
-// JSON 只能传输字符串，所以我们将二进制 Blob 模拟为 Base64 Data URL
-// 这是一个 1x1 像素的红色图片
-// const getMockAvatarBlob = () => {
-//   return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
-// };
-
-// ==========================================
-// 3. Handlers 定义
+// Handlers 定义
 // ==========================================
 export const handlers = [
-  // --- Login ---
+  // --- 登录 ---
   http.get("/user/login", async ({ request }) => {
     const url = new URL(request.url);
-
-    // 2. 从查询参数中获取数据
     const username = url.searchParams.get("username");
-    // 实际场景可能需要验证密码，这里简化
-    // 我们可以从 URL 获取参数来模拟不同用户登录
-    // 默认返回 test_user 的 token
-    const user = userDatabase.get("test_user");
+    const password = url.searchParams.get("password");
 
-    return HttpResponse.json<ApiResponse<User>>({
-      code: 1,
-      msg: "success",
-      data: user ? { ...user } : { username: username!, token: "default-token" },
-    });
-  }),
+    await delay(800);
 
-  // --- Register (动态添加用户) ---
-  http.post("/user/register", async ({ request }) => {
-    const body = (await request.json()) as {
-      username: string;
-      password?: string;
-    };
-
-    console.log("正在模拟注册用户:", body.username);
-    await delay(1000);
-
-    // 1. 检查用户是否已存在 (查 Map)
-    if (userDatabase.has(body.username) || ["admin", "exist"].includes(body.username)) {
-      return HttpResponse.json({
-        code: 0,
-        msg: `注册失败：用户 '${body.username}' 已存在`,
-        data: null,
-      });
+    if (!username) {
+      return HttpResponse.json({ code: 0, msg: "用户名不能为空", data: null });
     }
 
-    // 2. 动态保存新用户到 "数据库"
-    const newUser: User = {
+    if (!password) {
+      return HttpResponse.json({ code: 0, msg: "密码不能为空", data: null });
+    }
+
+    const user = userDatabase.get(username);
+
+    if (!user) {
+      return HttpResponse.json({ code: 0, msg: "用户不存在", data: null });
+    }
+
+    if (user.password !== password) {
+      return HttpResponse.json({ code: 0, msg: "密码错误", data: null });
+    }
+
+    // 记录登录日志
+    loginLogs.push({
+      username,
+      loginTime: new Date().toLocaleString("zh-CN"),
+      ip: randomIp(),
+      device: randomDevice(),
+      status: "成功",
+    });
+
+    // 返回用户信息（不包含密码）
+    const { password: _, ...userInfo } = user;
+    return HttpResponse.json({ code: 1, msg: "登录成功", data: { ...userInfo } });
+  }),
+
+  // --- 注册 ---
+  http.post("/user/register", async ({ request }) => {
+    const body = (await request.json()) as { username: string; password: string; email?: string };
+    await delay(800);
+
+    if (!body.username || body.username.length < 3) {
+      return HttpResponse.json({ code: 0, msg: "用户名长度至少3个字符", data: null });
+    }
+
+    if (!body.password || body.password.length < 6) {
+      return HttpResponse.json({ code: 0, msg: "密码长度至少6个字符", data: null });
+    }
+
+    if (userDatabase.has(body.username)) {
+      return HttpResponse.json({ code: 0, msg: `用户 '${body.username}' 已存在`, data: null });
+    }
+
+    const newUser: StoredUser = {
       username: body.username,
-      token: `mock-token-${Date.now()}`, // 生成新 token
-      email: `${body.username}@example.com`, // 自动生成默认邮箱
+      password: body.password,
+      token: `mock-token-${Date.now()}`,
+      email: body.email || `${body.username}@example.com`,
       registrationDate: new Date().toISOString().split("T")[0],
+      avatarUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${body.username}`,
+      role: "user",
     };
     userDatabase.set(body.username, newUser);
 
+    return HttpResponse.json({ code: 1, msg: "注册成功", data: "注册成功" });
+  }),
+
+  // --- 获取用户信息 ---
+  http.get("/user/information", async ({ request }) => {
+    const url = new URL(request.url);
+    const username = url.searchParams.get("username");
+    await delay(300);
+
+    if (!username) {
+      return HttpResponse.json({ code: 0, msg: "用户名不能为空", data: null });
+    }
+
+    const user = userDatabase.get(username);
+
+    if (!user) {
+      return HttpResponse.json({ code: 0, msg: "用户不存在", data: null });
+    }
+
+    const { password: _, ...userInfo } = user;
+    return HttpResponse.json({ code: 1, msg: "success", data: { ...userInfo } });
+  }),
+
+  // --- 更新用户信息 ---
+  http.post("/user/reset", async ({ request }) => {
+    const formData = await request.formData();
+    const username = formData.get("username") as string;
+    const token = formData.get("token") as string;
+    const email = formData.get("email") as string | null;
+    const avatar = formData.get("avatar") as File | null;
+    await delay(500);
+
+    if (!username || !userDatabase.has(username)) {
+      return HttpResponse.json({ code: 404, message: "用户不存在", data: null }, { status: 404 });
+    }
+
+    if (!token) {
+      return HttpResponse.json({ code: 401, message: "未授权", data: null }, { status: 401 });
+    }
+
+    const currentUser = userDatabase.get(username)!;
+
+    if (email) {
+      currentUser.email = email;
+    }
+
+    if (avatar && avatar instanceof File) {
+      const arrayBuffer = await avatar.arrayBuffer();
+      const base64 = btoa(
+        new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+      );
+      currentUser.avatarUrl = `data:${avatar.type};base64,${base64}`;
+    }
+
+    userDatabase.set(username, currentUser);
+
+    return HttpResponse.json<ApiResponse<string>>({ code: 200, data: "更新成功", msg: "OK" });
+  }),
+
+  // --- 修改密码 ---
+  http.post("/user/change-password", async ({ request }) => {
+    const body = (await request.json()) as {
+      username: string;
+      oldPassword: string;
+      newPassword: string;
+    };
+    await delay(600);
+
+    if (!body.username || !userDatabase.has(body.username)) {
+      return HttpResponse.json({ code: 404, msg: "用户不存在", data: null });
+    }
+
+    const user = userDatabase.get(body.username)!;
+
+    if (user.password !== body.oldPassword) {
+      return HttpResponse.json({ code: 400, msg: "原密码错误", data: null });
+    }
+
+    if (!body.newPassword || body.newPassword.length < 6) {
+      return HttpResponse.json({ code: 400, msg: "新密码长度至少6个字符", data: null });
+    }
+
+    user.password = body.newPassword;
+    userDatabase.set(body.username, user);
+
+    return HttpResponse.json({ code: 1, msg: "密码修改成功", data: true });
+  }),
+
+  // --- 获取登录日志 ---
+  http.get("/user/login-logs", async ({ request }) => {
+    const url = new URL(request.url);
+    const username = url.searchParams.get("username");
+    const page = Number(url.searchParams.get("page")) || 1;
+    const pageSize = Number(url.searchParams.get("pageSize")) || 10;
+    await delay(300);
+
+    let filteredLogs = [...loginLogs];
+    if (username) {
+      filteredLogs = filteredLogs.filter((log) => log.username === username);
+    }
+    filteredLogs.sort((a, b) => new Date(b.loginTime).getTime() - new Date(a.loginTime).getTime());
+
+    const start = (page - 1) * pageSize;
     return HttpResponse.json({
       code: 1,
       msg: "success",
-      data: "注册成功，请登录",
+      data: { total: filteredLogs.length, records: filteredLogs.slice(start, start + pageSize) },
     });
   }),
 
-  // --- Get Info (动态获取 + Avatar Blob) ---
-  http.get("/user/information", ({ request }) => {
-    const url = new URL(request.url);
-    const username = url.searchParams.get("username");
+  // --- 上传头像 ---
+  http.post("/user/avatar", async ({ request }) => {
+    const formData = await request.formData();
+    const file = formData.get("avatar");
+    const username = formData.get("username") as string;
+    await delay(800);
 
-    // 1. 从动态数据库中查找用户
-    const user = userDatabase.get(username || "");
-
-    if (user) {
-      // 2. 构造返回数据：深拷贝用户对象，防止污染数据库
-      const responseUser = { ...user };
-
-      // 3. 【核心需求】将 avatar 改为 Blob (Base64) 返回
-      // 无论数据库里存没存，这里都动态注入一个由 Base64 构成的“图片流”
-      // responseUser.avatar = getMockAvatarBlob();
-      // console.log(responseUser.avatar);
-      // const file: File = responseUser.avatar!;
-      // console.log(`发送图片: ${file.name}, 类型: ${file.type}, 大小: ${file.size}`);
-      return HttpResponse.json<ApiResponse<User>>({
-        code: 200,
-        data: responseUser,
-        msg: "success",
-      });
+    if (!file || !(file instanceof File)) {
+      return HttpResponse.json({ code: 400, msg: "请上传有效的图片文件", data: null });
     }
 
-    return new HttpResponse(null, { status: 404, statusText: "User not found" });
+    if (!username || !userDatabase.has(username)) {
+      return HttpResponse.json({ code: 404, msg: "用户不存在", data: null });
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const base64 = btoa(
+      new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+    );
+    const newAvatarUrl = `data:${file.type};base64,${base64}`;
+
+    const user = userDatabase.get(username)!;
+    user.avatarUrl = newAvatarUrl;
+    userDatabase.set(username, user);
+
+    return HttpResponse.json({ code: 1, msg: "头像上传成功", data: { avatarUrl: newAvatarUrl } });
   }),
 
-  // --- Reset (动态更新) ---
-  http.post("/user/reset", async ({ request }) => {
-    const requestBody = (await request.json()) as User;
-    console.log("收到重置请求:", requestBody);
+  // --- 退出登录 ---
+  http.post("/user/logout", async () => {
+    await delay(200);
+    return HttpResponse.json({ code: 1, msg: "退出成功", data: true });
+  }),
 
-    // 1. 校验用户是否存在
-    if (!requestBody.username || !userDatabase.has(requestBody.username)) {
-      return HttpResponse.json({ message: "User not found" }, { status: 404 });
+  // --- 获取所有用户列表 ---
+  http.get("/user/list", async () => {
+    await delay(300);
+    const users = Array.from(userDatabase.values()).map((u) => ({
+      username: u.username,
+      email: u.email,
+      registrationDate: u.registrationDate,
+      avatarUrl: u.avatarUrl,
+      role: u.role,
+    }));
+    return HttpResponse.json({ code: 1, msg: "success", data: users });
+  }),
+
+  // --- 删除用户 ---
+  http.delete("/user/:username", async ({ params }) => {
+    const { username } = params;
+    await delay(500);
+
+    if (username === "admin") {
+      return HttpResponse.json({ code: 403, msg: "不能删除管理员账户", data: null });
     }
 
-    // 2. 校验 Token (简单模拟)
-    if (!requestBody.token) {
-      return new HttpResponse(null, { status: 401, statusText: "Unauthorized" });
+    if (!userDatabase.has(username as string)) {
+      return HttpResponse.json({ code: 404, msg: "用户不存在", data: null });
     }
 
-    // 3. 更新数据库
-    const currentUser = userDatabase.get(requestBody.username)!;
-
-    // 合并旧数据和新数据
-    const updatedUser = {
-      ...currentUser,
-      ...requestBody,
-      // 保持 token 和 username 不被意外覆盖（除非业务允许）
-      username: currentUser.username,
-      token: currentUser.token,
-    };
-    // const file: File = requestBody.avatar!;
-    // console.log(`收到图片: ${file.name}, 类型: ${file.type}, 大小: ${file.size}`);
-
-    userDatabase.set(requestBody.username, updatedUser);
-
-    return HttpResponse.json<ApiResponse<string>>({
-      code: 200,
-      data: "Reset successful",
-      msg: "OK",
-    });
+    userDatabase.delete(username as string);
+    return HttpResponse.json({ code: 1, msg: "删除成功", data: true });
   }),
 ];

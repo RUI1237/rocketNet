@@ -1,39 +1,73 @@
 import { http, HttpResponse, delay } from "msw";
 
 export const monitoringData = [
-  // ... 其他 handlers ...
-
-  // ------------------------------------------------
-  // 接口: 上传图片并分析 (直接把上传的图原样返回)
-  // URL: POST /detection/image
-  // ------------------------------------------------
+  // 上传图片并分析 - 返回 ApiResponse<string>，data 是图片 URL
   http.post("/detection/image", async ({ request }) => {
-    // 1. 解析 FormData
     const formData = await request.formData();
-
-    // ⚠️ 注意：这里的 "file" 必须和你前端 formData.append('file', ...) 里的 key 一致
     const file = formData.get("image");
 
-    // 2. 校验是否有文件
     if (!file || !(file instanceof File)) {
-      return HttpResponse.text("请上传有效的文件", { status: 400 });
+      return HttpResponse.json(
+        { code: 400, msg: "请上传有效的图片文件", data: null },
+        { status: 400 }
+      );
     }
 
-    console.log(`收到图片: ${file.name}, 类型: ${file.type}, 大小: ${file.size}`);
+    if (!file.type.startsWith("image/")) {
+      return HttpResponse.json(
+        { code: 400, msg: "只支持图片格式文件", data: null },
+        { status: 400 }
+      );
+    }
 
-    // 3. 模拟一点网络延迟 (比如 1.5秒)，让 loading 效果能展示出来
+    // 模拟处理延迟
     await delay(1000);
-    console.log(file);
-    // 4. 直接把文件对象返回！
-    // File 对象本身就是一种特殊的 Blob，可以直接作为 HttpResponse 的 body
-    return new HttpResponse(file, {
-      headers: {
-        // 动态设置 Content-Type，上传的是 png 就回 png，是 jpg 就回 jpg
-        "Content-Type": file.type,
 
-        // (可选) 如果你想模拟这是一个新生成的图，也可以强制写死 'image/jpeg'
-        // "Content-Type": "image/jpeg",
+    // 将上传的图片转为 base64 返回
+    const arrayBuffer = await file.arrayBuffer();
+    const base64 = btoa(
+      new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+    );
+    const dataUrl = `data:${file.type};base64,${base64}`;
+
+    return HttpResponse.json({
+      code: 1,
+      msg: "检测完成",
+      data: dataUrl,
+    });
+  }),
+
+  // 获取实时监控状态
+  http.get("/monitoring/status", () => {
+    return HttpResponse.json({
+      code: 1,
+      msg: "success",
+      data: {
+        isOnline: true,
+        lastHeartbeat: new Date().toISOString(),
+        currentFps: 28.5,
+        resolution: "1920x1080",
+        cpuUsage: 45.2,
+        gpuUsage: 62.8,
+        modelVersion: "v2.3.1",
       },
+    });
+  }),
+
+  // 获取监控设备列表
+  http.get("/monitoring/devices", () => {
+    const devices = [
+      { id: 1, name: "1号输送带摄像头", location: "进料口", status: "online" },
+      { id: 2, name: "1号输送带摄像头", location: "中段", status: "online" },
+      { id: 3, name: "2号输送带摄像头", location: "进料口", status: "online" },
+      { id: 4, name: "破碎机监控", location: "入口", status: "online" },
+      { id: 5, name: "筛分机监控", location: "A区", status: "maintenance" },
+    ];
+
+    return HttpResponse.json({
+      code: 1,
+      msg: "success",
+      data: { devices, total: devices.length },
     });
   }),
 ];

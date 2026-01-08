@@ -25,7 +25,10 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".", // 告诉编译器，路径解析的基础目录是项目根目录 ('.')
     "paths": {
-      "@/*": ["./src/*"] // 告诉编译器，'@/*' 这样的路径模式，应该映射到 'src/*'
+      "@/*": ["./src/*"], // 告诉编译器，'@/*' 这样的路径模式，应该映射到 'src/*'
+      "@features/*": ["./src/features/*"], // 特性模块路径别名
+      "@shared/*": ["./src/shared/*"], // 共享模块路径别名
+      "@app/*": ["./src/app/*"] // 应用层路径别名
     }
   },
   "include": ["src"]

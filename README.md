@@ -1,14 +1,42 @@
-# React + TypeScript + Vite
+# RockNet 监控管理系统
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+基于 React + TypeScript 的工业监控管理系统前端应用。
 
-Currently, two official plugins are available:
+## 技术栈
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react)
-  uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in
-  [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc)
-  uses [SWC](https://swc.rs/) for Fast Refresh
+| 类别        | 技术                          | 版本 |
+| ----------- | ----------------------------- | ---- |
+| 框架        | React                         | 18.3 |
+| 语言        | TypeScript                    | 5.9  |
+| 构建工具    | Vite (rolldown-vite)          | 7.1  |
+| UI 组件库   | Ant Design                    | 5.27 |
+| 路由        | React Router                  | 7.10 |
+| 状态管理    | Zustand                       | 5.0  |
+| HTTP 客户端 | Axios                         | 1.13 |
+| 图表库      | ECharts                       | 6.0  |
+| 样式        | SCSS + CSS Modules            | -    |
+| Mock 服务   | MSW (Mock Service Worker)     | 2.12 |
+| 代码规范    | ESLint + Prettier + Stylelint | -    |
+
+## 快速开始
+
+```bash
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm dev
+
+# 构建生产版本
+pnpm build
+
+# 代码检查
+pnpm lint
+```
+
+## 项目文档
+
+详细的项目说明请查看 [PROJECT.md](./PROJECT.md)
 
 ## React Compiler
 

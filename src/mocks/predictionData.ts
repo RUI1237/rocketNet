@@ -1,82 +1,71 @@
 import { http, HttpResponse } from "msw";
-import { fakerZH_CN as faker } from "@faker-js/faker";
-import type { PredictionEvent, PredictionLogType } from "@/types";
+import type { PredictionLogType } from "@/features/prediction-log/types/prediction.types";
+import predictionsJson from "./data/predictions.json";
 
-const allPredictions: PredictionLogType[] = Array.from({ length: 50 }).map((_, index) => {
-  // 1. 随机生成状态
-  const status = faker.helpers.arrayElement(["COMPLETED", "PROCESSING", "FAILED"]);
-  const isCompleted = status === "COMPLETED";
-
-  // 2. 如果任务完成，生成 1-5 个随机事件；否则为空
-  const events: PredictionEvent[] = isCompleted
-    ? Array.from({ length: faker.number.int({ min: 1, max: 5 }) }).map((__, i) => ({
-        id: faker.string.uuid(),
-        // 模拟时间戳：00:00:05, 00:00:10...
-        frameTimestamp: `00:00:${String((i + 1) * 5).padStart(2, "0")}`,
-        isAlarm: faker.datatype.boolean() ? "true" : "false",
-        measuredLength: faker.number.float({ min: 0.1, max: 3.0, fractionDigits: 2 }),
-        // 生成随机图片 URL
-        resultImageUrl: faker.image.urlPicsumPhotos({ width: 300, height: 200 }),
-      }))
-    : [];
-
-  return {
-    id: index + 1, // ID 从 1 开始
-    originalFilename: `monitor_video_${faker.string.numeric(4)}.mp4`,
-    creationTime: faker.date.recent({ days: 7 }).toLocaleString(),
-    taskStatus: status,
-    // 只有完成的任务才有预测结果
-    predictionResult: isCompleted ? faker.helpers.arrayElement(["正常", "触发报警"]) : undefined,
-    events: events,
-  };
-});
+// 静态预测数据（只读）
+export const allPredictions: PredictionLogType[] = predictionsJson as PredictionLogType[];
 
 export const predictionData = [
+  // 分页查询
   http.get("/predictions/page", ({ request }) => {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get("page")) || 1;
     const pageSize = Number(url.searchParams.get("pageSize")) || 10;
+    const status = url.searchParams.get("status");
+    const result = url.searchParams.get("result");
 
-    // 1. 分页切片
+    let filteredData = [...allPredictions];
+    if (status) filteredData = filteredData.filter((item) => item.taskStatus === status);
+    if (result) filteredData = filteredData.filter((item) => item.predictionResult === result);
+
     const start = (page - 1) * pageSize;
-    const end = start + pageSize;
-    const sliceData = allPredictions.slice(start, end);
+    const sliceData = filteredData.slice(start, start + pageSize);
 
-    const listData = sliceData.map((item) => ({
-      ...item,
-      events: [], // 或者直接使用 delete item.events
-    }));
+    return HttpResponse.json({
+      code: 1,
+      msg: "success",
+      data: {
+        total: filteredData.length,
+        records: sliceData.map((item) => ({
+          id: item.id,
+          originalFilename: item.originalFilename,
+          creationTime: item.creationTime,
+          taskStatus: item.taskStatus,
+          predictionResult: item.predictionResult,
+        })),
+      },
+    });
+  }),
+
+  // 查询详情
+  http.get("/predictions/:id", ({ params }) => {
+    const targetLog = allPredictions.find((item) => item.id === Number(params.id));
+    if (!targetLog) {
+      return HttpResponse.json({ code: 0, msg: "未找到记录", data: null }, { status: 404 });
+    }
+    return HttpResponse.json({ code: 1, msg: "success", data: targetLog });
+  }),
+
+  // 获取预测统计
+  http.get("/predictions/statistics", () => {
+    const completed = allPredictions.filter((p) => p.taskStatus === "COMPLETED").length;
+    const processing = allPredictions.filter((p) => p.taskStatus === "PROCESSING").length;
+    const failed = allPredictions.filter((p) => p.taskStatus === "FAILED").length;
+    const alarmTriggered = allPredictions.filter((p) => p.predictionResult === "触发报警").length;
 
     return HttpResponse.json({
       code: 1,
       msg: "success",
       data: {
         total: allPredictions.length,
-        records: listData,
+        completed,
+        processing,
+        failed,
+        alarmTriggered,
+        normalCount: completed - alarmTriggered,
+        successRate: ((completed / allPredictions.length) * 100).toFixed(1),
+        alarmRate: completed > 0 ? ((alarmTriggered / completed) * 100).toFixed(1) : "0",
       },
-    });
-  }),
-
-  http.get("/predictions/:id", ({ params }) => {
-    // 1. 转换 ID 类型 (确保安全转换)
-    const targetId = Number(params.id);
-
-    if (isNaN(targetId)) {
-      return HttpResponse.json({ code: 0, msg: "ID格式错误", data: null }, { status: 400 });
-    }
-
-    // 2. 查找数据
-    const targetLog = allPredictions.find((item) => item.id === targetId);
-
-    if (!targetLog) {
-      return HttpResponse.json({ code: 0, msg: "未找到记录", data: null }, { status: 404 });
-    }
-
-    // 3. 返回完整对象 (包含 events)
-    return HttpResponse.json({
-      code: 1,
-      msg: "success",
-      data: targetLog,
     });
   }),
 ];
