@@ -2,7 +2,6 @@ import axios, { AxiosError } from "axios";
 import type { ApiResponse } from "../types";
 import { BASE_URL, TIME_OUT } from "../config/index";
 import { router } from "@/app/router";
-import { message } from "antd";
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
